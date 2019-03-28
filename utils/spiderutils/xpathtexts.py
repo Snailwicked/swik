@@ -40,7 +40,7 @@ class xPathTexts(object):
         resp.encoding = charset
         return resp.text
 
-    def get_contents(self,url,X_path,header):
+    def get_contents(self,*args,**kwargs):
         '''
         :param url: 'http://www.sohu.com/a/304311876_123753'
         :param X_path: '//article[@class = 'article']//p//text()'
@@ -62,3 +62,17 @@ class xPathTexts(object):
         for item in etree.HTML(str(self.html)).xpath(self.X_path):
             contens.append(str(item).strip())
         return contens
+if __name__ == "__main__":
+    url = "http://www.sohu.com/a/304311876_123753"
+    X_path= "//article[@class = 'article']//p//text()"
+    header = {
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-CN,zh;q=0.9',}
+    xpt = xPathTexts()
+    contens = xpt.get_contents(url=url,X_path=X_path,header=header)
+    for item in contens:
+        print(item)
