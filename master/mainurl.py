@@ -8,9 +8,9 @@ class mainUrl(xPathTexts):
         super(mainUrl, self).__init__()
 
 
-    def getUrls(self,url,X_path,headers):
+    def getUrls(self,url,html,X_path):
         data = set()
-        for item in self.get_contents(url,X_path,headers):
+        for item in self.get_contents(html=html,X_path=X_path):
             url = urljoin(url, item)
             if "http" in url:
                 data.add(url)
@@ -19,6 +19,8 @@ class mainUrl(xPathTexts):
 if __name__ == "__main__":
     url = "http://finance.ifeng.com/"
     X_path = "//a//@href"
+    import requests
+    html = requests.get(url).text
     mainurl = mainUrl()
-    for url in mainurl.getUrls(url,X_path,headers):
+    for url in mainurl.getUrls(url,html ,X_path):
         print(url)
