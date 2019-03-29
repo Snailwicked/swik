@@ -14,9 +14,9 @@ class baseUrl(xPathTexts):
         X_path = "//a//@href"
         data = set()
         if html!= None:
-            self.urls = self.get_contents(X_path=X_path, html=html, header=header)
+            self.urls = self.get_contents(X_path=X_path, html=html, headers=header)
         else:
-            self.urls = self.get_contents(url=url, X_path=X_path, header=header)
+            self.urls = self.get_contents(url=url, X_path=X_path, headers=header)
         for item in self.urls:
             url = urljoin(url, item)
             if "http" in url:

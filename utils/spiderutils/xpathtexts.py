@@ -38,12 +38,12 @@ class xPathTexts(object):
     def __init__(self, *args,**kwargs):
         self.html = None
 
-    def getHtml(self,url = None,header= None):
+    def getHtml(self,url = None,headers= None,cookies = None):
         '''
         获取self.url 的 html
         :return: html
         '''
-        resp = requests.get(url=url,headers= header)
+        resp = requests.get(url=url,headers= headers ,cookies = cookies)
         charset = None
         try:
             reg = '<meta .*(http-equiv="?Content-Type"?.*)?charset="?([a-zA-Z0-9_-]+)"?'
@@ -55,12 +55,12 @@ class xPathTexts(object):
         resp.encoding = charset
         return resp.text
 
-    def get_contents(self,html=None,url= None,header=None,X_path= None):
+    def get_contents(self,html=None,url= None,headers=None,X_path= None,cookies = None):
 
         if html != None:
             self.html = html
         else:
-            self.html = self.getHtml(url,header)
+            self.html = self.getHtml(url,headers,cookies)
         contens = []
         for item in etree.HTML(str(self.html)).xpath(X_path):
             contens.append(str(item).strip())
@@ -69,7 +69,7 @@ class xPathTexts(object):
 if __name__ == "__main__":
     url = "http://www.sohu.com/a/304311876_123753"
     X_path= "//a//@href"
-    header = {
+    headers = {
         'Connection': 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     #             <li data-id="" data-tag-id="78040" ><a href="//search.sohu.com/?keyword=股票&queryType=outside">股票</a></li>
     #             <li data-id="" data-tag-id="78042" ><a href="//search.sohu.com/?keyword=世界杯&queryType=outside">世界杯</a></li>
     #         </ul>'''
-    contens = xpt.get_contents(url=url ,X_path=X_path,header=header)
+    contens = xpt.get_contents(url=url ,X_path=X_path,headers=headers)
     import requests
     for item in contens:
         print(item)

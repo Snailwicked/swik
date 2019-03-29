@@ -49,11 +49,6 @@ class mysqlClient():
 
 
     def close(self):
-         try:
-             if self.cursor is not None:
-                 self.cursor.close()
-                 self.conn.close()
-         finally:
-             if self.cursor is not None:
-                 self.cursor.close()
-                 self.conn.close()
+        self.cursor.close()
+        self.conn.close()
+
