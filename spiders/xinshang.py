@@ -1,7 +1,9 @@
 from utils.spiderutils.xpathtexts import xPathTexts
 from utils.baseutils.headers import headers
 from urllib.parse import urljoin
+import asyncio
 
+import uuid
 import time
 
 cookies = {
@@ -15,6 +17,28 @@ cookies = {
     'downloadLayerState': '1',
     'showLoginPop': '1',
     'Hm_lpvt_0ad737e4b4ab167a30f27d43256ff3c8': str(int(time.time()))}
+
+class xinShangData():
+    def __init__(self):
+        self.uuid = ''
+        self.url = ''
+        self.title = ''
+        self.state = ''
+        self.sale_price = ''
+        self.discount = ''
+        self.price_font = ''
+        self.brand = ''
+        self.type = ''
+        self.human = ''
+        self.imgs = ''
+
+    def __str__(self):
+        return "'uuid':'{}','url':'{}','title':'{}'," \
+               "'state':'{}','sale_price':'{}','discount':'{}'," \
+               "'price_font':'{}','brand':'{}','type':'{}','human':'{}','imgs':{}" \
+            .format(self.uuid,self.url, self.title,
+                    self.state, self.sale_price,self.discount,
+                    self.price_font,self.brand, self.type,self.human,self.imgs)
 
 class baseUrl(xPathTexts):
     def __init__(self):
@@ -34,16 +58,13 @@ class baseUrl(xPathTexts):
                 data.add(url)
         return data
 
-
-
 class parseUrl(baseUrl):
     def __init__(self):
         super(parseUrl, self).__init__()
-
     def get_data(self,url=None,headers=None):
         for itme in  self.getUrls(url=url,headers=headers):
             html = self.getHtml(url=itme,headers=headers,cookies=cookies)
-            data = []
+            xsd = xinShangData()
             X_title = "//h3[@class = 'goods-name']//text()"
             X_sale_price = "//span[@class = 'sale-price']//b//text()"
             X_discount = "//em[@class = 'discount']//text()"
@@ -53,45 +74,81 @@ class parseUrl(baseUrl):
             X_type = "//article[@class = 'argument']//p[3]//a//text()"
             X_human = "//article[@class = 'argument']//p[4]//text()"
             X_imgs = "//div[@class = 'details-middle-img']//img//@src"
+            xsd.uuid = uuid.uuid1()
+            xsd.url=itme
+            try:
+                xsd.title = self.get_contents(html=html, X_path=X_title)[0]
+            except:
+                xsd.title = ""
+            try:
+                xsd.state = self.get_contents(html=html, X_path=X_state)[1]
+            except:
+                xsd.state= ""
+            try:
+                xsd.sale_price = self.get_contents(html=html,X_path=X_sale_price)[0]
+            except:
+                xsd.sale_price = ""
+            try:
+                xsd.discount = self.get_contents(html=html,X_path=X_discount)[0]
+            except:
+                xsd.discount = ""
+            try:
+                xsd.price_font = self.get_contents(html=html,X_path=X_price_font)[0]
+            except:
+                xsd.price_font = ""
+            try:
+                xsd.brand = self.get_contents(html=html, X_path=X_brand)[0]
+            except:
+                xsd.brand = ""
+            try:
+                xsd.type = self.get_contents(html=html, X_path=X_type)[0]
+            except:
+                xsd.type = ""
+            try:
+                xsd.human = self.get_contents(html=html, X_path=X_human)[1]
+            except:
+                xsd.human = ""
+            try:
+                xsd.imgs = self.get_contents(html=html, X_path=X_imgs)
+            except:
+                xsd.imgs = []
+            yield xsd
 
-            title = self.get_contents(html=html,X_path=X_title)
-            state = self.get_contents(html=html,X_path=X_state)
-            sale_price = self.get_contents(html=html,X_path=X_sale_price)
-            discount = self.get_contents(html=html,X_path=X_discount)
-            price_font = self.get_contents(html=html,X_path=X_price_font)
-            brand = self.get_contents(html=html,X_path=X_brand)
-            type = self.get_contents(html=html,X_path=X_type)
-            human = self.get_contents(html=html,X_path=X_human)
-            imgs= self.get_contents(html=html,X_path=X_imgs)
-            data.append(itme)
-            data.append(title[0])
-            data.append(state[1])
-            data.append(sale_price[0])
-            try:
-                data.append(price_font[0])
-            except:
-                data.append("")
-            try:
-                data.append(discount[0])
-            except:
-                data.append("")
-            try:
-                data.append(type[0])
-            except:
-                data.append("")
-            try:
-                data.append(brand[0])
-            except:
-                data.append("")
-            data.append(human[1])
-            data.append(imgs)
-            yield data
+
+
+
+
+
+
+import threading
+import time
+
+
+class myThread(threading.Thread):
+    def __init__(self, sort):
+        threading.Thread.__init__(self)
+        self.sort = sort
+
+    def run(self):  # 把要执行的代码写到run函数里面 线程在创建后会直接运行run函数
+        self.function(self.sort)
+
+    def function(self,sort):
+        for i in range(1, 5):
+            url = "http://91xinshang.com/{}/n{}/".format(sort, i)
+            baseurl = parseUrl()
+            for item in baseurl.get_data(url=url, headers=headers):
+                print(item)
+
+
+# 创建新线程
+
 
 if __name__ == '__main__':
     classification = ["bag","shoes","watch","yifu","shoushi"]
-    for i in range(1,100):
-        url = "http://91xinshang.com/bag/n{}/".format(i)
-        baseurl = parseUrl()
-        for item in  baseurl.get_data(url=url,headers=headers):
-            print(item)
 
+    thread1 = myThread("bag")
+    thread2 = myThread("shoes")
+    thread3 = myThread("yifu")
+    thread1.start()
+    thread2.start()
+    thread3.start()
