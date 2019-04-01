@@ -118,7 +118,12 @@ class parseUrl(baseUrl):
 
 
 
-
+def function(sort):
+    for i in range(1, 5):
+        url = "http://91xinshang.com/{}/n{}/".format(sort, i)
+        baseurl = parseUrl()
+        for item in baseurl.get_data(url=url, headers=headers):
+            print(item)
 
 import threading
 import time
