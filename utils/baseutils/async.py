@@ -19,29 +19,27 @@ class ASymain():
                     bianma = ""
                 if bianma != "":
                     self.charset = bianma.lower()
-                print(self.charset)
                 response.encoding = self.charset
                 try:
-                    return await response.text()
+                    return (url ,await response.text())
                 except:
-                    print("pass")
+                    print("解析页面错误")
     def run(self,urls):
         for url in urls:
+            tasks = []
             task = asyncio.ensure_future(self.getHTML(url))
-            self.tasks.append(task)
-        yield self.loop.run_until_complete(asyncio.gather(*self.tasks))
+            tasks.append(task)
+            yield self.loop.run_until_complete(asyncio.gather(*tasks))
 
     def start(self,urls):
         self.loop = asyncio.get_event_loop()
         for item in self.run(urls):
-            print(item)
-
-
-
+            yield item[0]
 
 
 if __name__ == '__main__':
-    urls = ["http://news.sohu.com/","",""]
+    urls = ["http://news.sohu.com/","https://news.sina.com.cn/","http://news.ifeng.com/"]
 
     am =ASymain()
-    am.start(urls)
+    for item in am.start(urls):
+        print(item)
