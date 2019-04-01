@@ -3,6 +3,7 @@ import time
 from spiders.xinshang import function
 
 class oneThread(threading.Thread):
+
     def __init__(self, fuction,parameters):
         threading.Thread.__init__(self,)
         self.fuction = fuction
@@ -19,11 +20,12 @@ class Crawlers():
 
     def crawler(self,fuction,parameters):
         crawler = oneThread(fuction,parameters)
+        crawler.start()
         self.crawlers.add(crawler)
 
-    def start(self):
+    def join(self):
         for item in self.crawlers:
-            item.start()
+            item.join()
 
 
 
@@ -34,4 +36,4 @@ if __name__ == "__main__":
     classification = ["bag", "shoes", "watch", "yifu", "shoushi"]
     for item in classification :
         runner.crawler(function,item)
-    runner.start()
+    runner.join()
