@@ -1,18 +1,4 @@
 """A simple web crawler."""
-
-# TODO:
-# - More organized logging (with task ID or URL?).
-# - Use logging module for Logger.
-# - KeyboardInterrupt in HTML parsing may hang or report unretrieved error.
-# - Support gzip encoding.
-# - Close connection if HTTP/1.0 response.
-# - Add timeouts.  (E.g. when switching networks, all seems to hang.)
-# - Add arguments to specify TLS settings (e.g. cert/key files).
-# - Skip reading large non-text/html files?
-# - Use ETag and If-Modified-Since?
-# - Handle out of file descriptors directly?  (How?)
-
-import argparse
 import asyncio
 import asyncio.locks
 import cgi
@@ -22,33 +8,19 @@ import sys
 import time
 import urllib.parse
 
-
 class Logger:
-
     def __init__(self, level):
         self.level = level
-
     def _log(self, n, args):
         if self.level >= n:
             print(*args, file=sys.stderr, flush=True)
-
     def log(self, n, *args):
         self._log(n, args)
-
     def __call__(self, n, *args):
         self._log(n, args)
 
 
 class ConnectionPool:
-    """A connection pool.
-    To open a connection, use reserve().  To recycle it, use unreserve().
-    The pool is mostly just a mapping from (host, port, ssl) tuples to
-    lists of Connections.  The currently active connections are *not*
-    in the data structure; get_connection() takes the connection out,
-    and recycle_connection() puts it back in.  To recycle a
-    connection, call conn.close(recycle=True).
-    There are limits to both the overall pool and the per-key pool.
-    """
 
     def __init__(self, log, max_pool=10, max_tasks=5):
         self.log = log
@@ -59,7 +31,7 @@ class ConnectionPool:
         self.queue = []  # [Connection, ...]
 
     def close(self):
-        """Close all connections available for reuse."""
+
         for conns in self.connections.values():
             for conn in conns:
                 conn.close()
@@ -78,7 +50,6 @@ class ConnectionPool:
         self.log(1, '* %s resolves to %s' %
                     (host, ', '.join(ip[4][0] for ip in ipaddrs)))
 
-        # Look for a reusable connection.
         for _, _, _, _, (h, p, *_) in ipaddrs:
             key = h, p, ssl
             conn = None
@@ -103,9 +74,7 @@ class ConnectionPool:
         return conn
 
     def recycle_connection(self, conn):
-        """Make a connection available for reuse.
-        This also prunes the pool if it exceeds the size limits.
-        """
+
         if conn.stale():
             conn.close()
             return
@@ -118,9 +87,6 @@ class ConnectionPool:
         if len(conns) <= self.max_tasks and len(self.queue) <= self.max_pool:
             return
 
-        # Prune the queue.
-
-        # Close stale connections for this key first.
         stale = [conn for conn in conns if conn.stale()]
         if stale:
             for conn in stale:
@@ -206,10 +172,7 @@ class Connection:
 
 
 class Request:
-    """HTTP request.
-    Use connect() to open a connection; send_request() to send the
-    request; get_response() to receive the response headers.
-    """
+
 
     def __init__(self, log, url, pool):
         self.log = log
@@ -284,11 +247,6 @@ class Request:
 
 
 class Response:
-    """HTTP response.
-    Call read_headers() to receive the request headers.  Then check
-    the status attribute and call get_header() to inspect the headers.
-    Finally call read() to receive the body.
-    """
 
     def __init__(self, log, reader):
         self.log = log
@@ -382,15 +340,6 @@ class Response:
 
 
 class Fetcher:
-    """Logic and state for one URL.
-    When found in crawler.busy, this represents a URL to be fetched or
-    in the process of being fetched; when found in crawler.done, this
-    holds the results from fetching it.
-    This is usually associated with a task.  This references the
-    crawler for the connection pool and to add more URLs to its todo
-    list.
-    Call fetch() to do the fetching, then report() to print the results.
-    """
 
     def __init__(self, log, url, crawler, max_redirect=10, max_tries=4):
         self.log = log
@@ -417,10 +366,6 @@ class Fetcher:
 
     @asyncio.coroutine
     def fetch(self):
-        """Attempt to fetch the contents of the URL.
-        If successful, and the data is HTML, extract further links and
-        add them to the crawler.  Redirects are also added back there.
-        """
         while self.tries < self.max_tries:
             self.tries += 1
             self.request = None
@@ -541,12 +486,6 @@ class Stats:
 
 
 class Crawler:
-    """Crawl a set of URLs.
-    This manages three disjoint sets of URLs (todo, busy, done).  The
-    data structures actually store dicts -- the values in todo give
-    the redirect limit, while the values in busy and done are Fetcher
-    instances.
-    """
     def __init__(self, log,
                  roots, exclude=None, strict=True,  # What to crawl.
                  max_redirect=10, max_tries=4,  # Per-url limits.
@@ -598,11 +537,7 @@ class Crawler:
         self.pool.close()
 
     def host_okay(self, host):
-        """Check if a host should be crawled.
-        A literal match (after lowercasing) is always good.  For hosts
-        that don't look like IP addresses, some approximate matches
-        are okay depending on the strict flag.
-        """
+
         host = host.lower()
         if host in self.root_domains:
             return True
@@ -614,9 +549,7 @@ class Crawler:
             return self._host_okay_lenient(host)
 
     def _host_okay_strictish(self, host):
-        """Check if a host should be crawled, strict-ish version.
-        This checks for equality modulo an initial 'www.' component.
-         """
+
         if host.startswith('www.'):
             if host[4:] in self.root_domains:
                 return True
@@ -626,9 +559,7 @@ class Crawler:
         return False
 
     def _host_okay_lenient(self, host):
-        """Check if a host should be crawled, lenient version.
-        This compares the last two components of the host.
-        """
+
         parts = host.split('.')
         if len(parts) > 2:
             host = '.'.join(parts[-2:])
@@ -726,10 +657,6 @@ class Crawler:
         print('Done:', len(self.done), file=file)
         print('Date:', time.ctime(), 'local time', file=file)
 
-
-
-
-
 class CrawlerRuning:
     def __init__(self):
         self.log = Logger(0)
@@ -746,10 +673,8 @@ class CrawlerRuning:
             crawler.report()
             crawler.close()
             self.loop.close()
-
 if __name__ == '__main__':
     roots = {"http://news.sohu.com/", "https://news.sina.com.cn/", "http://news.ifeng.com/"}
-
     runner = CrawlerRuning()
     result = runner.crawl(roots)
     for item in result:
