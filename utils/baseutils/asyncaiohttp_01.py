@@ -2,6 +2,23 @@ import asyncio
 import re
 import urllib.parse
 import aiohttp
+import queue
+
+
+class queueUtil:
+    def __init__(self):
+        self.queue = queue.Queue()
+
+    def put(self,data):
+        self.queue.put(data)
+    def get(self):
+        while not self.queue.empty():
+            if self.queue.qsize()<10:
+                import time
+                time.sleep(5)
+            yield self.queue.get()
+
+
 
 class Crawler:
     def __init__(self, rooturl, loop, maxtasks=100):
@@ -61,10 +78,23 @@ class Crawler:
         else:
             if (resp.status == 200 and
                     ('text/html' in resp.headers.get('content-type'))):
-                data = (yield from resp.read()).decode('utf-8', 'replace')
+                html = (yield from resp.read())
+                data = html.decode('utf-8', 'replace')
+
                 urls = re.findall(r'(?i)href=["\']?([^\s"\'<>]+)', data)
-                asyncio.ensure_future(self.addhtmls(url,data), loop=self.loop)
                 asyncio.Task(self.addurls([(u, url) for u in urls]))
+                try:
+                    reg = '<meta .*(http-equiv="?Content-Type"?.*)?charset="?([a-zA-Z0-9_-]+)"?'
+                    charset = re.findall(reg,data)[0][1]
+                except:
+                    charset = ""
+                if charset != "":
+                    charset = charset.lower()
+                else:
+                    charset = "utf-8"
+                data = html.decode(charset, 'replace')
+
+                asyncio.ensure_future(self.addhtmls(url,data), loop=self.loop)
 
             resp.close()
             self.done[url] = True
@@ -88,6 +118,9 @@ def main():
     print('tasks:', len(c.tasks))
 if __name__ == '__main__':
     main()
+
+
+
 
 
 
