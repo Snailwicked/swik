@@ -34,7 +34,7 @@ class ASymain():
     def start(self,urls):
         self.loop = asyncio.get_event_loop()
         for item in self.run(urls):
-            yield item[0]
+            yield from item
 
 
 if __name__ == '__main__':
