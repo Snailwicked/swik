@@ -21,16 +21,15 @@ class queueUtil:
 
 
 class Crawler:
-    def __init__(self, rooturl, loop, maxtasks=100):
-        self.rooturl = rooturl
-        self.loop = loop
+    def __init__(self, maxtasks=100):
+        self.rooturl = None
+        self.loop = None
         self.todo = set()
         self.busy = set()
         self.done = {}
         self.tasks = set()
-        self.htmls = set()
-        self.sem = asyncio.Semaphore(maxtasks, loop=loop)
-        self.session = aiohttp.ClientSession(loop=loop)
+        self.sem = asyncio.Semaphore(maxtasks, loop=self.loop)
+        self.session = aiohttp.ClientSession(loop=self.loop)
 
     @asyncio.coroutine
     def run(self):
@@ -60,9 +59,8 @@ class Crawler:
                 task.add_done_callback(self.tasks.remove)
                 self.tasks.add(task)
     @asyncio.coroutine
-    def addhtmls(self, url ,html):
-        print(len(self.htmls),'data:', (url ,html))
-        self.htmls.add((url ,html))
+    def response(self, item):
+        pass
 
     @asyncio.coroutine
     def process(self, url):
@@ -94,7 +92,7 @@ class Crawler:
                     charset = "utf-8"
                 data = html.decode(charset, 'replace')
 
-                asyncio.ensure_future(self.addhtmls(url,data), loop=self.loop)
+                asyncio.ensure_future(self.response((url,data)), loop=self.loop)
 
             resp.close()
             self.done[url] = True
@@ -103,22 +101,35 @@ class Crawler:
               'still pending, todo', len(self.todo))
 
 
-def main():
-    loop = asyncio.get_event_loop()
+class Crawleruning(Crawler):
 
-    c = Crawler("http://news.sohu.com/", loop)
-    asyncio.ensure_future(c.run(), loop=loop)
-    try:
-        loop.run_forever()
-    finally:
+    def __init__(self):
+        super(Crawleruning, self).__init__()
+
+    @asyncio.coroutine
+    def response(self, item):
+        print('data:DSADA', item)
+
+
+    def main(self,loop):
+        self.rooturl = "http://news.sohu.com/"
+        self.loop = loop
+
+        tasks = asyncio.gather(  # gather() 可以将一些 future 和协程封装成一个 future
+            asyncio.ensure_future(self.run(), loop=loop),# ensure_future() 可以将一个协程封装成一个 Task
+        )
+        return tasks
+
+    def start(self):
+        loop = asyncio.get_event_loop()
+
+        loop.run_until_complete(self.main(loop))
         loop.close()
-    print('todo:', len(c.todo))
-    print('busy:', len(c.busy))
-    print('done:', len(c.done), '; ok:', sum(c.done.values()))
-    print('tasks:', len(c.tasks))
-if __name__ == '__main__':
-    main()
 
+
+if __name__ == '__main__':
+    crawler = Crawleruning()
+    crawler.start()
 
 
 
