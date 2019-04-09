@@ -1,6 +1,7 @@
 from utils.spiderutils.xpathtexts import xPathTexts
 from utils.baseutils.headers import headers
 from urllib.parse import urljoin
+from dbs.mongodbclient import MongodbClient
 import asyncio
 
 import uuid
@@ -20,25 +21,26 @@ cookies = {
 
 class xinShangData():
     def __init__(self):
-        self.uuid = ''
-        self.url = ''
-        self.title = ''
-        self.state = ''
-        self.sale_price = ''
-        self.discount = ''
-        self.price_font = ''
-        self.brand = ''
-        self.type = ''
-        self.human = ''
-        self.imgs = ''
+        self.uuid = ''        #id
+        self.url = ''         #网址
+        self.title = ''       #标题
+        self.state = ''       #新旧程度
+        self.sale_price = ''  #售价
+        self.discount = ''    #折扣
+        self.price_font = ''  #原价
+        self.brand = ''       #品牌
+        self.type = ''        #商品类型
+        self.human = ''       #适用人群
+        self.addtime = ''     #采集时间
+        self.imgs = ''        #图片集合
 
     def __str__(self):
         return "'uuid':'{}','url':'{}','title':'{}'," \
                "'state':'{}','sale_price':'{}','discount':'{}'," \
-               "'price_font':'{}','brand':'{}','type':'{}','human':'{}','imgs':{}" \
+               "'price_font':'{}','brand':'{}','type':'{}','human':'{}','addtime':'{}','imgs':{}" \
             .format(self.uuid,self.url, self.title,
                     self.state, self.sale_price,self.discount,
-                    self.price_font,self.brand, self.type,self.human,self.imgs)
+                    self.price_font,self.brand, self.type,self.human,self.addtime,self.imgs)
 
 class baseUrl(xPathTexts):
     def __init__(self):
@@ -74,8 +76,10 @@ class parseUrl(baseUrl):
             X_type = "//article[@class = 'argument']//p[3]//a//text()"
             X_human = "//article[@class = 'argument']//p[4]//text()"
             X_imgs = "//div[@class = 'details-middle-img']//img//@src"
-            xsd.uuid = uuid.uuid1()
+            xsd.uuid = str(uuid.uuid1())
             xsd.url=itme
+            import datetime
+            xsd.addtime = str(datetime.datetime.now())
             try:
                 xsd.title = self.get_contents(html=html, X_path=X_title)[0]
             except:
@@ -115,34 +119,37 @@ class parseUrl(baseUrl):
             yield xsd
 
 
-
+import json
 
 
 def function(sort):
-    for i in range(1, 5):
+    for i in range(1, 100):
         url = "http://91xinshang.com/{}/n{}/".format(sort, i)
         baseurl = parseUrl()
         for item in baseurl.get_data(url=url, headers=headers):
             print(item)
 
 import threading
-import time
 
 
 class myThread(threading.Thread):
     def __init__(self, sort):
         threading.Thread.__init__(self)
+        self.momgodb = MongodbClient(mongodb_conf ={'host': '192.168.30.66', 'port': 27017, 'db_name': 'xs_spider', 'table_name': 'xs_data'})
         self.sort = sort
 
     def run(self):  # 把要执行的代码写到run函数里面 线程在创建后会直接运行run函数
         self.function(self.sort)
 
     def function(self,sort):
-        for i in range(1, 5):
+        for i in range(1, 10):
             url = "http://91xinshang.com/{}/n{}/".format(sort, i)
             baseurl = parseUrl()
             for item in baseurl.get_data(url=url, headers=headers):
+                item= "{" + str(item) + "}"
                 print(item)
+                self.momgodb.insert_one(json.loads(str(item).replace("'",'"')))
+        self.momgodb.close()
 
 
 # 创建新线程
@@ -154,6 +161,12 @@ if __name__ == '__main__':
     thread1 = myThread("bag")
     thread2 = myThread("shoes")
     thread3 = myThread("yifu")
+    thread4 = myThread("watch")
+    thread5 = myThread("shoushi")
+
+
     thread1.start()
     thread2.start()
     thread3.start()
+    thread4.start()
+    thread5.start()

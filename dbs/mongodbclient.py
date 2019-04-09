@@ -11,8 +11,9 @@ import json
 
 
 class MongodbClient(object):
-    def __init__(self):
-        self.mongodb_conf = {'host': '101.132.113.50', 'port': 27017, 'db_name': 'spider', 'table_name': 'test'}
+    def __init__(self,mongodb_conf =None):
+        # mongodb_conf={'host': '101.132.113.50', 'port': 27017, 'db_name': 'spider', 'table_name': 'test'}
+        self.mongodb_conf = mongodb_conf
         self.client = MongoClient(host=self.mongodb_conf['host'], port=self.mongodb_conf['port'])
         self.db = self.client[self.mongodb_conf['db_name']]
         self.collection = self.db[self.mongodb_conf['table_name']]
@@ -79,7 +80,8 @@ class MongodbClient(object):
         return True
 
 if __name__ == "__main__":
-    db = MongodbClient()
+    db = MongodbClient(mongodb_conf ={'host': '192.168.30.66', 'port': 27017, 'db_name': 'xs_spider', 'table_name': 'xs_data'})
+    # data = {'uuid':'8ca3784a-5a71-11e9-b147-005056c00008','url':'http://91xinshang.com/xianzhi/U0RjNXY2Um9aZ1k9.html','title':'Tiffany & Co. 蒂芙尼罗马数字项圈项链','state':'9成新','sale_price':'997','discount':'2折','price_font':'原价: ¥4999','brand':'Tiffany & Co.','type':'首饰配饰/项链/吊坠','human':'女士','addtime':'','imgs':['http://img.91sph.com/goods//20190330//5d5d86ff3cf647d68ddd0e153796106d_s2.jpg', 'http://img.91sph.com/goods//20190330//7c292e0cc7ee4d57b9edc33fd78dce60_s2.jpg', 'http://img.91sph.com/goods//20190330//f310eef3d8254f24b5caa4ed248a1522_s2.jpg', 'http://img.91sph.com/goods//20190330//f9ef4810d30d4954afc61f889f436321_s2.jpg']}
     # main_url ,re_url= db.select_one_and_delete()
     # print(main_url,re_url)
     # 更新操作
@@ -91,8 +93,11 @@ if __name__ == "__main__":
     #     db.update_one(condition,result)
     #     print(result)
     # print()
+    # db.insert_one(data)
+    i = 0
     for result in db.select_all():
-        print(result)
+        i = i +1
+        print(i,result)
         # re_url =result.get("re_url")
         # re =json.loads(re_url)
         # print(re.get('re0'))
