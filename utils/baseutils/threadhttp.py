@@ -12,7 +12,6 @@ class oneThread(threading.Thread):
     def run(self):
         self.fuction(self.parameters)
 
-
 class Crawlers():
 
     def __init__(self):

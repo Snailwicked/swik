@@ -2,7 +2,6 @@ from utils.spiderutils.xpathtexts import xPathTexts
 from utils.baseutils.headers import headers
 from urllib.parse import urljoin
 from dbs.mongodbclient import MongodbClient
-import asyncio
 
 import uuid
 import time
@@ -135,6 +134,7 @@ import threading
 class myThread(threading.Thread):
     def __init__(self, sort):
         threading.Thread.__init__(self)
+        self.__flag = threading.Event()
         self.momgodb = MongodbClient(mongodb_conf ={'host': '192.168.30.66', 'port': 27017, 'db_name': 'xs_spider', 'table_name': 'xs_data'})
         self.sort = sort
 
@@ -151,12 +151,24 @@ class myThread(threading.Thread):
                 self.momgodb.insert_one(json.loads(str(item).replace("'",'"')))
         self.momgodb.close()
 
+    def test(self):
+        cursors = self.momgodb.collection.parallel_scan(5)
+        threads = [threading.Thread(target=self.run(), args=(cursor,))
+                   for cursor in cursors]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
 
 # 创建新线程
 
 
 if __name__ == '__main__':
     classification = ["bag","shoes","watch","yifu","shoushi"]
+    #
+
+
+
 
     thread1 = myThread("bag")
     thread2 = myThread("shoes")
@@ -170,3 +182,4 @@ if __name__ == '__main__':
     thread3.start()
     thread4.start()
     thread5.start()
+
