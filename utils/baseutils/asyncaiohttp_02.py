@@ -87,7 +87,7 @@ class Crawler:
                     task.add_done_callback(self.tasks.remove)
                     self.tasks.add(task)
                 if len(self.tasks)==0:
-                    self.loop.close()
+                    break
             except:
                 pass
 
