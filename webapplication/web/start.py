@@ -1,9 +1,9 @@
 from flask import Flask,request,jsonify
 from flask_cors import *
-from spider.service.select import Select
-from spider.service.add import Add
-from spider.service.delete import Delete
-from spider.service.update import Update
+from webapplication.service.select import Select
+from webapplication.service.add import Add
+from webapplication.service.delete import Delete
+from webapplication.service.update import Update
 
 import json
 

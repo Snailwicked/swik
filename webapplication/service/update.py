@@ -1,4 +1,4 @@
-from db.client.sqliteclient import SqliteClient
+from dbs.sqliteclient import SqliteClient
 import uuid
 
 import datetime
