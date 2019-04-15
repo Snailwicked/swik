@@ -86,7 +86,7 @@ class Crawler:
                     task.add_done_callback(lambda t: self.sem.release())
                     task.add_done_callback(self.tasks.remove)
                     self.tasks.add(task)
-                if len(self.tasks)==0:
+                if item == "" and len(self.tasks)==0 and len(self.busy)== 0  and len(self.todo)==0:
                     break
             except:
                 pass
