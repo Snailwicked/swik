@@ -1,0 +1,12 @@
+requests>=2.21.0
+redis>=3.2.1
+pymongo>=3.7.2
+lxml>=4.3.3
+Flask>=1.0.2
+Flask-Cors>=3.0.7
+bitarray>=0.8.3
+aiohttp>=3.5.4
+PyMySql>=0.9.3
+scikit-learn>=0.20.3
+jieba>=0.39
+networkx>=2.3
