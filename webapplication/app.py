@@ -24,6 +24,14 @@ def show_todo_list():
     if request.method == 'GET':
         webinfos = WebInfo.query.all()
         return render_template('index.html', webinfos=webinfos, form=form)
+    if form.validate_on_submit():
+        webinfo = WebInfo(form.url.data, form.web_name.data, form.agent.data, form.status.data, form.sort.data)
+        db.session.add(webinfo)
+        db.session.commit()
+        flash('您已成功添加')
+    else:
+        flash(form.errors)
+    return redirect(url_for('show_todo_list'))
 
 
 @app.route('/login', methods=['GET', 'POST'])

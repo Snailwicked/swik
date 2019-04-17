@@ -1,6 +1,7 @@
 from .ext import db
 from flask_login import UserMixin
 import datetime
+import hashlib
 
 
 class WebInfo(db.Model):
@@ -14,9 +15,20 @@ class WebInfo(db.Model):
     agent = db.Column(db.Integer, nullable=True)  # 0国内  1国外
     sort = db.Column(db.Integer, nullable=True)  # 1 通用型 2 登录型 3 特殊型
 
-    def __init__(self, url):
+    __mapper_args__ = {
+        "order_by": add_time.desc()
+    }
+
+    def __init__(self, url, web_name, status, agent, sort):
+        hl = hashlib.md5()
         self.url = url
+        hl.update(url.encode("utf8"))
+        self.id = hl.hexdigest()
         self.add_time = datetime.datetime.now()
+        self.web_name = web_name
+        self.status = status
+        self.agent = agent
+        self.sort = sort
 
 
 class User(UserMixin, db.Model):

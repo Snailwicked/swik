@@ -3,40 +3,9 @@
 
 {% block page_content %}
 
-<table class="table table-hover">
-    <thead>
-        <th class="active">No</th>
-        <th class="active">描述</th>
-        <th class="active">是否完成</th>
-        <th class="active">创建时间</th>
-        <th class='active'>操作</th>
-    </thead>
-    <tbody>
-        {% for todo in todolists %}
-
-            <!-- tr -->
-            {% if todo.status %} <tr class="success">
-            {% else %} <tr class="info"> {% endif %}
-                <td>{{ loop.index }}</td>
-                <td>{{ todo.title }}</td>
-                <td>{{ todo.status }}</td>
-                <td>{{ todo.create_time }}</td>
-                <td>
-                    {% if todo.status %}
-                    <a href="{{ url_for('delete_todo_list', id=todo.id) }}" class="btn btn-danger" role ="button">删除</a>
-                    {% else %}
-                    <a href="{{ url_for('change_todo_list', id=todo.id) }}" class="btn btn-success" role ="button">修改</a>
-                    {% endif %}
-                </td>
-
-            </tr>
-        {% endfor %}
-
-    </tbody>
-</table>
-
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> ADD </button>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> 批量删除 </button>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> 添加 </button>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -44,7 +13,7 @@
 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel" align="center">add new todo list</h4>
+        <h4 class="modal-title" id="myModalLabel" align="center">新增网址</h4>
       </div>
 
       <div class="modal-body">
@@ -55,6 +24,38 @@
 
     </div> </div>
 </div>
+
+
+
+<table class="table table-hover">
+    <thead>
+         <th ><input type="checkbox"></th>
+        <th class="active">序号</th>
+        <th class="active">网址</th>
+        <th class="active">网站名称</th>
+        <th class="active">添加时间</th>
+        <th class="active">爬虫状态</th>
+        <th class="active">操作</th>
+    </thead>
+    <tbody>
+        {% for webinfo in webinfos %}
+
+            <!-- tr -->
+            {% if webinfo %} <tr class="success">
+            {% else %} <tr class="info"> {% endif %}
+                <td><input type="checkbox"></td>
+                <td>{{ loop.index }}</td>
+                <td>{{ webinfo.url }}</td>
+                <td>{{ webinfo.web_name }}</td>
+                <td>{{ webinfo.add_time }}</td>
+                <td>{{ webinfo.status }}</td>
+                <td><button type="button" class="ant-btn look"><span>删 除</span></button></td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
 
 
 {% endblock %}
