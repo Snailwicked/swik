@@ -8,7 +8,6 @@ from webapplication.models import WebInfo, User
 
 SECRET_KEY = 'This is my key'
 app = Flask(__name__)
-
 bootstrap = Bootstrap(app)
 app.secret_key = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:BlueSnail123!@101.132.113.50/spider_manage"
@@ -24,7 +23,7 @@ def show_todo_list():
     form = TodoListForm()
     if request.method == 'GET':
         webinfos = WebInfo.query.all()
-        return render_template('index', webinfos=webinfos, form=form)
+        return render_template('index.html', webinfos=webinfos, form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])

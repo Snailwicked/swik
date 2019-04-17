@@ -1,10 +1,10 @@
 {% extends "bootstrap/base.html" %}
 
-{% block title %}My TODO List{% endblock %}
+{% block title %}爬虫后台管理{% endblock %}
 
 {% block navbar %}
     <nav class="navbar navbar-inverse container">
-        <div class="navbar-header"> <a class="navbar-brand" href="{{ url_for('show_todo_list') }}">TODO</a> </div>
+        <div class="navbar-header"> <a class="navbar-brand" href="{{ url_for('show_todo_list') }}">爬虫后台管理</a> </div>
         <!-- logout links -->
         {% if current_user.is_authenticated %}
             <ul class="nav navbar-nav pull-right">
