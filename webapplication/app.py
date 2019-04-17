@@ -2,9 +2,9 @@ from __future__ import unicode_literals
 from flask import (Flask, render_template, redirect, url_for, request, flash)
 from flask_bootstrap import Bootstrap
 from flask_login import login_required, login_user, logout_user, current_user
-from .forms import TodoListForm, LoginForm
-from .ext import db, login_manager
-from .models import WebInfo, User
+from webapplication.forms import TodoListForm, LoginForm
+from webapplication.ext import db, login_manager
+from webapplication.models import WebInfo, User
 
 
 SECRET_KEY = 'This is my key'

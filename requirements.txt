@@ -10,3 +10,6 @@ PyMySql>=0.9.3
 scikit-learn>=0.20.3
 jieba>=0.39
 networkx>=2.3
+Flask-Bootstrap>=3.3.7.1
+Flask-WTF>=0.14.2
+mysqlclient>=1.4.2
