@@ -51,4 +51,59 @@ class mysqlClient():
     def close(self):
         self.cursor.close()
         self.conn.close()
+import hashlib
+import datetime
+class test:
+    def __init__(self):
+        self.hash = hashlib.md5()
+        self.service =mysqlClient(conf ={'host': '101.132.113.50', 'port': 3306,'user': 'root','password': 'BlueSnail123!', 'db_name': 'spider_manage', 'table_name': 'webinfo'})
+
+    def start(self):
+        sql = 'insert into webinfo (id,url,add_time,agent,status,web_name,sort,info) values (%s,%s,%s,%s,%s,%s,%s,%s)'
+        # item = ('467f8ab6988134ffb76a24dbeeea0b98', 'https://finance.sina.com.cn/', '2019-04-17 14:23:04.906493', 0, 0, '新浪', 1, '')
+        #
+        # self.service.insert_data(sql, item)
+
+
+
+        datas = []
+
+        data = [['人民网', 'http://finance.people.com.cn/'], ['中国日报', 'http://caijing.chinadaily.com.cn/'],
+                ['CCTV', 'http://jingji.cctv.com/'], ['中华网', 'https://finance.china.com/'],
+                ['中国人民广播电台', 'http://finance.cnr.cn/'], ['环球网', 'http://finance.huanqiu.com/'],
+                ['光明网', 'http://economy.gmw.cn/'], ['参考消息', 'http://finance.cankaoxiaoxi.com/'],
+                ['北方网', 'http://economy.enorth.com.cn/'], ['新浪', 'https://finance.sina.com.cn/'],
+                ['中国经济网', 'http://www.ce.cn/'], ['凤凰网', 'http://finance.ifeng.com/'],
+                ['西部网', 'http://finance.cnwest.com/'], ['网易新闻', 'http://money.163.com/'],
+                ['中国新闻网', 'http://finance.chinanews.com/']]
+
+        for item in data:
+            cell = []
+            self.hash.update(bytes(str(item[1]), encoding='utf-8'))
+            cell.append(self.hash.hexdigest())
+            cell.append(item[1])
+            cell.append(str(datetime.datetime.now()))
+            cell.append(0)
+            cell.append(0)
+            cell.append(item[0])
+            cell.append(1)
+            cell.append("")
+            print(tuple(cell))
+            datas.append(tuple(cell))
+        for itme in datas:
+            self.service.insert_data(sql, itme)
+
+
+if __name__ =="__main__":
+    t = test()
+    t.start()
+    print(type(datetime.datetime.now()))
+
+
+
+
+
+
+
+
 
