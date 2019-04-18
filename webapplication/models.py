@@ -15,10 +15,6 @@ class WebInfo(db.Model):
     agent = db.Column(db.Integer, nullable=True)  # 0国内  1国外
     sort = db.Column(db.Integer, nullable=True)  # 1 通用型 2 登录型 3 特殊型
 
-    __mapper_args__ = {
-        "order_by": add_time.desc()
-    }
-
     def __init__(self, url, web_name, status, agent, sort):
         hl = hashlib.md5()
         self.url = url

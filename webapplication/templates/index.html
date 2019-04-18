@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% import "_macros.html" as macros %}
 {% block page_content %}
 
+
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> 批量删除 </button>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" > 批量删除 </button>
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> 添加 </button>
 
 <!-- Modal -->
@@ -29,12 +30,14 @@
 
 <table class="table table-hover">
     <thead>
-         <th ><input type="checkbox"></th>
+        <th ><input type="checkbox"></th>
         <th class="active">序号</th>
         <th class="active">网址</th>
         <th class="active">网站名称</th>
         <th class="active">添加时间</th>
-        <th class="active">爬虫状态</th>
+        <th class="active">采集状态</th>
+        <th class="active">代理情况</th>
+        <th class="active">网站类型</th>
         <th class="active">操作</th>
     </thead>
     <tbody>
@@ -48,14 +51,59 @@
                 <td>{{ webinfo.url }}</td>
                 <td>{{ webinfo.web_name }}</td>
                 <td>{{ webinfo.add_time }}</td>
-                <td>{{ webinfo.status }}</td>
-                <td><button type="button" class="ant-btn look"><span>删 除</span></button></td>
+                <td>{% if webinfo.status == 0 %}
+                        未采集
+                    {% else %}
+                        已采集
+                    {% endif %}
+                </td>
+                <td>{% if webinfo.agent == 0 %}
+                        国内
+                    {% else %}
+                        国外
+                    {% endif %}
+                </td>
+                <td>{% if webinfo.sort == 1 %}
+                        通用型
+                    {% elif webinfo.sort == 2 %}
+                        登录型
+                    {% else %}
+                        特殊性
+                    {% endif %}
+                </td>
+
+                <td><a class='fa fa-lg fa-warning text-red' data-toggle="modal" data-target="#confirm-delete">删除</a></td>
+
+                <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                请确认
+                            </div>
+                            <div class="modal-body">
+                                确认删除 {{ webinfo.web_name }} 吗？
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <form action="" method="POST">
+                                <a class="btn btn-danger btn-ok" href="{{ url_for('delete_todo_list', id=webinfo.id) }}">确认</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </tr>
+
         {% endfor %}
 
     </tbody>
 </table>
 
-
+{%if pagination%}
+    <div class="pagination">
+        {{ macros.pagination_widget(pagination, 'show_todo_list') }}
+    </div>
+{% endif %}
 
 {% endblock %}

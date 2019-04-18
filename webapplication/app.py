@@ -23,15 +23,28 @@ login_manager.login_view = "login"
 def show_todo_list():
     form = TodoListForm()
     if request.method == 'GET':
-        webinfos = WebInfo.query.all()
+        page = request.args.get('page', 1, type=int)
+        pagination = WebInfo.query.order_by(WebInfo.add_time.desc()).paginate(page, per_page=10, error_out=False)
+        webinfos = pagination.items
+        # webinfos = WebInfo.query.all()
         return render_template('index.html', webinfos=webinfos, form=form)
     if form.validate_on_submit():
-        webinfo = WebInfo(form.url.data, form.web_name.data, form.agent.data, form.status.data, form.sort.data)
+        webinfo = WebInfo(form.url.data, form.web_name.data, form.status.data, form.agent.data, form.sort.data)
         db.session.add(webinfo)
         db.session.commit()
         flash('您已成功添加')
     else:
         flash(form.errors)
+    return redirect(url_for('show_todo_list'))
+
+
+@app.route('/delete/<string:id>', methods=['GET', 'POST'])
+@login_required
+def delete_todo_list(id):
+    webinfo = WebInfo.query.filter_by(id=id).first()
+    db.session.delete(webinfo)
+    db.session.commit()
+    flash('您已成功删除')
     return redirect(url_for('show_todo_list'))
 
 
