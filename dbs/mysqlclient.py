@@ -51,6 +51,8 @@ class mysqlClient():
     def close(self):
         self.cursor.close()
         self.conn.close()
+
+
 import hashlib
 import datetime
 class test:
@@ -95,9 +97,39 @@ class test:
 
 
 if __name__ =="__main__":
-    t = test()
-    t.start()
-    print(type(datetime.datetime.now()))
+    from spiders.xinshang import parseUrl
+    import pickle
+    url = 'http://91xinshang.com/bag/n2/'
+    # baseurl = parseUrl()
+    # souhu = pickle.dumps(baseurl)
+    # print(souhu)
+    service = mysqlClient(
+        conf={'host': '101.132.113.50', 'port': 3306, 'user': 'root', 'password': 'BlueSnail123!',
+              'db_name': 'spider_manage', 'table_name': 'spider_task'})
+    #
+    # sql = 'insert into spider_task (uuid,task_job,task_name,create_time,status,creater) values (%s,%s,%s,%s,%s,%s)'
+    # data = ("asdasd",souhu,"wode","dasd",1,"sdasd")
+
+
+
+    sql = "select task_job from spider_task"
+    task_names = service.select_all(sql)
+    souhu = pickle.loads(task_names[0][0])
+    headers = {
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-CN,zh;q=0.9', }
+    for item in souhu.get_data(url=url, headers=headers):
+        print(item)
+
+
+
+
+
+
 
 
 
