@@ -4,6 +4,37 @@
 {% block page_content %}
 
 
+<div class="row">
+    <div class='col-sm-3'>
+        <div class="form-group">
+            <label>选择开始时间：</label>
+            <!--指定 date标记-->
+            <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-sm-3'>
+        <div class="form-group">
+            <label>选择结束时间：</label>
+            <!--指定 date标记-->
+            <div class='input-group date' id='datetimepicker2'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" > 批量删除 </button>
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> 添加 </button>
@@ -25,7 +56,6 @@
 
     </div> </div>
 </div>
-
 
 
 <table class="table table-hover">
@@ -103,3 +133,27 @@
 
 {{ show_pagination(pagination) }}
 {% endblock %}
+
+
+
+<script type="text/javascript">
+    $(function () {
+    var picker1 = $('#datetimepicker1').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: moment.locale('zh-cn'),
+        //minDate: '2016-7-1'
+    });
+    var picker2 = $('#datetimepicker2').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: moment.locale('zh-cn')
+    });
+    //动态设置最小值
+    picker1.on('dp.change', function (e) {
+        picker2.data('DateTimePicker').minDate(e.date);
+    });
+    //动态设置最大值
+    picker2.on('dp.change', function (e) {
+        picker1.data('DateTimePicker').maxDate(e.date);
+    });
+});
+    </script>

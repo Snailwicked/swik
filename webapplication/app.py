@@ -102,8 +102,6 @@ def index():
     return render_template('base.html')
 
 
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter_by(id=int(user_id)).first()
