@@ -13,3 +13,4 @@ networkx>=2.3
 Flask-Bootstrap>=3.3.7.1
 Flask-WTF>=0.14.2
 mysqlclient>=1.4.2
+Flask-nav>=0.6
