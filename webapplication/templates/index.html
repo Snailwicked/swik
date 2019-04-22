@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% import "_macros.html" as macros %}
+{% from '_macros.html' import show_pagination %}
 {% block page_content %}
 
 
@@ -35,6 +35,7 @@
         <th class="active">网址</th>
         <th class="active">网站名称</th>
         <th class="active">添加时间</th>
+        <th class="active">采集结果</th>
         <th class="active">采集状态</th>
         <th class="active">代理情况</th>
         <th class="active">网站类型</th>
@@ -51,6 +52,7 @@
                 <td>{{ webinfo.url }}</td>
                 <td>{{ webinfo.web_name }}</td>
                 <td>{{ webinfo.add_time }}</td>
+                <td> </td>>
                 <td>{% if webinfo.status == 0 %}
                         未采集
                     {% else %}
@@ -96,14 +98,8 @@
             </tr>
 
         {% endfor %}
-
     </tbody>
 </table>
 
-{%if pagination%}
-    <div class="pagination">
-        {{ macros.pagination_widget(pagination, 'show_todo_list') }}
-    </div>
-{% endif %}
-
+{{ show_pagination(pagination) }}
 {% endblock %}
