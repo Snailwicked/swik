@@ -14,6 +14,7 @@ class WebInfo(db.Model):
     status = db.Column(db.Integer, nullable=True, default=0)  # 0说明没有采集  1被采集了
     agent = db.Column(db.Integer, nullable=True)  # 0国内  1国外
     sort = db.Column(db.Integer, nullable=True)  # 1 通用型 2 登录型 3 特殊型
+    total = db.Column(db.Integer, nullable=True)  # 采集总量，明辉mongodb的爬虫配置信息会存进来，读就完事
 
     def __init__(self, url, web_name, status, agent, sort):
         hl = hashlib.md5()
