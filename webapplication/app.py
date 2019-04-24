@@ -8,7 +8,11 @@ from webapplication.models import WebInfo, User, SpiderTask
 from flask_nav import Nav
 from flask_nav.elements import *
 from datetime import datetime
-
+'''
+后台管理的视图函数
+author: 王凯
+datetime: 2019/04/24
+'''
 
 SECRET_KEY = 'This is my key'
 app = Flask(__name__)
