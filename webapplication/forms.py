@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from flask_wtf import FlaskForm
-from wtforms import RadioField, SubmitField, StringField, PasswordField
+from wtforms import RadioField, SubmitField, StringField, PasswordField, DateTimeField
 from wtforms.validators import DataRequired, Length
 
 
@@ -15,6 +15,17 @@ class TodoListForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('用户名', validators=[DataRequired(), Length(1, 24)])
+    username = StringField('账户', validators=[DataRequired(), Length(1, 24)])
     password = PasswordField('密码', validators=[DataRequired(), Length(1, 24)])
     submit = SubmitField('登录')
+
+
+# class SearchForm(FlaskForm):
+#     start_time = DateTimeField('开始时间', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired(), Length(1, 20)])
+#     end_time = DateTimeField('结束时间', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired(), Length(1, 20)])
+#     search_name = StringField('请输入网站名称', validators=[DataRequired(), Length(1, 64)])
+#     submit = SubmitField('搜索')
+
+
+class WaitedTaskForm(FlaskForm):
+    pass

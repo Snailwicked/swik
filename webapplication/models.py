@@ -2,6 +2,8 @@ from .ext import db
 from flask_login import UserMixin
 import datetime
 import hashlib
+import uuid
+from flask_login import current_user
 
 
 class WebInfo(db.Model):
@@ -37,3 +39,29 @@ class User(UserMixin, db.Model):
     def __init__(self, username, password):
         self.username = username
         self.password = password
+
+
+class SpiderTask(db.Model):
+    __tablename__ = "spider_task"
+    id = db.Column(db.String(100), primary_key=True)  # uuid md5加密
+    task_name = db.Column(db.String(255), nullable=False)
+    task_job = db.Column(db.Binary(255), nullable=False)  # 二进制文件
+    create_time = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.Integer, nullable=False)  # 0未启动 1启动
+    creater = db.Column(db.String(255), nullable=False)
+    config_name = db.Column(db.String(255), nullable=True)  # 用于查询mongodb的配置表信息
+    result_name = db.Column(db.String(255), nullable=True)  # 用于查询mongodb存储的结果信息
+
+    def __init__(self, task_name, task_job, status, config_name, result_name):
+        self.id = uuid.uuid3()
+        self.task_name = task_name
+        self.task_job = task_job
+        self.status = status
+        self.config_name = config_name
+        self.result_name = result_name
+        self.create_time = datetime.datetime.now()
+        self.creater = current_user.username
+
+
+
+

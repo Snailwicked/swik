@@ -2,11 +2,12 @@ from __future__ import unicode_literals
 from flask import (Flask, render_template, redirect, url_for, request, flash)
 from flask_bootstrap import Bootstrap
 from flask_login import login_required, login_user, logout_user, current_user
-from webapplication.forms import TodoListForm, LoginForm
+from webapplication.forms import TodoListForm, LoginForm, WaitedTaskForm
 from webapplication.ext import db, login_manager
-from webapplication.models import WebInfo, User
+from webapplication.models import WebInfo, User, SpiderTask
 from flask_nav import Nav
 from flask_nav.elements import *
+from datetime import datetime
 
 
 SECRET_KEY = 'This is my key'
@@ -24,9 +25,9 @@ nav.register_element('top', Navbar(u'爬虫管理后台',
                                             )
                                    ,
                                     Subgroup(u'爬虫管理',
-                                             View(u'在启动爬虫列表', 'show_todo_list'),
+                                             View(u'在启动爬虫任务列表', 'show_todo_list'),
                                              Separator(),
-                                             View(u'待启动爬虫列表', 'show_todo_list'),
+                                             View(u'待启动爬虫任务列表', 'show_waited_task'),
                                     ),
                                     Subgroup(u'数据统计',
                                             View(u'服务器监控', 'show_todo_list'),
@@ -44,27 +45,61 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 
-@app.route('/show', methods=['GET', 'POST'])
+@app.route('/WebWaitedShow', methods=['GET', 'POST'])
 @login_required
 def show_todo_list():
     form = TodoListForm()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
-        pagination = WebInfo.query.order_by(WebInfo.add_time.desc()).paginate(page, per_page=10, error_out=False)
+        pagination = WebInfo.query.filter_by(status=0).order_by(WebInfo.add_time.desc()).paginate(page, per_page=10,
+                                                                                                  error_out=False)
         webinfos = pagination.items
         # webinfos = WebInfo.query.all()
         return render_template('waited_crawler.html', webinfos=webinfos, form=form, pagination=pagination)
     if form.validate_on_submit():
-        webinfo = WebInfo(form.url.data, form.web_name.data, form.status.data, form.agent.data, form.sort.data)
+        webinfo = WebInfo(form.url.data, form.web_name.data, form.status.data, form.agent.data,
+                          form.sort.data)
         db.session.add(webinfo)
         db.session.commit()
         flash('您已成功添加')
+    elif form.validate_on_submit():
+        if form.start_time and form.search_name:
+            results = WebInfo.query.filter_by(web_name=form.search_name.data)
+            if results:
+                return render_template('waited_crawler.html', form=form)
+            else:
+                flash("没有查询到数据")
+        elif form.start_time and not form.search_name:
+            results = WebInfo.query.filter(WebInfo.add_time.between(datetime.strftime(form.start_time.data)),
+                                           datetime.strftime(form.end_time.data))
+            if results:
+                return render_template('waited_crawler.html', form=form)
+            else:
+                flash("没有查询到数据")
+        elif not form.start_time and form.search_name:
+            results = WebInfo.query.filter_by(web_name=form.search_name.data)
+            if results:
+                return render_template('waited_crawler.html', form=form)
+            else:
+                flash("没有查询到数据")
     else:
         flash(form.errors)
     return redirect(url_for('show_todo_list'))
 
 
-@app.route('/delete/<string:id>', methods=['GET', 'POST'])
+@app.route('/TaskWaitedShow', methods=['POST', 'GET'])
+@login_required
+def show_waited_task():
+    form = WaitedTaskForm()
+    if request.method == 'GET':
+        page = request.args.get('page', 1, type=int)
+        pagination = SpiderTask.query.filter_by(status=0).order_by(SpiderTask.create_time.desc()).\
+            paginate(page, per_page=10, error_out=False)
+        tasks = pagination.items
+        return render_template('waited_task.html', form=form, tasks=tasks, pagination=pagination)
+
+
+@app.route('/DeleteWeb/<string:id>', methods=['GET', 'POST'])
 @login_required
 def delete_todo_list(id):
     webinfo = WebInfo.query.filter_by(id=id).first()
@@ -72,6 +107,16 @@ def delete_todo_list(id):
     db.session.commit()
     flash('您已成功删除')
     return redirect(url_for('show_todo_list'))
+
+
+@app.route('/DeleteTask/<string:id>', methods=['GET', 'POST'])
+@login_required
+def delete_task(id):
+    task = SpiderTask.query.filter_by(id=id).first()
+    db.session.delete(task)
+    db.session.commit()
+    flash("您已成功删除")
+    return redirect(url_for(''))
 
 
 @app.route('/login', methods=['GET', 'POST'])
