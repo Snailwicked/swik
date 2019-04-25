@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from flask_wtf import FlaskForm
-from wtforms import RadioField, SubmitField, StringField, PasswordField, DateTimeField
+from wtforms import RadioField, SubmitField, StringField, PasswordField, DateTimeField, SelectMultipleField
 from wtforms.validators import DataRequired, Length
 
 
@@ -28,4 +28,6 @@ class LoginForm(FlaskForm):
 
 
 class WaitedTaskForm(FlaskForm):
-    pass
+    # waited_crawl = SubmitField('未启动网站')
+    # crawl_deepth = SelectMultipleField('采集深度', choices=[('one', '1'), ('two', '2'), ('three', '3')]) 不用复选框
+    crawl_deepth = StringField('采集深度', validators=[DataRequired(), Length(1, 2)])

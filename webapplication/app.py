@@ -8,6 +8,7 @@ from webapplication.models import WebInfo, User, SpiderTask
 from flask_nav import Nav
 from flask_nav.elements import *
 from datetime import datetime
+from flask_pymongo import PyMongo
 '''
 后台管理的视图函数
 author: 王凯
@@ -16,6 +17,8 @@ datetime: 2019/04/24
 
 SECRET_KEY = 'This is my key'
 app = Flask(__name__)
+app.config["MONGO_URI"] = "mongodb://101.132.113.50:27017/test"
+mongo = PyMongo(app)
 bootstrap = Bootstrap(app)
 nav = Nav()
 nav.register_element('top', Navbar(u'爬虫管理后台',
@@ -101,15 +104,44 @@ def show_waited_task():
             paginate(page, per_page=10, error_out=False)
         tasks = pagination.items
         return render_template('waited_task.html', form=form, tasks=tasks, pagination=pagination)
+    if form.validate_on_submit():
+        waited_task = mongo.db.test1.insert({'crawl_deepth': form.crawl_deepth.data})
+        if waited_task:
+            flash("配置成功")
+    else:
+        flash(form.errors)
+    return redirect(url_for('show_waited_task'))
 
 
 @app.route('/DeleteWeb/<string:id>', methods=['GET', 'POST'])
 @login_required
 def delete_todo_list(id):
+    """
+    单个删除网站
+    :param id:
+    :return:
+    """
     webinfo = WebInfo.query.filter_by(id=id).first()
     db.session.delete(webinfo)
     db.session.commit()
     flash('您已成功删除')
+    return redirect(url_for('show_todo_list'))
+
+
+@app.route('/DeleteWebList', methods=['GET', 'POST'])
+@login_required
+def delete_todo_list2():
+    """
+    批量删除网站
+    :return:
+    """
+    ids = request.args.getlist('value')
+    print(ids)
+    for id in ids:
+        webinfo = WebInfo.query.filter_by(id=id).first()
+        db.session.delete(webinfo)
+        db.session.commit()
+        flash('您已成功批量删除')
     return redirect(url_for('show_todo_list'))
 
 
@@ -120,7 +152,7 @@ def delete_task(id):
     db.session.delete(task)
     db.session.commit()
     flash("您已成功删除")
-    return redirect(url_for(''))
+    return redirect(url_for('show_waited_task'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -154,6 +186,13 @@ def index():
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter_by(id=int(user_id)).first()
+
+
+# @app.route('/GetMongoDb/<string:name>')
+# @login_required
+# def get_mongodb_config(name):
+#     config_name = mongo.db.students.find_one_or_404({'name': name})
+#     return config_name
 
 
 if __name__ == '__main__':

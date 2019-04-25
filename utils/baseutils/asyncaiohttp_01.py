@@ -5,19 +5,19 @@ import aiohttp
 import queue
 
 
-class queueUtil:
+class QueueUtil:
     def __init__(self):
         self.queue = queue.Queue()
 
-    def put(self,data):
+    def put(self, data):
         self.queue.put(data)
+
     def get(self):
         while not self.queue.empty():
-            if self.queue.qsize()<10:
+            if self.queue.qsize() < 10:
                 import time
                 time.sleep(5)
             yield self.queue.get()
-
 
 
 class Crawler:

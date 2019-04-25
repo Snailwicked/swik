@@ -45,7 +45,10 @@
 
       <div class="modal-body">
           <div class="row">
-              <div class="col-md-8 col-md-offset-2"> {{ wtf.quick_form(form, form_type="horizontal") }} </div>
+              <div class="col-md-8 col-md-offset-2"> <form method="POST" action="">
+                  <a class="button" href="{{ url_for('show_todo_list') }}">未启动网站</a>
+              </form>
+              </div>
           </div>
       </div> <!-- modal body -->
 
@@ -76,7 +79,7 @@
                 <td>{{ task.create_time }}</td>
                 <td> {{ task.status }} </td>>
                 <td> {{ task.creater }} </td>
-                <td> {{ task.config_name }} </td>
+                <td><a href="">详情</a></td>
                 <td><a class='fa fa-lg fa-warning text-red' data-toggle="modal" data-target="#confirm-delete">删除</a></td>
 
                 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
