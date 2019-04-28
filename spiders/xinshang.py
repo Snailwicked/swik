@@ -148,7 +148,7 @@ class myThread(threading.Thread):
             for item in baseurl.get_data(url=url, headers=headers):
                 item= "{" + str(item) + "}"
                 print(item)
-                self.momgodb.insert_one(json.loads(str(item).replace("'",'"')))
+                # self.momgodb.insert_one(json.loads(str(item).replace("'",'"')))
         self.momgodb.close()
 
     def test(self):
