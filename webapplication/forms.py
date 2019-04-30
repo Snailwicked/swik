@@ -30,4 +30,5 @@ class LoginForm(FlaskForm):
 class WaitedTaskForm(FlaskForm):
     # waited_crawl = SubmitField('未启动网站')
     # crawl_deepth = SelectMultipleField('采集深度', choices=[('one', '1'), ('two', '2'), ('three', '3')]) 不用复选框
-    crawl_deepth = StringField('采集深度', validators=[DataRequired(), Length(1, 2)])
+    limit = StringField('采集深度', validators=[DataRequired(), Length(1, 2)])
+    submit = SubmitField('提交')

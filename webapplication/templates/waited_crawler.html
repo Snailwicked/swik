@@ -92,8 +92,6 @@
     </thead>
     <tbody>
         {% for webinfo in webinfos %}
-
-            <!-- tr -->
             {% if webinfo %} <tr class="success">
             {% else %} <tr class="info"> {% endif %}
                 <td><input type="checkbox"  name="checkboxBtn" value="{{ webinfo.id }}"></td>
@@ -123,10 +121,10 @@
                     {% endif %}
                 </td>
 
-                <td><a class='fa fa-lg fa-warning text-red' data-toggle="modal" data-target="#confirm-delete">删除</a></td>
-
-                <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                    aria-hidden="true">
+                <td><a class='fa fa-lg fa-warning text-red' data-toggle="modal" data-target="#confirm-delete{{ webinfo.id }}">删除</a></td>
+                <!-- 模态框 -->
+                <div class="modal fade" id="confirm-delete{{ webinfo.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -144,8 +142,7 @@
                         </div>
                     </div>
                 </div>
-            </tr>
-
+        </tr>
         {% endfor %}
     </tbody>
 </table>
@@ -196,14 +193,6 @@
     });
   });
 </script>
-
-<script src="../Js/jquery-1.11.3.min.js"></script>
-<link href="../Js/bootstrap-3.3.5-dist/css/bootstrap.css" rel="stylesheet" />
-<script src="../Js/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
-
-<link href="../Js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-<script src="../Js/bootstrap-datetimepicker/js/moment-with-locales.min.js"></script>
-<script src="../Js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
 
 {{ show_pagination(pagination) }}

@@ -17,7 +17,7 @@ datetime: 2019/04/24
 
 SECRET_KEY = 'This is my key'
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://101.132.113.50:27017/test"
+app.config["MONGO_URI"] = "mongodb://101.132.113.50:27017/spider_manage"
 mongo = PyMongo(app)
 bootstrap = Bootstrap(app)
 nav = Nav()
@@ -58,7 +58,7 @@ def show_todo_list():
     form = TodoListForm()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
-        pagination = WebInfo.query.filter_by(status=0).order_by(WebInfo.add_time.desc()).paginate(page, per_page=10,
+        pagination = WebInfo.query.filter_by(status=0).order_by(WebInfo.add_time.desc()).paginate(page, per_page=15,
                                                                                                   error_out=False)
         webinfos = pagination.items
         # webinfos = WebInfo.query.all()
@@ -101,11 +101,12 @@ def show_waited_task():
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
         pagination = SpiderTask.query.filter_by(status=0).order_by(SpiderTask.create_time.desc()).\
-            paginate(page, per_page=10, error_out=False)
+            paginate(page, per_page=15, error_out=False)
         tasks = pagination.items
+        task_mongo = mongo.db.config
         return render_template('waited_task.html', form=form, tasks=tasks, pagination=pagination)
     if form.validate_on_submit():
-        waited_task = mongo.db.test1.insert({'crawl_deepth': form.crawl_deepth.data})
+        waited_task = mongo.db.congif.insert_one({'limit': form.limit.data})
         if waited_task:
             flash("配置成功")
     else:
@@ -135,13 +136,12 @@ def delete_todo_list2():
     批量删除网站
     :return:
     """
-    ids = request.args.getlist('value')
-    print(ids)
+    ids = request.form.get("ids")
     for id in ids:
         webinfo = WebInfo.query.filter_by(id=id).first()
         db.session.delete(webinfo)
         db.session.commit()
-        flash('您已成功批量删除')
+    flash("您已成功批量删除")
     return redirect(url_for('show_todo_list'))
 
 
@@ -188,10 +188,10 @@ def load_user(user_id):
     return User.query.filter_by(id=int(user_id)).first()
 
 
-# @app.route('/GetMongoDb/<string:name>')
+# @app.route('/GetMongoDb/<string:id>')
 # @login_required
-# def get_mongodb_config(name):
-#     config_name = mongo.db.students.find_one_or_404({'name': name})
+# def get_mongodb_config(id):
+#     config_name = mongo.db.config.find_one_or_404({'uuid': id})
 #     return config_name
 
 
