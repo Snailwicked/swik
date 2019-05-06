@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from flask import (Flask, render_template, redirect, url_for, request, flash)
 from flask_bootstrap import Bootstrap
 from flask_login import login_required, login_user, logout_user, current_user
-from webapplication.forms import TodoListForm, LoginForm, WaitedTaskForm
+from webapplication.forms import TodoListForm, LoginForm, WaitedTaskForm, SearchForm
 from webapplication.ext import db, login_manager
 from webapplication.models import WebInfo, User, SpiderTask
 from flask_nav import Nav
@@ -14,7 +14,6 @@ from flask_pymongo import PyMongo
 author: 王凯
 datetime: 2019/04/24
 '''
-
 SECRET_KEY = 'This is my key'
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://101.132.113.50:27017/spider_manage"
@@ -24,7 +23,7 @@ nav = Nav()
 nav.register_element('top', Navbar(u'爬虫管理后台',
                                     View(u'主页', 'index'),
                                    Subgroup(u'网址管理',
-                                            View(u'在采集网址管理', 'show_todo_list'),
+                                            View(u'在采集网址管理', 'doing_crawler'),
                                             Separator(),
                                             View(u'待采集网址管理', 'show_todo_list'),
                                             Separator(),
@@ -52,9 +51,68 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 
+@app.route('/SearchWeb', methods=['GET', 'POST'])
+@login_required
+def search_web():
+    if request.method == "POST":
+        form = TodoListForm()
+        search_form = SearchForm()
+        page = request.args.get('page', 1, type=int)
+        web_name = request.form.get('search_name')
+        pagination = WebInfo.query.filter(WebInfo.web_name.contains(web_name)).order_by(WebInfo.add_time.desc()).\
+            paginate(page, per_page=15, error_out=False)
+        webinfos = pagination.items
+        return render_template('waited_crawler.html', webinfos=webinfos, form=form, search_form=search_form,
+                               pagination=pagination)
+    return redirect(url_for('show_todo_list'))
+
+
+@app.route('/DoingCrawler', methods=['GET', 'POST'])
+@login_required
+def doing_crawler():
+    form = TodoListForm()
+    if request.method == 'GET':
+        page = request.args.get('page', 1, type=int)
+        pagination = WebInfo.query.filter_by(status=1).order_by(WebInfo.add_time.desc()).paginate(page, per_page=15,
+                                                                                                  error_out=False)
+        webinfos = pagination.items
+        # webinfos = WebInfo.query.all()
+        return render_template('doing_crawler.html', webinfos=webinfos, form=form, pagination=pagination)
+    if form.validate_on_submit():
+        webinfo = WebInfo(form.url.data, form.web_name.data, form.status.data, form.agent.data,
+                          form.sort.data)
+        db.session.add(webinfo)
+        db.session.commit()
+        flash('您已成功添加')
+    elif form.validate_on_submit():
+        if form.start_time and form.search_name:
+            results = WebInfo.query.filter_by(web_name=form.search_name.data)
+            if results:
+                return render_template('doing_crawler.html', form=form)
+            else:
+                flash("没有查询到数据")
+        elif form.start_time and not form.search_name:
+            results = WebInfo.query.filter(WebInfo.add_time.between(datetime.strftime(form.start_time.data)),
+                                           datetime.strftime(form.end_time.data))
+            if results:
+                return render_template('doing_crawler.html', form=form)
+            else:
+                flash("没有查询到数据")
+        elif not form.start_time and form.search_name:
+            results = WebInfo.query.filter_by(web_name=form.search_name.data)
+            if results:
+                return render_template('doing_crawler.html', form=form)
+            else:
+                flash("没有查询到数据")
+    else:
+        flash(form.errors)
+    return redirect(url_for('doing_crawler'))
+
+
 @app.route('/WebWaitedShow', methods=['GET', 'POST'])
 @login_required
 def show_todo_list():
+    search_form = SearchForm()
     form = TodoListForm()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
@@ -62,7 +120,7 @@ def show_todo_list():
                                                                                                   error_out=False)
         webinfos = pagination.items
         # webinfos = WebInfo.query.all()
-        return render_template('waited_crawler.html', webinfos=webinfos, form=form, pagination=pagination)
+        return render_template('waited_crawler.html', webinfos=webinfos, form=form, pagination=pagination, search_form=search_form)
     if form.validate_on_submit():
         webinfo = WebInfo(form.url.data, form.web_name.data, form.status.data, form.agent.data,
                           form.sort.data)

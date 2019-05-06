@@ -20,11 +20,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField('登录')
 
 
-# class SearchForm(FlaskForm):
-#     start_time = DateTimeField('开始时间', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired(), Length(1, 20)])
-#     end_time = DateTimeField('结束时间', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired(), Length(1, 20)])
-#     search_name = StringField('请输入网站名称', validators=[DataRequired(), Length(1, 64)])
-#     submit = SubmitField('搜索')
+class SearchForm(FlaskForm):
+    search_name = StringField('请输入网站名称', validators=[DataRequired(), Length(1, 64)])
+    submit = SubmitField('搜索')
 
 
 class WaitedTaskForm(FlaskForm):
