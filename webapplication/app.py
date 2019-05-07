@@ -62,7 +62,7 @@ def search_web():
         page = request.args.get('page', 1, type=int)
         web_name = request.form.get('search_name')
         pagination = WebInfo.query.filter(WebInfo.web_name.contains(web_name)).order_by(WebInfo.add_time.desc()).\
-            paginate(page, per_page=15, error_out=False)
+            paginate(page, per_page=10, error_out=False)
         webinfos = pagination.items
         return render_template('waited_crawler.html', webinfos=webinfos, form=form, search_form=search_form,
                                pagination=pagination)
@@ -75,7 +75,7 @@ def doing_crawler():
     form = TodoListForm()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
-        pagination = WebInfo.query.filter_by(status=1).order_by(WebInfo.add_time.desc()).paginate(page, per_page=15,
+        pagination = WebInfo.query.filter_by(status=1).order_by(WebInfo.add_time.desc()).paginate(page, per_page=10,
                                                                                                   error_out=False)
         webinfos = pagination.items
         # webinfos = WebInfo.query.all()
@@ -118,7 +118,7 @@ def show_todo_list():
     form = TodoListForm()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
-        pagination = WebInfo.query.filter_by(status=0).order_by(WebInfo.add_time.desc()).paginate(page, per_page=15,
+        pagination = WebInfo.query.filter_by(status=0).order_by(WebInfo.add_time.desc()).paginate(page, per_page=10,
                                                                                                   error_out=False)
         webinfos = pagination.items
         # webinfos = WebInfo.query.all()
