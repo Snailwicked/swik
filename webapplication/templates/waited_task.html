@@ -66,6 +66,7 @@
         <th class="active">添加者</th>
         <th class="active">配置信息</th>
         <th class="active">操作</th>
+        <th class="active">操作</th>
     </thead>
     <tbody>
         {% for task in tasks %}
@@ -79,7 +80,8 @@
                 <td>{{ task.create_time }}</td>
                 <td> {{ task.status }} </td>>
                 <td> {{ task.creater }} </td>
-                <td><a href="">详情</a></td>
+                <td><a href="{{ url_for('get_mongodb_config', id=task.config_name) }}">详情</a></td>
+                <td><a href="{{ url_for('run_spider', id=task.config_name) }}">启动</a></td>
                 <td><a class='fa fa-lg fa-warning text-red' data-toggle="modal" data-target="#confirm-delete{{ task.id }}">删除</a></td>
 
                 <div class="modal fade" id="confirm-delete{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

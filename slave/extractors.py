@@ -7,6 +7,7 @@ import networkx as nx
 from sklearn.feature_extraction.text import TfidfVectorizer, TfidfTransformer
 import html as hl
 
+
 class StringSplitter(object):
     def __init__(self, pattern):
         self.pattern = re.compile(pattern)

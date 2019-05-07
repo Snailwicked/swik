@@ -9,6 +9,8 @@ from flask_nav import Nav
 from flask_nav.elements import *
 from datetime import datetime
 from flask_pymongo import PyMongo
+from utils.spiderutils.parse import Parse
+import json
 '''
 后台管理的视图函数
 author: 王凯
@@ -246,11 +248,27 @@ def load_user(user_id):
     return User.query.filter_by(id=int(user_id)).first()
 
 
-# @app.route('/GetMongoDb/<string:id>')
-# @login_required
-# def get_mongodb_config(id):
-#     config_name = mongo.db.config.find_one_or_404({'uuid': id})
-#     return config_name
+@app.route('/StartSpider/<string:id>', methods=['GET', 'POST'])
+@login_required
+def run_spider(id):
+    task = SpiderTask.query.filter_by(config_name=id).first()
+    task.status = 1
+    db.session.commit()
+    parse = Parse()
+    urls = mongo.db.config.find_one_or_404({'uuid': id})['urls']
+    result = parse.get_data(urls)
+    if result:
+        flash('爬虫采集完毕')
+    return redirect(url_for('show_waited_task'))
+
+
+@app.route('/GetMongoDb/<string:id>', methods=['GET', 'POST'])
+@login_required
+def get_mongodb_config(id):
+    config_all = mongo.db.config.find_one_or_404({'uuid': id})
+    config_all.pop("_id")
+    config_all.pop("uuid")
+    return json.dumps(config_all)
 
 
 if __name__ == '__main__':
