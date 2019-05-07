@@ -5,6 +5,8 @@ from keras.layers.core import Dense, Dropout, Activation
 from keras.optimizers import Adam
 import numpy as np
 from keras.models import load_model
+from keras.callbacks import EarlyStopping
+
 '''
 keras实现神经网络回归模型
 '''
@@ -51,7 +53,6 @@ model.add(Activation('relu'))
 model.add(Dropout(0.2))
 model.add(Dense(6))
 model.compile(loss='mean_squared_error', optimizer=Adam())
-from keras.callbacks import EarlyStopping
 early_stopping = EarlyStopping(monitor='val_loss', patience=50, verbose=2)
 history = model.fit(train_X, train_y, epochs=300, batch_size=20, validation_data=(test_X, test_y), verbose=2, shuffle=False, callbacks=[early_stopping])
 pyplot.plot(history.history['loss'], label='train')
