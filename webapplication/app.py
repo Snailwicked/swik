@@ -9,6 +9,8 @@ from flask_nav import Nav
 from flask_nav.elements import *
 from datetime import datetime
 from flask_pymongo import PyMongo
+from utils.spiderutils.parse import Parse
+import json
 '''
 后台管理的视图函数
 author: 王凯
@@ -60,7 +62,7 @@ def search_web():
         page = request.args.get('page', 1, type=int)
         web_name = request.form.get('search_name')
         pagination = WebInfo.query.filter(WebInfo.web_name.contains(web_name)).order_by(WebInfo.add_time.desc()).\
-            paginate(page, per_page=15, error_out=False)
+            paginate(page, per_page=10, error_out=False)
         webinfos = pagination.items
         return render_template('waited_crawler.html', webinfos=webinfos, form=form, search_form=search_form,
                                pagination=pagination)
@@ -73,7 +75,7 @@ def doing_crawler():
     form = TodoListForm()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
-        pagination = WebInfo.query.filter_by(status=1).order_by(WebInfo.add_time.desc()).paginate(page, per_page=15,
+        pagination = WebInfo.query.filter_by(status=1).order_by(WebInfo.add_time.desc()).paginate(page, per_page=10,
                                                                                                   error_out=False)
         webinfos = pagination.items
         # webinfos = WebInfo.query.all()
@@ -116,7 +118,7 @@ def show_todo_list():
     form = TodoListForm()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
-        pagination = WebInfo.query.filter_by(status=0).order_by(WebInfo.add_time.desc()).paginate(page, per_page=15,
+        pagination = WebInfo.query.filter_by(status=0).order_by(WebInfo.add_time.desc()).paginate(page, per_page=10,
                                                                                                   error_out=False)
         webinfos = pagination.items
         # webinfos = WebInfo.query.all()
@@ -246,11 +248,27 @@ def load_user(user_id):
     return User.query.filter_by(id=int(user_id)).first()
 
 
-# @app.route('/GetMongoDb/<string:id>')
-# @login_required
-# def get_mongodb_config(id):
-#     config_name = mongo.db.config.find_one_or_404({'uuid': id})
-#     return config_name
+@app.route('/StartSpider/<string:id>', methods=['GET', 'POST'])
+@login_required
+def run_spider(id):
+    task = SpiderTask.query.filter_by(config_name=id).first()
+    task.status = 1
+    db.session.commit()
+    parse = Parse()
+    urls = mongo.db.config.find_one_or_404({'uuid': id})['urls']
+    result = parse.get_data(urls)
+    if result:
+        flash('爬虫采集完毕')
+    return redirect(url_for('show_waited_task'))
+
+
+@app.route('/GetMongoDb/<string:id>', methods=['GET', 'POST'])
+@login_required
+def get_mongodb_config(id):
+    config_all = mongo.db.config.find_one_or_404({'uuid': id})
+    config_all.pop("_id")
+    config_all.pop("uuid")
+    return json.dumps(config_all)
 
 
 if __name__ == '__main__':
