@@ -43,7 +43,14 @@ class xPathTexts(object):
         获取self.url 的 html
         :return: html
         '''
-        resp = requests.get(url=url,headers= headers ,cookies = cookies)
+        import time
+        import random
+        pause_time = random.randint(1, 4)
+        time.sleep(pause_time)
+        try:
+            resp = requests.get(url=url,headers= headers ,cookies = cookies,timeout=30)
+        except:
+            pass
         charset = None
         try:
             reg = '<meta .*(http-equiv="?Content-Type"?.*)?charset="?([a-zA-Z0-9_-]+)"?'
