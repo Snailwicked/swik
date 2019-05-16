@@ -92,10 +92,10 @@ class seCooData():
         self.human = ''  # 适用人群
         self.addtime = ''  # 采集时间
         self.imgs = ''  # 图片集合
-        self.material = ''
-        self.size = ""
-        self.colour = ""
-        self.origin = ""
+        self.material = ''#材质
+        self.size = ""#大小
+        self.colour = "" #颜色
+        self.origin = "" #产地
 
     def __str__(self):
         return "'uuid':'{}','url':'{}','title':'{}'," \
@@ -244,7 +244,7 @@ for item in range(1,1000):
             scd.discount = ""
             scd.type = "包袋"
             try:
-                scd.title = xpt.get_contents(html=response.text, X_path=X_title)[0]
+                scd.title = str(xpt.get_contents(html=response.text, X_path=X_title)[0]).replace("\"","").replace("'","")
             except:
                 scd.title = ""
             try:
@@ -270,7 +270,7 @@ for item in range(1,1000):
                     if temp[0]=="材质":
                         scd.material = temp[1]
                     if temp[0]=="尺寸":
-                        scd.size = temp[1]
+                        scd.size = str(temp[1]).replace("\"","").replace("'","")
                     if temp[0]=="颜色":
                         scd.colour = temp[1]
                     if temp[0]=="产地":
