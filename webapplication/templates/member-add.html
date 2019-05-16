@@ -83,7 +83,7 @@
               var agent = $("#L_agent").val();
               var sort = $("#L_sort").val();
               $.ajax({   
-         url:'http://127.0.0.1:5000/add',       
+         url:'http://127.0.0.1:5000/web/add',       
          method:'post',       
          data:{"web_name":web_name,"web_url":web_url, "agent":agent, "sort":sort},        
          dataType:'JSON',         

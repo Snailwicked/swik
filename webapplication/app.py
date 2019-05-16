@@ -12,8 +12,10 @@ CORS(app, supports_credentials=True)
 
 data = []
 news = []
-# 启用网址
-@app.route('/select_all')
+
+
+# 网页启动网址
+@app.route('/web/select_all')
 def get_datas_on():
     select = Select()
     page = request.args.get('page')
@@ -22,8 +24,8 @@ def get_datas_on():
     data = select.select_all(params)
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
-
-@app.route('/select_off')
+# 网页待启动网址
+@app.route('/web/select_off')
 def get_datas_off():
     select = Select()
     page = request.args.get('page')
@@ -33,7 +35,7 @@ def get_datas_off():
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
 
-@app.route('/delete', methods=["POST"])
+@app.route('/web/delete', methods=["POST"])
 def delete_data():
     delete = Delete()
     if request.method == 'POST':
@@ -42,7 +44,7 @@ def delete_data():
     return jsonify({"code": 1, "msg": "删除成功"})
 
 
-@app.route('/add', methods=["POST"])
+@app.route('/web/add', methods=["POST"])
 def add_data():
     add = Add()
     if request.method == 'POST':
@@ -54,7 +56,7 @@ def add_data():
     return "1"
 
 
-@app.route('/update', methods=["POST"])
+@app.route('/web/update', methods=["POST"])
 def update():
     update = Update()
     if request.method == 'POST':
@@ -63,7 +65,7 @@ def update():
     return jsonify({"code": 1, "msg": "更新成功"})
 
 
-@app.route('/on', methods=["POST"])
+@app.route('/web/on', methods=["POST"])
 def state_on():
     update = Update()
     if request.method == 'POST':
