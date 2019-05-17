@@ -6,6 +6,7 @@ from webapplication.service.spider_webs.delete import Delete
 from webapplication.service.spider_webs.update import Update
 from webapplication.service.spider_tasks.taskselect import TaskSelect
 from webapplication.service.spider_tasks.taskupdate import TaskUpdate
+from webapplication.service.spider_tasks.taskdelete import TaskDelete
 import json
 from utils.spiderutils.parse import Parse
 
@@ -15,6 +16,14 @@ CORS(app, supports_credentials=True)
 app.secret_key = SECRET_KEY
 data = []
 news = []
+# 删除任务
+@app.route('/task/delete', methods=['POST'])
+def delete_task():
+    delete = TaskDelete()
+    data = request.get_data().decode('utf-8')
+    delete.delete_one(json.loads(data))
+    return jsonify({"code": 1, "msg": "删除成功"})
+
 # 待启动任务
 @app.route('/task/select_off')
 def get_tasks_off():
@@ -37,6 +46,14 @@ def get_tasks_on():
     if parse.get_data(urls):
         flash('爬虫采集完毕')
     return jsonify({"code": 1, "msg": "任务启动成功"})
+
+
+@app.route('/task/update', methods=['POST'])
+def update_task():
+    update = TaskUpdate()
+    data = request.get_data().decode('utf-8')
+    update.update(json.loads(data))
+    return jsonify({"code": 1, "msg": "更新成功"})
 
 # 网页启动网址
 @app.route('/web/select_all')

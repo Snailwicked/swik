@@ -41,6 +41,24 @@ class TaskUpdate:
         finally:
             self.mysql_db.close()
 
+    def update(self, data):
+        """
+        修改表格中部分可修改的数据如爬虫任务名称
+        :param data:
+        :return:
+        """
+        id = data['id']
+        task_name = data['task_name']
+        sql = 'update spider_task set task_name="%s" where id="%s"' % (task_name, id)
+        cursors = self.mysql_db.cursor()
+        try:
+            cursors.execute(sql)
+            self.mysql_db.commit()
+        except Exception as e:
+            print(e)
+        finally:
+            self.mysql_db.close()
+
 
 if __name__ == "__main__":
     update = TaskUpdate()

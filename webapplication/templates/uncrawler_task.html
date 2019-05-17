@@ -40,6 +40,7 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form-->
       </div>
+
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加任务','./member-add.html',450,250)"><i class="layui-icon"></i>添加</button>
@@ -111,7 +112,7 @@
             layer.confirm('确定对此行进行编辑吗', function(){
                  var data = obj.data //得到所在行所有键值
                  $.ajax({
-                     url:'http://127.0.0.1:5000/web/update',       
+                     url:'http://127.0.0.1:5000/task/update',       
               method:'post',       
               data:JSON.stringify(data),        
               dataType:'JSON',    
@@ -137,7 +138,7 @@
     if(obj.event === 'del'){
       layer.confirm('真的删除行么', function(){
           $.ajax({   
-         url:'http://127.0.0.1:5000/web/delete',       
+         url:'http://127.0.0.1:5000/task/delete',       
          method:'post',       
          data:JSON.stringify(data),        
          dataType:'JSON',         
