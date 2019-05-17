@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, flash
+from flask import Flask, request, jsonify
 from flask_cors import *
 from webapplication.service.spider_webs.select import Select
 from webapplication.service.spider_webs.add import Add
@@ -9,6 +9,7 @@ from webapplication.service.spider_tasks.taskupdate import TaskUpdate
 from webapplication.service.spider_tasks.taskdelete import TaskDelete
 import json
 from utils.spiderutils.parse import Parse
+
 
 SECRET_KEY = 'This is the key'
 app = Flask(__name__)
@@ -43,8 +44,7 @@ def get_tasks_on():
     update.update_status(json.loads(data))
     update_other = TaskUpdate()
     urls = update_other.query_mongo_urls(json.loads(data))
-    if parse.get_data(urls):
-        flash('爬虫采集完毕')
+    parse.get_data(urls)
     return jsonify({"code": 1, "msg": "任务启动成功"})
 
 
