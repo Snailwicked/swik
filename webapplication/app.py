@@ -1,18 +1,42 @@
-from flask import Flask,request,jsonify
+from flask import Flask, request, jsonify, flash
 from flask_cors import *
 from webapplication.service.spider_webs.select import Select
 from webapplication.service.spider_webs.add import Add
 from webapplication.service.spider_webs.delete import Delete
 from webapplication.service.spider_webs.update import Update
-
+from webapplication.service.spider_tasks.taskselect import TaskSelect
+from webapplication.service.spider_tasks.taskupdate import TaskUpdate
 import json
+from utils.spiderutils.parse import Parse
 
+SECRET_KEY = 'This is the key'
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-
+app.secret_key = SECRET_KEY
 data = []
 news = []
+# 待启动任务
+@app.route('/task/select_off')
+def get_tasks_off():
+    select = TaskSelect()
+    page = request.args.get('page')
+    limit = request.args.get('limit')
+    params = {'page': page, 'limit': limit}
+    data = select.select_off(params)
+    return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
+
+@app.route('/task/on', methods=["POST"])
+def get_tasks_on():
+    update = TaskUpdate()
+    parse = Parse()
+    data = request.get_data().decode('utf-8')
+    update.update_status(json.loads(data))
+    update_other = TaskUpdate()
+    urls = update_other.query_mongo_urls(json.loads(data))
+    if parse.get_data(urls):
+        flash('爬虫采集完毕')
+    return jsonify({"code": 1, "msg": "任务启动成功"})
 
 # 网页启动网址
 @app.route('/web/select_all')

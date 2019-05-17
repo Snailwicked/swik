@@ -36,7 +36,7 @@
         <!--form class="layui-form layui-col-md12 x-so">
           <input class="layui-input" placeholder="开始日" name="start" id="start">
           <input class="layui-input" placeholder="截止日" name="end" id="end">
-          <input type="text" name="username"  placeholder="请输入网站名称" autocomplete="off" class="layui-input">
+          <input type="text" name="keyword"  placeholder="请输入网站名称" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form-->
       </div>
@@ -69,17 +69,16 @@
         });
   table.render({
           elem: '#layui-table'
-          ,url:'http://localhost:5000/web/select_off'
+          ,url:'http://localhost:5000/task/select_off'
           ,dataType: "json"
           ,title: '用户数据表'
           ,cols: [[
               {type: 'checkbox', fixed: 'left'}
-             ,{field:'web_name', title:'网站名称',  edit: 'text'}
-             ,{field:'url', title:'网址',  edit: 'text'}
-             ,{field:'add_time', title:'添加时间'}
-             ,{field:'agent', title:'代理情况'}
-             ,{field:'sort', title:'网站类型'}
-             ,{field:'status', title:'爬虫状态' ,templet: '#switchTpl', unresize: true}
+             ,{field:'task_name', title:'爬虫任务名称',  edit: 'text'}
+             ,{field:'create_time', title:'创建时间'}
+             ,{field:'creater', title:'创建人'}
+             ,{field:'config_name', title:'配置信息'}
+             ,{field:'status', title:'任务状态' ,templet: '#switchTpl', unresize: true}
              ,{fixed: 'right',title:'操作', toolbar: '#barDemo'}]]
           ,page: true
         });
@@ -89,7 +88,7 @@
       var status = 0
       if (obj.elem.checked===true){status = 1}else {status = 0}
       $.ajax({
-                     url:'http://127.0.0.1:5000/web/on',       
+                     url:'http://127.0.0.1:5000/task/on',       
               method:'post',       
               data:JSON.stringify({'id':this.value,"status":status}),        
               dataType:'JSON',    
@@ -162,10 +161,7 @@
   });
 });
 
-</script>
-
-
-
+</script >
 
   </body>
 
