@@ -24,3 +24,4 @@ if __name__ == "__main__":
     parse = Parse()
     result = parse.get_data(urls)
     print(result)
+
