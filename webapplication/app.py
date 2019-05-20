@@ -9,12 +9,15 @@ from webapplication.service.spider_tasks.taskupdate import TaskUpdate
 from webapplication.service.spider_tasks.taskdelete import TaskDelete
 import json
 from utils.spiderutils.parse import Parse
+# from celery import Celery
 
 
 SECRET_KEY = 'This is the key'
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = SECRET_KEY
+# cele = Celery('app', app.config['CELERY_BROKER_URL'])
+# cele.config_from_object('celery_config')
 data = []
 news = []
 # 删除任务
@@ -36,6 +39,7 @@ def get_tasks_off():
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
 
+# @cele.task
 @app.route('/task/on', methods=["POST"])
 def get_tasks_on():
     update = TaskUpdate()
