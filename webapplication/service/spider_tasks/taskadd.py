@@ -4,7 +4,7 @@ import uuid
 import datetime
 
 
-class AddTask:
+class TaskAdd:
     def __init__(self):
         self.mysql_db = pymysql.connect(host='101.132.113.50', user='root', password='BlueSnail123!', db='spider_manage',
                                         charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)

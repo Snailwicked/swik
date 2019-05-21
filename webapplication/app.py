@@ -7,7 +7,7 @@ from webapplication.service.spider_webs.update import Update
 from webapplication.service.spider_tasks.taskselect import TaskSelect
 from webapplication.service.spider_tasks.taskupdate import TaskUpdate
 from webapplication.service.spider_tasks.taskdelete import TaskDelete
-from webapplication.service.spider_tasks.taskadd import AddTask
+from webapplication.service.spider_tasks.taskadd import TaskAdd
 import json
 from utils.spiderutils.parse import Parse
 # from celery import Celery
@@ -24,7 +24,7 @@ news = []
 # 添加任务
 @app.route('/task/add', methods=['POST'])
 def task_add():
-    add = AddTask()
+    add = TaskAdd()
     task_name = request.form['task_name']
     data = {'task_name': task_name}
     add.add_task(data)
