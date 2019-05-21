@@ -7,6 +7,7 @@ from webapplication.service.spider_webs.update import Update
 from webapplication.service.spider_tasks.taskselect import TaskSelect
 from webapplication.service.spider_tasks.taskupdate import TaskUpdate
 from webapplication.service.spider_tasks.taskdelete import TaskDelete
+from webapplication.service.spider_tasks.taskadd import AddTask
 import json
 from utils.spiderutils.parse import Parse
 # from celery import Celery
@@ -20,6 +21,15 @@ app.secret_key = SECRET_KEY
 # cele.config_from_object('celery_config')
 data = []
 news = []
+# 添加任务
+@app.route('/task/add', methods=['POST'])
+def task_add():
+    add = AddTask()
+    task_name = request.form['task_name']
+    data = {'task_name': task_name}
+    add.add_task(data)
+    return "1"
+
 # 删除任务
 @app.route('/task/delete', methods=['POST'])
 def delete_task():
