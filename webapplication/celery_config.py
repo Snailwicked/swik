@@ -1,4 +1,4 @@
-CELERY_BROKER_URL = 'redis://101.132.113.50:6379/1'                # 使用Redis作为消息代理
+CELERY_BROKER_URL = 'redis://101.132.113.50:6379/1'                # 使用Redis作为消息中间件
 CELERY_RESULT_BACKEND = 'redis://101.132.113.50:6379/2'      # 把任务结果存在了Redis
 
 CELERY_TIMEZONE = 'Asia/Shanghai'                         # 指定时区，默认是 UTC
