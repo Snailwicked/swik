@@ -69,7 +69,7 @@ def update_task():
     update.update(json.loads(data))
     return jsonify({"code": 1, "msg": "更新成功"})
 
-# 网页启动网址
+# 全部网址
 @app.route('/web/select_all')
 def get_datas_on():
     select = Select()
@@ -80,14 +80,14 @@ def get_datas_on():
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
 # 网页待启动网址
-@app.route('/web/select_off')
-def get_datas_off():
-    select = Select()
-    page = request.args.get('page')
-    limit = request.args.get('limit')
-    params = {'page': page, 'limit': limit}
-    data = select.select_off(params)
-    return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
+# @app.route('/web/select_off')
+# def get_datas_off():
+#     select = Select()
+#     page = request.args.get('page')
+#     limit = request.args.get('limit')
+#     params = {'page': page, 'limit': limit}
+#     data = select.select_off(params)
+#     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
 
 @app.route('/web/delete', methods=["POST"])
