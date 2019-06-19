@@ -58,8 +58,11 @@ class Select:
         """
         page = int(data['page'])
         limit = int(data['limit'])
-        sql = "select * from webinfo order by status desc limit %d, %d" % ((page-1)*limit, limit)
-        count_sql = 'select count(*) from webinfo'
+        status = int(data['status'])
+        keyword = str(data['keyword'])
+
+        sql = "select * from webinfo where status = {} and web_name LIKE '%{}%'limit {}, {};" .format(status,keyword,(page-1)*limit, limit)
+        count_sql = "select count(*) from webinfo where status = {} and web_name LIKE '%{}%'limit {}, {};" .format(status,keyword,(page-1)*limit, limit)
         cursors = self.db.cursor()
         try:
             cursors.execute(sql)
@@ -77,5 +80,5 @@ class Select:
 
 if __name__ == "__main__":
     select = Select()
-    a = select.select_all({'page': 1, 'limit': 10})
-    print(a)
+    result = select.select_all({'page': 1, 'limit': 10,'status':0,'keyword':''})
+    print(result)
