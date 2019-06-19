@@ -56,13 +56,22 @@ class Select:
         :param data:
         :return:
         """
-        page = int(data['page'])
-        limit = int(data['limit'])
-        status = int(data['status'])
-        keyword = str(data['keyword'])
+        try:
+            page = int(data['page'])
+            limit = int(data['limit'])
+        except:
+            pass
+        try:
+            status = int(data['status'])
+        except:
+            status = 1
+        try:
+            keyword = str(data['keyword'])
+        except:
+            keyword = ""
 
         sql = "select * from webinfo where status = {} and web_name LIKE '%{}%'limit {}, {};" .format(status,keyword,(page-1)*limit, limit)
-        count_sql = "select count(*) from webinfo where status = {} and web_name LIKE '%{}%'limit {}, {};" .format(status,keyword,(page-1)*limit, limit)
+        count_sql = "select count(*) from webinfo where status = {} and web_name LIKE '%{}%';" .format(status,keyword)
         cursors = self.db.cursor()
         try:
             cursors.execute(sql)
@@ -80,5 +89,5 @@ class Select:
 
 if __name__ == "__main__":
     select = Select()
-    result = select.select_all({'page': 1, 'limit': 10,'status':0,'keyword':''})
+    result = select.select_all({'status': '0', 'page': '3', 'limit': '10'})
     print(result)

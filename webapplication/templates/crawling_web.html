@@ -33,17 +33,17 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input class="layui-input" placeholder="开始日" name="start" id="start">
-          <input class="layui-input" placeholder="截止日" name="end" id="end">
-          <input type="text" name="keyword
-"  placeholder="请输入网站名称" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-        </form>
+
+        <div class="layui-form layui-col-md12 x-so">
+            <input type="text"  placeholder="请输入网站名称" autocomplete="off" class="layui-input" id="keyword">
+            <button class="layui-btn"  lay-submit="" lay-filter="search" id ="search"><i class="layui-icon">&#xe615;</i></button>
+        </div>
       </div>
       <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
         <button class="layui-btn" onclick="x_admin_show('添加网站','./member-add.html',450,250)"><i class="layui-icon"></i>添加</button>
+
+        反选  <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭" id="sta">
       </xblock>
       <table id="layui-table" lay-filter="layui-table"></table>
     </div>
@@ -57,17 +57,11 @@
 
 
     <script>
-  layui.use(['table','layer','laydate'], function(){
-      var table = layui.table, laydate = layui.laydate,form = layui.form;
+  layui.use(['table','layer','laydate','jquery'], function(){
+      var table = layui.table,
+          form = layui.form,
+          $ = layui.jquery;
 
- laydate.render({
-          elem: '#start' //指定元素
-        });
-
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#end' //指定元素
-        });
   table.render({
           elem: '#layui-table'
           ,url:'http://localhost:5000/web/select_all'
@@ -84,6 +78,44 @@
              ,{fixed: 'right',title:'操作', toolbar: '#barDemo'}]]
           ,page: true
         });
+
+  $('#search').on('click', function () {
+
+                  // 搜索条件
+                  var keyword = $('#keyword').val();
+
+                 if($("#sta").is(':checked')){
+                          status = 0
+                 } else {
+                     status = 1
+                 }
+
+                  table.reload('layui-table', {
+                       where: {
+                          'keyword': keyword,
+                           'status':status
+                      }
+                      , page: {
+                          curr: 1
+                      }
+                  });
+  });
+
+  $('#sta').on('click', function () {
+
+                 if($("#sta").is(':checked')){
+                          status = 0
+                 } else {
+                     status = 1
+                 }
+
+                  table.reload('layui-table', {
+                       where: {
+                           'status':status
+                      }
+                      , page: true
+                  });
+  });
 
   form.on('switch(status)', function(obj){
           // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
@@ -162,6 +194,7 @@
     }
   });
 });
+
 </script>
 
 

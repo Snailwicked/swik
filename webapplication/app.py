@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,render_template
 from flask_cors import *
 from webapplication.service.spider_webs.select import Select
 from webapplication.service.spider_webs.add import Add
@@ -29,6 +29,12 @@ def task_add():
     data = {'task_name': task_name}
     add.add_task(data)
     return "1"
+
+@app.route('/')
+def task_adds():
+
+    return render_template('index.html')
+
 
 # 删除任务
 @app.route('/task/delete', methods=['POST'])
@@ -61,7 +67,6 @@ def get_tasks_on():
     parse.get_data(urls)
     return jsonify({"code": 1, "msg": "任务启动成功"})
 
-
 @app.route('/task/update', methods=['POST'])
 def update_task():
     update = TaskUpdate()
@@ -73,10 +78,10 @@ def update_task():
 @app.route('/web/select_all')
 def get_datas_on():
     select = Select()
-    page = request.args.get('page')
-    limit = request.args.get('limit')
-    params = {'page': page, 'limit': limit}
+    params = request.args.to_dict()
+    print(params)
     data = select.select_all(params)
+    print(data)
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
 # 网页待启动网址
