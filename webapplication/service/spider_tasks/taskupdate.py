@@ -59,8 +59,3 @@ class TaskUpdate:
         finally:
             self.mysql_db.close()
 
-
-if __name__ == "__main__":
-    update = TaskUpdate()
-    a = update.query_mongo_urls({'id': 'lmngggg'})
-    print(a)
