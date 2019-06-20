@@ -50,11 +50,15 @@
 
     <script type="text/html" id="barDemo">
       <a title="删除" lay-event="del"><i class="layui-icon" >&#xe640;</i></a>
+      <a title="检测" lay-event="check"><i class="layui-icon" >&#xe67a;</i></a>
+
     </script>
     <script type="text/html" id="switchTpl">
-      <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="status" {{ d.status == 1 ? 'checked' : '' }}>
+      <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="在采集|未采集" lay-filter="status" {{ d.status == 1 ? 'checked' : '' }}>
     </script>
-
+    <script type="text/html" id="switchTps">
+      <input type="checkbox" name="checked" value="{{d.id}}" lay-skin="switch" lay-text="已检测|未检测" lay-filter="checked" {{ d.checked == 1 ? 'checked' : '' }}>
+    </script>
 
     <script>
   layui.use(['table','layer','laydate','jquery'], function(){
@@ -69,12 +73,14 @@
           ,title: '用户数据表'
           ,cols: [[
               {type: 'checkbox', fixed: 'left'}
-             ,{field:'web_name', title:'网站名称',  edit: 'text'}
-             ,{field:'url', title:'网址',  edit: 'text'}
+             ,{field:'web_name', title:'网站名称'}
+             ,{field:'url', title:'网址'}
              ,{field:'add_time', title:'添加时间'}
-             ,{field:'agent', title:'代理情况'}
-             ,{field:'sort', title:'网站类型'}
-             ,{field:'status', title:'爬虫状态' ,templet: '#switchTpl', unresize: true}
+             // ,{field:'agent', title:'代理情况'}
+             // ,{field:'sort', title:'网站类型'}
+             ,{field:'status', title:'网站状态' ,templet: '#switchTpl', unresize: true}
+             ,{field:'checked', title:'是否检测' ,templet: '#switchTps', unresize: true}
+
              ,{fixed: 'right',title:'操作', toolbar: '#barDemo'}]]
           ,page: true
         });
@@ -113,7 +119,9 @@
                        where: {
                            'status':status
                       }
-                      , page: true
+                      , page: {
+                          curr: 1
+                      }
                   });
   });
 
@@ -191,6 +199,30 @@
                     }
                  })
           });
+    }
+    if(obj.event === 'check'){
+
+        $.ajax({   
+         url:'http://127.0.0.1:5000/task/on',       
+         method:'post',       
+         data:{url:data.url},        
+         dataType:'JSON',         
+         success:function(re){
+                    layer.alert("删除成功", {icon: 6},function () {
+
+                         layer.closeAll();
+                         location.reload()
+                         });
+                    },
+                error:function (){
+
+                  layer.alert("检测失败", {icon: 6},function () {
+                         layer.closeAll();
+                         location.reload()
+                         });
+
+                    }
+                 })
     }
   });
 });

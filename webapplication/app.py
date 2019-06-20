@@ -58,13 +58,17 @@ def get_tasks_off():
 # @cele.task
 @app.route('/task/on', methods=["POST"])
 def get_tasks_on():
-    update = TaskUpdate()
+    params = request.values.to_dict()
+    # update = TaskUpdate()
     parse = Parse()
-    data = request.get_data().decode('utf-8')
-    update.update_status(json.loads(data))
-    update_other = TaskUpdate()
-    urls = update_other.query_mongo_urls(json.loads(data))
-    parse.get_data(urls)
+    # data = request.get_data().decode('utf-8')
+    # update.update_status(json.loads(data))
+    # update_other = TaskUpdate()
+    # urls = update_other.query_mongo_urls(json.loads(data))
+    urls = []
+    urls.append(params.get("url"))
+    result = parse.get_data(urls)
+    print(result)
     return jsonify({"code": 1, "msg": "任务启动成功"})
 
 @app.route('/task/update', methods=['POST'])
@@ -79,9 +83,7 @@ def update_task():
 def get_datas_on():
     select = Select()
     params = request.args.to_dict()
-    print(params)
     data = select.select_all(params)
-    print(data)
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
 # 网页待启动网址
