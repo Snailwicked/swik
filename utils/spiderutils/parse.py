@@ -9,14 +9,24 @@ class Parse:
         self.xpath = xPathTexts()
 
     def get_data(self, urls):
+        data = []
         for url in self.master.FilterUrls(urls):
+            item= {}
             try:
                 html = self.xpath.getHtml(url)
                 ce = ContentExtractor(html=html, url=url)
-                print(url, ce.get_title())
+                item["url"] = url
+                item["title"] = ce.get_title()
+                item["authors"] = ce.get_authors()
+                item["publishing_date"] = ce.get_publishing_date()
+                item["content"] = ce.get_content()
+                item["summary"] = ce.get_summary()
+                print(item)
+
+                data.append(item)
             except Exception as e:
                 print(e)
-        return True
+        return data
 
 
 if __name__ == "__main__":

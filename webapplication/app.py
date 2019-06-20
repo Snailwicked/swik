@@ -59,6 +59,7 @@ def get_tasks_off():
 @app.route('/task/on', methods=["POST"])
 def get_tasks_on():
     params = request.values.to_dict()
+    print()
     # update = TaskUpdate()
     parse = Parse()
     # data = request.get_data().decode('utf-8')
@@ -67,9 +68,8 @@ def get_tasks_on():
     # urls = update_other.query_mongo_urls(json.loads(data))
     urls = []
     urls.append(params.get("url"))
-    result = parse.get_data(urls)
-    print(result)
-    return jsonify({"code": 1, "msg": "任务启动成功"})
+    data = parse.get_data(urls)
+    return jsonify({"code": 0, "msg": "", "count": len(data), "data": data})
 
 
 @app.route('/task/update', methods=['POST'])

@@ -27,7 +27,7 @@ class StringReplacement(object):
         if not string:
             return ''
         return string.replace(self.pattern, self.replaceWith)
-def load_stopwords(path='./stop_word'):
+def load_stopwords(path='../slave/stop_word'):
     with open(path, encoding="utf-8") as f:
         stopwords = list(map(lambda x: x.strip(), f.readlines()))
     stopwords.extend([' ', '\t', '\n'])
@@ -287,7 +287,6 @@ class ContentExtractor(object):
 
     def get_content(self):
 
-
         reCOMM = '<!--.*?-->'
         reTRIM = '<{0}.*?>([\s\S]*?)<\/{0}>'
         reA = '<a>([\s\S]*?)<\/a>'
@@ -310,7 +309,6 @@ class ContentExtractor(object):
         if lines>=6:
             for i in range(5):
                 cblocks = list(map(lambda x, y: x + y, textLens[i: lines - 6 + i], cblocks))
-
             maxTextLen = max(cblocks)
             start = end = cblocks.index(maxTextLen)
             while start > 0 and cblocks[start] > min(textLens):
