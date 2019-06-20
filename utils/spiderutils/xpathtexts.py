@@ -45,8 +45,8 @@ class xPathTexts(object):
         '''
         import time
         import random
-        pause_time = random.randint(1, 4)
-        time.sleep(pause_time)
+        # pause_time = random.randint(1, 4)
+        # time.sleep(pause_time)
         try:
             resp = requests.get(url=url,headers= headers ,cookies = cookies,timeout=30)
         except:
