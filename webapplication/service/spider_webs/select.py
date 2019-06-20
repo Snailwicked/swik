@@ -52,7 +52,7 @@ class Select:
 
     def select_all(self, data):
         """
-        全部先展示status=1
+        展示采集个未采集
         :param data:
         :return:
         """
@@ -70,8 +70,8 @@ class Select:
         except:
             keyword = ""
 
-        sql = "select * from webinfo where status = {} and web_name LIKE '%{}%'limit {}, {};" .format(status,keyword,(page-1)*limit, limit)
-        count_sql = "select count(*) from webinfo where status = {} and web_name LIKE '%{}%';" .format(status,keyword)
+        sql = "select * from webinfo where status = {} and web_name LIKE '%{}%'limit {}, {};" .format(status, keyword, (page-1)*limit, limit)
+        count_sql = "select count(*) from webinfo where status = {} and web_name LIKE '%{}%';" .format(status, keyword)
         cursors = self.db.cursor()
         try:
             cursors.execute(sql)
