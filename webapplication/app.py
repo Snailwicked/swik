@@ -71,6 +71,7 @@ def get_tasks_on():
     print(result)
     return jsonify({"code": 1, "msg": "任务启动成功"})
 
+
 @app.route('/task/update', methods=['POST'])
 def update_task():
     update = TaskUpdate()

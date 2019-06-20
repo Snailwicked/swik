@@ -52,26 +52,26 @@ class Select:
 
     def select_all(self, data):
         """
-        全部先展示status=1
+        通过status参数展示正在采集和待采集
         :param data:
         :return:
         """
         try:
             page = int(data['page'])
             limit = int(data['limit'])
-        except:
-            pass
+        except Exception as e:
+            print(e)
         try:
             status = int(data['status'])
-        except:
+        except Exception as e:
             status = 1
         try:
             keyword = str(data['keyword'])
-        except:
+        except Exception as e:
             keyword = ""
 
-        sql = "select * from webinfo where status = {} and web_name LIKE '%{}%'limit {}, {};" .format(status,keyword,(page-1)*limit, limit)
-        count_sql = "select count(*) from webinfo where status = {} and web_name LIKE '%{}%';" .format(status,keyword)
+        sql = "select * from webinfo where status = {} and web_name LIKE '%{}%'limit {}, {};" .format(status, keyword, (page-1)*limit, limit)
+        count_sql = "select count(*) from webinfo where status = {} and web_name LIKE '%{}%';" .format(status, keyword)
         cursors = self.db.cursor()
         try:
             cursors.execute(sql)
@@ -86,8 +86,3 @@ class Select:
         finally:
             self.db.close()
 
-
-if __name__ == "__main__":
-    select = Select()
-    result = select.select_all({'status': '0', 'page': '3', 'limit': '10'})
-    print(result)
