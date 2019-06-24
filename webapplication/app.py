@@ -123,7 +123,6 @@ def update():
     update = Update()
     if request.method == 'POST':
         data = request.values.to_dict()
-        print(data)
         update.update(data)
     return jsonify({"code": 1, "msg": "更新成功"})
 
@@ -132,8 +131,9 @@ def update():
 def state_on():
     update = Update()
     if request.method == 'POST':
-        data = request.get_data().decode('utf-8')
-        update.update_status(json.loads(data))
+        data = request.values.to_dict()
+        print(data)
+        update.update_status(data)
     return jsonify({"code": 1, "msg": "更新成功"})
 
 

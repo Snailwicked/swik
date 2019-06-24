@@ -136,7 +136,7 @@
       $.ajax({
                      url:'http://127.0.0.1:5000/web/on',       
               method:'post',       
-              data:JSON.stringify({'id':this.value,"status":status}),        
+              data:{'id':this.value,"status":status},        
               dataType:'JSON',    
                      success:function(){
                         layer.alert("更新成功", {icon: 6},function () {
@@ -153,13 +153,12 @@
   });
 
     form.on('switch(checked)', function(obj){
-          // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
       var checked = 0
       if (obj.elem.checked===true){checked = 1}else {checked = 0}
       $.ajax({
                      url:'http://127.0.0.1:5000/web/on',       
               method:'post',       
-              data:JSON.stringify({'id':this.value,"checked":checked}),        
+              data:{'id':this.value,"checked":checked},        
               dataType:'JSON',    
                      success:function(){
                         layer.alert("更新成功", {icon: 6},function () {
