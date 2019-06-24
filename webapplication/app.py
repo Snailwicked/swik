@@ -30,10 +30,10 @@ def task_add():
     add.add_task(data)
     return "1"
 
-@app.route('/')
-def task_adds():
-
-    return render_template('index.html')
+# @app.route('/')
+# def task_adds():
+#
+#     return render_template('index.html')
 
 
 # 删除任务
