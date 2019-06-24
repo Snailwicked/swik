@@ -8,12 +8,8 @@ class Update:
 
     def update(self, data):
         id = data['id']
-        web_name = data['web_name']
-        url = data['url']
-        agent = int(data['agent'])
-        sort = int(data['sort'])
-        sql = 'update webinfo set web_name="%s", url="%s", agent=%d, sort=%d where id="%s"' % (web_name, url, agent,
-                                                                                               sort, id)
+        remark = data['remark']
+        sql = 'update webinfo set remark="%s" where id="%s"' % (remark, id)
         cursors = self.db.cursor()
         try:
             cursors.execute(sql)
@@ -25,8 +21,19 @@ class Update:
 
     def update_status(self, data):
         id = data['id']
-        status = int(data['status'])
-        sql = 'update webinfo set status=%d where id="%s"' % (status, id)
+        try:
+            status = int(data['status'])
+            sql = 'update webinfo set status=%d where id="%s"' % (status, id)
+        except:
+            pass
+        try:
+            checked = int(data['checked'])
+            sql = 'update webinfo set checked=%d where id="%s"' % (checked, id)
+
+        except:
+            pass
+
+
         cursors = self.db.cursor()
         try:
             cursors.execute(sql)

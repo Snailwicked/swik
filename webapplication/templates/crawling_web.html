@@ -52,11 +52,11 @@
     </div>
     <script type="text/html" id="barDemo">
       <a title="删除" lay-event="del"><i class="layui-icon" >&#xe640;</i></a>
-      <a title="检测" lay-event="check"><i class="layui-icon" >&#xe67a;</i></a>
+      <a title="检测" lay-event="check"><i class="layui-icon" >&#xe601;</i></a>
 
     </script>
     <script type="text/html" id="switchTpl">
-      <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="在采集|未采集" lay-filter="status" {{ d.status == 1 ? 'checked' : '' }}>
+      <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="可采集|有bug" lay-filter="status" {{ d.status == 1 ? 'checked' : '' }}>
     </script>
     <script type="text/html" id="switchTps">
       <input type="checkbox" name="checked" value="{{d.id}}" lay-skin="switch" lay-text="已检测|未检测" lay-filter="checked" {{ d.checked == 1 ? 'checked' : '' }}>
@@ -80,6 +80,8 @@
              ,{field:'add_time', title:'添加时间'}
              // ,{field:'agent', title:'代理情况'}
              // ,{field:'sort', title:'网站类型'}
+             ,{field:'remark', title:'备注',edit: 'text'}
+
              ,{field:'status', title:'网站状态' ,templet: '#switchTpl', unresize: true}
              ,{field:'checked', title:'是否检测' ,templet: '#switchTps', unresize: true}
 
@@ -139,12 +141,35 @@
                      success:function(){
                         layer.alert("更新成功", {icon: 6},function () {
                              layer.closeAll();
-                             location.reload()
+                             parent.reload()
                              })},
                       error:function (){
                          layer.alert("更新失败", {icon: 6},function () {
                              layer.closeAll();
-                             location.reload()
+                             parent.reload()
+                             })
+                      }
+                  })
+  });
+
+    form.on('switch(checked)', function(obj){
+          // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+      var checked = 0
+      if (obj.elem.checked===true){checked = 1}else {checked = 0}
+      $.ajax({
+                     url:'http://127.0.0.1:5000/web/on',       
+              method:'post',       
+              data:JSON.stringify({'id':this.value,"checked":checked}),        
+              dataType:'JSON',    
+                     success:function(){
+                        layer.alert("更新成功", {icon: 6},function () {
+                             layer.closeAll();
+                             parent.reload()
+                             })},
+                      error:function (){
+                         layer.alert("更新失败", {icon: 6},function () {
+                             layer.closeAll();
+                             parent.reload()
                              })
                       }
                   })
@@ -157,17 +182,17 @@
                  $.ajax({
                      url:'http://127.0.0.1:5000/web/update',       
               method:'post',       
-              data:JSON.stringify(data),        
+              data:{id:data.id,remark:data.remark},        
               dataType:'JSON',    
                      success:function(){
                         layer.alert("更新成功", {icon: 6},function () {
                              layer.closeAll();
-                             location.reload()
+                             parent.reload()
                              })},
                       error:function (){
                          layer.alert("更新失败", {icon: 6},function () {
                              layer.closeAll();
-                             location.reload()
+                             parent.reload()
                              })
                       }
                   })

@@ -123,8 +123,9 @@ def add_data():
 def update():
     update = Update()
     if request.method == 'POST':
-        data = request.get_data().decode('utf-8')
-        update.update(json.loads(data))
+        data = request.values.to_dict()
+        print(data)
+        update.update(data)
     return jsonify({"code": 1, "msg": "更新成功"})
 
 
