@@ -18,6 +18,18 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+      .screenBtn{
+        background-color: #fff;
+        color: #ccc;
+        margin-top: 0px;
+        width: 85px;
+
+      }
+      .screenBtn.layui-form-onswitch{
+        background-color: #009688;
+      }
+    </style>
   </head>
   
   <body>
@@ -42,8 +54,15 @@
       <xblock>
         <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
         <button class="layui-btn" onclick="x_admin_show('添加网站','./member-add.html',450,250)"><i class="layui-icon"></i>添加</button>
-
-        反选  <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭" id="sta">
+        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn" data-statu="status" lay-skin="_switch">
+          <em>是否可采集</em>
+          <i></i>
+        </span>
+        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn" data-statu="checked"lay-skin="_switch">
+          <em>是否监测</em>
+          <i></i>
+        </span>
+<!--        <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭" id="sta">-->
       </xblock>
       <table id="layui-table" lay-filter="layui-table"></table>
     </div>
@@ -111,23 +130,44 @@
                   });
   });
 
-  $('#sta').on('click', function () {
+  $('.screenBtn').on('click', function () {
+      let onSwitch = this.classList.contains('layui-form-onswitch'),
+          status = 0,
+          AttrStatu = this.getAttribute('data-statu');
+      if (onSwitch) {
+        this.classList.remove('layui-form-onswitch')
+        status = 0
+      } else {
+        this.classList.add('layui-form-onswitch')
+        status = 1
+      }
+      var obj = {};
+      obj[AttrStatu] = status
+      table.reload('layui-table', {
+             where: obj
+            , page: {
+                curr: 1
+            }
+      });
+  })
 
-                 if($("#sta").is(':checked')){
-                          status = 0
-                 } else {
-                     status = 1
-                 }
-
-                  table.reload('layui-table', {
-                       where: {
-                           'status':status
-                      }
-                      , page: {
-                          curr: 1
-                      }
-                  });
-  });
+  // $('#sta').on('click', function () {
+  //
+  //                if($("#sta").is(':checked')){
+  //                         status = 0
+  //                } else {
+  //                    status = 1
+  //                }
+  //
+  //                 table.reload('layui-table', {
+  //                      where: {
+  //                          'status':status
+  //                     }
+  //                     , page: {
+  //                         curr: 1
+  //                     }
+  //                 });
+  // });
 
   form.on('switch(status)', function(obj){
           // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);

@@ -9,7 +9,7 @@ from webapplication.service.spider_tasks.taskupdate import TaskUpdate
 from webapplication.service.spider_tasks.taskdelete import TaskDelete
 from webapplication.service.spider_tasks.taskadd import TaskAdd
 import json
-from utils.spiderutils.parse import Parse
+# from utils.spiderutils.parse import Parse
 # from celery import Celery
 
 
@@ -60,14 +60,14 @@ def get_tasks_off():
 def get_tasks_on():
     params = request.values.to_dict()
     # update = TaskUpdate()
-    parse = Parse()
+    # parse = Parse()
     # data = request.get_data().decode('utf-8')
     # update.update_status(json.loads(data))
     # update_other = TaskUpdate()
     # urls = update_other.query_mongo_urls(json.loads(data))
-    urls = []
-    urls.append(params.get("url"))
-    data = parse.get_data(urls)
+    # urls = []
+    # urls.append(params.get("url"))
+    # data = parse.get_data(urls)
     return jsonify({"code": 0, "msg": "", "count": len(data), "data": data})
 
 
@@ -83,6 +83,7 @@ def update_task():
 def get_datas_on():
     select = Select()
     params = request.args.to_dict()
+    print(params)
     data = select.select_all(params)
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
