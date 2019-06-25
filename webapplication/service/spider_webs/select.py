@@ -61,17 +61,22 @@ class Select:
             limit = int(data['limit'])
         except Exception as e:
             print(e)
-        try:
-            status = int(data['status'])
-        except Exception as e:
-            status = 1
+
         try:
             keyword = str(data['keyword'])
         except Exception as e:
             keyword = ""
 
-        sql = "select * from webinfo where status = {} and web_name LIKE '%{}%'limit {}, {};" .format(status, keyword, (page-1)*limit, limit)
-        count_sql = "select count(*) from webinfo where status = {} and web_name LIKE '%{}%';" .format(status, keyword)
+        try:
+            status = int(data['status'])
+        except Exception as e:
+            status = 1
+        try:
+            checked = str(data['checked'])
+        except Exception as e:
+            checked = 1
+        sql = "select * from webinfo where status = {} and checked={} and web_name LIKE '%{}%'limit {}, {};" .format(status, checked,keyword, (page-1)*limit, limit)
+        count_sql = "select count(*) from webinfo where status = {} and checked={} and web_name LIKE '%{}%';" .format(status, checked,keyword)
         cursors = self.db.cursor()
         try:
             cursors.execute(sql)
