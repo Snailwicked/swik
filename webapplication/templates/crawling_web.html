@@ -122,6 +122,11 @@
                 ,{field:'total', title:'数量'}
                 , {field: 'remark', title: '备注', edit: 'text'}]]
             , page: true
+             ,where:{
+                 'checked': 1,
+                'status': 1,
+                'is_starting':1
+            }
         });
 
         $('#search').on('click', function () {

@@ -75,14 +75,19 @@ class Select:
             checked = str(data['checked'])
         except Exception as e:
             checked = 1
-
         try:
             is_starting = str(data['is_starting'])
+            sql = "select * from webinfo where status = {} and checked={} and is_starting = {} and web_name LIKE '%{}%'limit {}, {};".format(
+                status, checked, is_starting, keyword, (page - 1) * limit, limit)
+            count_sql = "select count(*) from webinfo where status = {} and checked={} and is_starting = {}  and web_name LIKE '%{}%';".format(
+                status, checked, is_starting, keyword)
         except Exception as e:
-            is_starting = 1
+            sql = "select * from webinfo where status = {} and checked={} and web_name LIKE '%{}%'limit {}, {};".format(
+                status, checked, keyword, (page - 1) * limit, limit)
+            count_sql = "select count(*) from webinfo where status = {} and checked={}  and web_name LIKE '%{}%';".format(
+                status, checked, keyword)
 
-        sql = "select * from webinfo where status = {} and checked={} and is_starting = {} and web_name LIKE '%{}%'limit {}, {};" .format(status, checked,is_starting,keyword, (page-1)*limit, limit)
-        count_sql = "select count(*) from webinfo where status = {} and checked={} and is_starting = {}  and web_name LIKE '%{}%';" .format(status, checked, is_starting ,keyword)
+
         cursors = self.db.cursor()
         try:
             cursors.execute(sql)
