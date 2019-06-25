@@ -111,7 +111,7 @@ class ContentExtractor(object):
             return _authors
 
         ATTRS = ['name', 'rel', 'itemprop', 'class', 'id','property']
-        VALS = ['author', 'byline', 'dc.creator', 'byl','section','creator',]
+        VALS = ['author', 'byline', 'dc.creator', 'byl','section','creator','edit']
         matches = []
         authors = []
 
@@ -135,7 +135,14 @@ class ContentExtractor(object):
                 authors.extend(parse_byline(res))
 
         if uniqify_list(authors):
-            return uniqify_list(authors)[0]
+            for item in uniqify_list(authors):
+                if "编" in item:
+                    return item
+            for item in uniqify_list(authors):
+
+                if item.isdigit():
+                    continue
+                return item
         return ""
 
     def get_publishing_date(self):
@@ -417,7 +424,7 @@ class ContentExtractor(object):
 
 
 if __name__ == "__main__":
-    url = "http://www.sohu.com/a/302964777_115479"
+    url = "http://shipin.people.com.cn/n/2014/1017/c85914-25855894.html"
     import requests
     res = requests.get(url)
     html = res.text
@@ -429,17 +436,18 @@ if __name__ == "__main__":
         bianma = ""
     if bianma != "":
         charset = bianma.lower()
-    print(charset)
     res.encoding = charset
 
-
-
+    html = res.text
+    print(html)
     ce = ContentExtractor(html=html,url=url)
 
     # print("发布时间",ce.get_publishing_date())
     # print("新闻标题",ce.get_title())
-    print("新闻内容",ce.get_content())
+    # print("新闻内容",ce.get_content())
     # print("新闻摘要",ce.get_summary())
+    print("新闻作者",ce.get_authors())
+
     # print(ce.doc)
     # print(ce.get_uuid())
     # print(ce.get_thirteenTime())
