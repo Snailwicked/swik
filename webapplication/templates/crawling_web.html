@@ -146,6 +146,8 @@
 
             if (AttrStatu === 'checked' && $(".gather")[0].classList.contains('layui-form-onswitch')) {
                 layer.msg('可采集已经是以检测的', {icon: 6, time: 1000});
+            } else if (AttrStatu === 'status' && !$(".gather")[0].classList.contains('layui-form-onswitch') && !$(".monitor")[0].classList.contains('layui-form-onswitch')) {
+                layer.msg('可采集已经是以检测的', {icon: 6, time: 1000});
             } else {
                 if (onSwitch) {
                     this.classList.remove('layui-form-onswitch')
