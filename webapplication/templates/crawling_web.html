@@ -54,11 +54,11 @@
       <xblock>
         <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
         <button class="layui-btn" onclick="x_admin_show('添加网站','./member-add.html',450,250)"><i class="layui-icon"></i>添加</button>
-        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn" data-statu="status" lay-skin="_switch">
+        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn gather" data-statu="status" lay-skin="_switch">
           <em>是否可采集</em>
           <i></i>
         </span>
-        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn" data-statu="checked"lay-skin="_switch">
+        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn monitor" data-statu="checked"lay-skin="_switch">
           <em>是否监测</em>
           <i></i>
         </span>
@@ -149,8 +149,17 @@
                 curr: 1
             }
       });
-  })
-
+      forbidden()
+  });
+  function forbidden () {
+    let hoaveAttr = $(".gather")[0].classList.contains('layui-form-onswitch');
+    if (hoaveAttr) {
+      $('.monitor').css('pointer-events', 'none')
+    } else {
+      $('.monitor').css('pointer-events', 'auto')
+    }
+  }
+  forbidden()
   // $('#sta').on('click', function () {
   //
   //                if($("#sta").is(':checked')){
