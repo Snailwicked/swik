@@ -99,6 +99,6 @@ class Select:
 
 if __name__ == '__main__':
     select = Select()
-    data = {'is_starting': '0', 'page': '1', 'limit': '10', 'status': '1', 'checked': '1'}
+    data = {'is_starting': '1', 'page': '1', 'limit': '10', 'status': '1', 'checked': '1'}
     for item in select.select_all(data).get("data"):
         print(item)
