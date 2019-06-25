@@ -57,18 +57,18 @@
     </div>
     <xblock>
         <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
-<!--        <button class="layui-btn" onclick="x_admin_show('添加网站','./member-add.html',450,250)"><i class="layui-icon"></i>添加-->
-<!--        </button>-->
-<!--        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn gather" data-statu="status"-->
-<!--              lay-skin="_switch">-->
-<!--          <em>可采集</em>-->
-<!--          <i></i>-->
-<!--        </span>-->
-<!--        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn monitor" data-statu="checked"-->
-<!--              lay-skin="_switch">-->
-<!--          <em>已监测</em>-->
-<!--          <i></i>-->
-<!--        </span>-->
+        <button class="layui-btn" onclick="x_admin_show('添加网站','./member-add.html',450,250)"><i class="layui-icon"></i>添加
+        </button>
+        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn gather" data-statu="status"
+              lay-skin="_switch">
+          <em>可采集</em>
+          <i></i>
+        </span>
+        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn monitor" data-statu="checked"
+              lay-skin="_switch">
+          <em>已监测</em>
+          <i></i>
+        </span>
         <!--        <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭" id="sta">-->
     </xblock>
     <table id="layui-table" lay-filter="layui-table"></table>
@@ -76,11 +76,11 @@
 <div id="view-member-div" style="padding: 1% 5%;display: none">
     <table class="layui-table" id="view-member-table"></table>
 </div>
-<!--<script type="text/html" id="barDemo">-->
-<!--    <a title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>-->
-<!--    <a title="检测" lay-event="check"><i class="layui-icon">&#xe601;</i></a>-->
+<script type="text/html" id="barDemo">
+    <a title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+    <a title="检测" lay-event="check"><i class="layui-icon">&#xe601;</i></a>
 
-<!--</script>-->
+</script>
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="可采集|有bug" lay-filter="status" {{
            d.status== 1 ? 'checked' : '' }}>
@@ -106,10 +106,14 @@
                 , {field: 'web_name', title: '网站名称'}
                 , {field: 'url', title: '网址'}
                 , {field: 'add_time', title: '添加时间'}
-                ,{field:'staring', title:'正在被采集'}
-                ,{field:'spider_name', title:'爬虫名称'}
-                ,{field:'total', title:'数量'}
-                , {field: 'remark', title: '备注', edit: 'text'}]]
+                // ,{field:'agent', title:'代理情况'}
+                // ,{field:'sort', title:'网站类型'}
+                , {field: 'remark', title: '备注', edit: 'text'}
+
+                , {field: 'status', title: '网站状态', templet: '#switchTpl', unresize: true}
+                , {field: 'checked', title: '是否检测', templet: '#switchTps', unresize: true}
+
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo'}]]
             , page: true
         });
 
