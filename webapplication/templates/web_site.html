@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>网址列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .screenBtn {
+            background-color: #fff;
+            color: #ccc;
+            margin-top: 0px;
+            width: 85px;
+
+        }
+
+        .screenBtn.layui-form-onswitch {
+            background-color: #009688;
+        }
+    </style>
+</head>
+
+<body>
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body">
+    <div class="layui-row">
+
+        <div class="layui-form layui-col-md12 x-so">
+            <input type="text" placeholder="请输入网站名称" autocomplete="off" class="layui-input" id="keyword">
+            <button class="layui-btn" lay-submit="" lay-filter="search" id="search"><i class="layui-icon">&#xe615;</i>
+            </button>
+        </div>
+    </div>
+    <xblock>
+        <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
+        <button class="layui-btn" onclick="x_admin_show('添加网站','./member-add.html',450,250)"><i class="layui-icon"></i>添加
+        </button>
+        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn gather" data-statu="status"
+              lay-skin="_switch">
+          <em>可采集</em>
+          <i></i>
+        </span>
+        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn monitor" data-statu="checked"
+              lay-skin="_switch">
+          <em>已监测</em>
+          <i></i>
+        </span>
+        <!--        <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭" id="sta">-->
+    </xblock>
+    <table id="layui-table" lay-filter="layui-table"></table>
+</div>
+<div id="view-member-div" style="padding: 1% 5%;display: none">
+    <table class="layui-table" id="view-member-table"></table>
+</div>
+<script type="text/html" id="barDemo">
+    <a title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+    <a title="检测" lay-event="check"><i class="layui-icon">&#xe601;</i></a>
+
+</script>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="可采集|有bug" lay-filter="status" {{
+           d.status== 1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="switchTps">
+    <input type="checkbox" name="checked" value="{{d.id}}" lay-skin="switch" lay-text="已检测|未检测" lay-filter="checked" {{
+           d.checked== 1 ? 'checked' : '' }}>
+</script>
+
+<script>
+    layui.use(['table', 'layer', 'laydate', 'jquery'], function () {
+        var table = layui.table,
+            form = layui.form,
+            $ = layui.jquery;
+
+        table.render({
+            elem: '#layui-table'
+            , url: 'http://localhost:5000/web_site/select_all'
+            , dataType: "json"
+            , title: '用户数据表'
+            , cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'domain', title: '网站名称'}
+                , {field: 'webSite', title: '网址'}
+                // , {field: 'add_time', title: '添加时间'}
+                // // ,{field:'agent', title:'代理情况'}
+                 ,{field:'sort', title:'网站类型'}
+                // , {field: 'remark', title: '备注', edit: 'text'}
+                //
+                // , {field: 'status', title: '网站状态', templet: '#switchTpl', unresize: true}
+                // , {field: 'checked', title: '是否检测', templet: '#switchTps', unresize: true}
+
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo'}]]
+            , page: true
+        });
+
+        $('#search').on('click', function () {
+            let hoaveAttr = $(".gather")[0].classList.contains('layui-form-onswitch');
+            // 搜索条件
+            var keyword = $('#keyword').val();
+
+            if (hoaveAttr) {
+                status = 1
+            } else {
+                status = 0
+            }
+
+            table.reload('layui-table', {
+                where: {
+                    'keyword': keyword,
+                    'status': status
+                }
+                , page: {
+                    curr: 1
+                }
+            });
+        });
+
+        $('.screenBtn').on('click', function () {
+            let onSwitch = this.classList.contains('layui-form-onswitch'),
+                condition = 0,
+                AttrStatu = this.getAttribute('data-statu');
+
+            if (AttrStatu === 'checked' && $(".gather")[0].classList.contains('layui-form-onswitch')) {
+                layer.msg('可采集已经是以检测的', {icon: 6, time: 1000});
+            } else if (AttrStatu === 'status' && !$(".gather")[0].classList.contains('layui-form-onswitch') && !$(".monitor")[0].classList.contains('layui-form-onswitch')) {
+                layer.msg('可采集已经是以检测的', {icon: 6, time: 1000});
+            } else {
+                if (onSwitch) {
+                    this.classList.remove('layui-form-onswitch')
+                    condition = 0;
+                    if (AttrStatu === 'status') {
+                        $(this).find('em').text('不可采集')
+                    } else {
+                        $(this).find('em').text('未监测')
+                    }
+                } else {
+                    this.classList.add('layui-form-onswitch')
+                    condition = 1;
+                    if (AttrStatu === 'status') {
+                        $(this).find('em').text('可采集')
+                    } else {
+                        $(this).find('em').text('已监测')
+                    }
+                }
+
+                var obj = {};
+                obj[AttrStatu] = condition
+                table.reload('layui-table', {
+                    where: obj
+                    , page: {
+                        curr: 1
+                    }
+                });
+            }
+
+        });
+
+        form.on('switch(status)', function (obj) {
+            // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+            var status = 0
+            if (obj.elem.checked === true) {
+                status = 1
+            } else {
+                status = 0
+            }
+            $.ajax({
+                url: 'http://127.0.0.1:5000/web/on',
+                method: 'post',
+                data: {'id': this.value, "status": status},
+                dataType: 'JSON',
+                success: function () {
+                    layer.alert("更新成功", {icon: 6}, function () {
+                        layer.closeAll();
+                        parent.reload()
+                    })
+                },
+                error: function () {
+                    layer.alert("更新失败", {icon: 6}, function () {
+                        layer.closeAll();
+                        parent.reload()
+                    })
+                }
+            })
+        });
+
+        form.on('switch(checked)', function (obj) {
+            var checked = 0
+            if (obj.elem.checked === true) {
+                checked = 1
+            } else {
+                checked = 0
+            }
+            $.ajax({
+                url: 'http://127.0.0.1:5000/web/on',
+                method: 'post',
+                data: {'id': this.value, "checked": checked},
+                dataType: 'JSON',
+                success: function () {
+                    layer.alert("更新成功", {icon: 6}, function () {
+                        layer.closeAll();
+                        parent.reload()
+                    })
+                },
+                error: function () {
+                    layer.alert("更新失败", {icon: 6}, function () {
+                        layer.closeAll();
+                        parent.reload()
+                    })
+                }
+            })
+        });
+
+
+        table.on('edit(layui-table)', function (obj) {
+            layer.confirm('确定对此行进行编辑吗', function () {
+                var data = obj.data //得到所在行所有键值
+                $.ajax({
+                    url: 'http://127.0.0.1:5000/web/update',
+                    method: 'post',
+                    data: {id: data.id, remark: data.remark},
+                    dataType: 'JSON',
+                    success: function () {
+                        layer.alert("更新成功", {icon: 6}, function () {
+                            layer.closeAll();
+                            parent.reload()
+                        })
+                    },
+                    error: function () {
+                        layer.alert("更新失败", {icon: 6}, function () {
+                            layer.closeAll();
+                            parent.reload()
+                        })
+                    }
+                })
+            })
+
+
+        });
+        //监听行工具事件
+        table.on('tool(layui-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function () {
+                    $.ajax({
+                        url: 'http://127.0.0.1:5000/web/delete',
+                        method: 'post',
+                        data: JSON.stringify(data),
+                        dataType: 'JSON',
+                        success: function () {
+                            layer.alert("删除成功", {icon: 6}, function () {
+                                layer.closeAll();
+                                location.reload()
+                            });
+                        },
+                        error: function () {
+
+                            layer.alert("删除成功", {icon: 6}, function () {
+                                layer.closeAll();
+                                location.reload()
+                            });
+
+                        }
+                    })
+                });
+            }
+            if (obj.event === 'check') {
+                layer.open({
+                    type: 1,
+                    content: $('#view-member-div'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    title: '新闻数据',
+                    area: ['800px', '420px'],
+                    success: function (layero, index) {
+                        layui.use('table', function () {
+                            var table = layui.table;
+                            var cols = [[ //标题栏
+                                // {field:'num', title: '序号',align: 'center'}
+                                {field: 'title', title: '标题'}
+                                , {field: 'authors', title: '作者'}
+
+                                , {field: 'summary', title: '摘要'}
+                                , {field: 'publishing_date', title: '发布时间'}
+                                , {field: 'url', title: '网址'}
+
+                                , {field: 'content', title: '内容'}
+                                // ,{field:'remainingPoints', title: '剩余积分',align: 'center'}
+                                // ,{field:'time', title: '领卡时间',align: 'center'}
+                            ]]
+                            //展示已知数据
+                            table.render({
+                                elem: '#view-member-table'
+                                , url: 'http://127.0.0.1:5000/task/on'
+                                , size: 'sm'
+                                , method: 'post'
+                                , cols: cols
+                                , where: {url: data.url}
+                                , even: true
+                                , height: '300'
+                            });
+
+                        });
+                    }
+
+                });
+            }
+        });
+    });
+
+</script>
+
+
+<!--弹出-->
+
+
+</body>
+
+</html>

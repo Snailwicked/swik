@@ -75,16 +75,22 @@ class Select:
             checked = str(data['checked'])
         except Exception as e:
             checked = 1
+
+        try:
+            sort = str(data['sort'])
+        except Exception as e:
+            sort = 0
+
         try:
             is_starting = str(data['is_starting'])
-            sql = "select * from webinfo where status = {} and checked={} and is_starting = {} and web_name LIKE '%{}%'limit {}, {};".format(
+            sql = "select * from webinfo where sort = {} and status = {} and checked={} and is_starting = {} and web_name LIKE '%{}%'limit {}, {};".format(sort,
                 status, checked, is_starting, keyword, (page - 1) * limit, limit)
-            count_sql = "select count(*) from webinfo where status = {} and checked={} and is_starting = {}  and web_name LIKE '%{}%';".format(
+            count_sql = "select count(*) from webinfo where sort = {} and status = {} and checked={} and is_starting = {}  and web_name LIKE '%{}%';".format(sort,
                 status, checked, is_starting, keyword)
         except Exception as e:
-            sql = "select * from webinfo where status = {} and checked={} and web_name LIKE '%{}%'limit {}, {};".format(
+            sql = "select * from webinfo where sort = {} and status = {} and checked={} and web_name LIKE '%{}%'limit {}, {};".format(sort,
                 status, checked, keyword, (page - 1) * limit, limit)
-            count_sql = "select count(*) from webinfo where status = {} and checked={}  and web_name LIKE '%{}%';".format(
+            count_sql = "select count(*) from webinfo where sort = {} and status = {} and checked={}  and web_name LIKE '%{}%';".format(sort,
                 status, checked, keyword)
 
 

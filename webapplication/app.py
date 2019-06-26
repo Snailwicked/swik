@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify,render_template
 from flask_cors import *
 from webapplication.service.spider_webs.select import Select
+from webapplication.service.spider_domain.domain_select import domain_Select
+
 from webapplication.service.spider_webs.add import Add
 from webapplication.service.spider_webs.delete import Delete
 from webapplication.service.spider_webs.update import Update
@@ -9,7 +11,9 @@ from webapplication.service.spider_tasks.taskupdate import TaskUpdate
 from webapplication.service.spider_tasks.taskdelete import TaskDelete
 from webapplication.service.spider_tasks.taskadd import TaskAdd
 import json
-# from utils.spiderutils.parse import Parse
+from utils.spiderutils.parse import Parse
+import threading
+
 # from celery import Celery
 
 
@@ -60,14 +64,15 @@ def get_tasks_off():
 def get_tasks_on():
     params = request.values.to_dict()
     # update = TaskUpdate()
-    # parse = Parse()
-    # data = request.get_data().decode('utf-8')
+    parse = Parse()
+    # data = request.values().decode('utf-8')
     # update.update_status(json.loads(data))
     # update_other = TaskUpdate()
     # urls = update_other.query_mongo_urls(json.loads(data))
-    # urls = []
-    # urls.append(params.get("url"))
-    # data = parse.get_data(urls)
+    urls = []
+    urls.append(params.get("url"))
+    print(len(urls))
+    data = parse.get_data(urls)
     return jsonify({"code": 0, "msg": "", "count": len(data), "data": data})
 
 
@@ -86,6 +91,17 @@ def get_datas_on():
     print(params)
     data = select.select_all(params)
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
+
+# 全部网址
+@app.route('/web_site/select_all')
+def get_web_site_data():
+    select = domain_Select()
+    params = request.args.to_dict()
+    print(params)
+    data = select.select_all(params)
+    return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
+
+
 
 # 网页待启动网址
 # @app.route('/web/select_off')
@@ -124,6 +140,7 @@ def update():
     update = Update()
     if request.method == 'POST':
         data = request.values.to_dict()
+        print(data)
         update.update(data)
     return jsonify({"code": 1, "msg": "更新成功"})
 
@@ -139,4 +156,4 @@ def state_on():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
