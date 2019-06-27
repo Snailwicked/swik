@@ -6,49 +6,6 @@ class Select:
         self.db = pymysql.connect(host='101.132.113.50', user='root', password='BlueSnail123!', db='spider_manage',
                              charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
-    # def select_all(self, data):
-    #     """
-    #     启用网址
-    #     :return: data
-    #     """
-    #     page = int(data['page'])
-    #     limit = int(data['limit'])
-    #     sql = "select * from webinfo where status=%d order by add_time desc limit %d, %d" % (1, (page-1)*limit, limit)
-    #     count_sql = 'select * from webinfo where status=%d' % 1
-    #     cursors = self.db.cursor()
-    #     try:
-    #         cursors.execute(sql)
-    #         data = cursors.fetchall()
-    #         count = cursors.execute(count_sql)
-    #         data = {'data': data, 'count': count}
-    #         self.db.commit()
-    #         return data
-    #     except Exception as e:
-    #         print(e)
-    #     finally:
-    #         self.db.close()
-    #
-    # def select_off(self, data):
-    #     """
-    #     停用网址
-    #     :return: data
-    #     """
-    #     page = int(data['page'])
-    #     limit = int(data['limit'])
-    #     sql = "select * from webinfo where status=%d order by add_time desc limit %d, %d" % (0, (page-1)*limit, limit)
-    #     count_sql = 'select * from webinfo where status=%d' % 0
-    #     cursors = self.db.cursor()
-    #     try:
-    #         cursors.execute(sql)
-    #         data = cursors.fetchall()
-    #         count = cursors.execute(count_sql)
-    #         data = {'data': data, 'count': count}
-    #         self.db.commit()
-    #         return data
-    #     except Exception as e:
-    #         print(e)
-    #     finally:
-    #         self.db.close()
 
     def select_all(self, data):
         """
@@ -56,49 +13,28 @@ class Select:
         :param data:
         :return:
         """
-        try:
-            page = int(data['page'])
-            limit = int(data['limit'])
-        except Exception as e:
-            print(e)
-
-        try:
-            keyword = str(data['keyword'])
-        except Exception as e:
-            keyword = ""
-
-        try:
-            status = int(data['status'])
-        except Exception as e:
-            status = 1
-        try:
-            checked = str(data['checked'])
-        except Exception as e:
-            checked = 1
-
-        try:
-            sort = str(data['sort'])
-        except Exception as e:
-            sort = 0
-
-        try:
-            pid = str(data['pid'])
-        except Exception as e:
-            pid = 6104
-
-
-        try:
-            is_starting = str(data['is_starting'])
-            sql = "select * from webinfo where sort = {} and status = {} and checked={} and is_starting = {} and web_name LIKE '%{}%'limit {}, {};".format(sort,
-                status, checked, is_starting, keyword, (page - 1) * limit, limit)
-            count_sql = "select count(*) from webinfo where sort = {} and status = {} and checked={} and is_starting = {}  and web_name LIKE '%{}%';".format(sort,
-                status, checked, is_starting, keyword)
-        except Exception as e:
-            sql = "select * from webinfo where pid = {} and sort = {} and status = {} and checked={} and web_name LIKE '%{}%'limit {}, {};".format(pid,sort,
-                status, checked, keyword, (page - 1) * limit, limit)
-            count_sql = "select count(*) from webinfo where pid = {} and sort = {} and status = {} and checked={}  and web_name LIKE '%{}%';".format(pid,sort,
-                status, checked, keyword)
-
+        page = int(data['page'])
+        limit = int(data['limit'])
+        pid = str(data['pid'])
+        if len(data)==3:
+            try:
+                sql = "select * from webinfo where pid = {} limit {}, {};".format(pid,(page - 1) * limit, limit)
+                count_sql = "select count(*) from webinfo where pid = {}".format(pid)
+            except Exception as e:
+                print(e)
+        else:
+            try:
+                status = int(data['status'])
+            except Exception:
+                pass
+            try:
+                checked = str(data['checked'])
+            except Exception:
+                pass
+            sql = "select * from webinfo where pid = {} and  status = {} and checked={} limit {}, {};".format(pid,
+                    status, checked, (page - 1) * limit, limit)
+            count_sql = "select count(*) from webinfo where pid = {} and  status = {} and checked={}".format(pid,
+                    status, checked)
 
         cursors = self.db.cursor()
         try:
