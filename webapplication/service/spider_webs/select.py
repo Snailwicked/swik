@@ -82,15 +82,21 @@ class Select:
             sort = 0
 
         try:
+            pid = str(data['pid'])
+        except Exception as e:
+            pid = 6104
+
+
+        try:
             is_starting = str(data['is_starting'])
             sql = "select * from webinfo where sort = {} and status = {} and checked={} and is_starting = {} and web_name LIKE '%{}%'limit {}, {};".format(sort,
                 status, checked, is_starting, keyword, (page - 1) * limit, limit)
             count_sql = "select count(*) from webinfo where sort = {} and status = {} and checked={} and is_starting = {}  and web_name LIKE '%{}%';".format(sort,
                 status, checked, is_starting, keyword)
         except Exception as e:
-            sql = "select * from webinfo where sort = {} and status = {} and checked={} and web_name LIKE '%{}%'limit {}, {};".format(sort,
+            sql = "select * from webinfo where pid = {} and sort = {} and status = {} and checked={} and web_name LIKE '%{}%'limit {}, {};".format(pid,sort,
                 status, checked, keyword, (page - 1) * limit, limit)
-            count_sql = "select count(*) from webinfo where sort = {} and status = {} and checked={}  and web_name LIKE '%{}%';".format(sort,
+            count_sql = "select count(*) from webinfo where pid = {} and sort = {} and status = {} and checked={}  and web_name LIKE '%{}%';".format(pid,sort,
                 status, checked, keyword)
 
 
@@ -110,6 +116,6 @@ class Select:
 
 if __name__ == '__main__':
     select = Select()
-    data = {'is_starting': '1', 'page': '1', 'limit': '10', 'status': '1', 'checked': '1'}
+    data = {'pid': 6104, 'page': '1', 'limit': '10', 'status': '1', 'checked': '1'}
     for item in select.select_all(data).get("data"):
         print(item)
