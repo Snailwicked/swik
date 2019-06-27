@@ -6,8 +6,7 @@
     <title>网址列表</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8"/>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="./css/font.css">
     <link rel="stylesheet" href="./css/xadmin.css">
@@ -20,6 +19,16 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
+        .syteType {
+            display: inline-block;
+        }
+
+        .syteType select {
+            height: 30px;
+            background-color: #009688;
+            color: #fff;
+        }
+
         .screenBtn {
             background-color: #fff;
             color: #ccc;
@@ -30,6 +39,14 @@
 
         .screenBtn.layui-form-onswitch {
             background-color: #009688;
+        }
+
+        #view-detail-div .layui-table-body {
+            height: 100% !important;
+        }
+
+        #view-detail-div .layui-table-body tr {
+            height: 40px;
         }
     </style>
 </head>
@@ -56,46 +73,60 @@
         </div>
     </div>
     <xblock>
-        <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
         <button class="layui-btn" onclick="x_admin_show('添加网站','./member-add.html',450,250)"><i class="layui-icon"></i>添加
         </button>
-        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn gather" data-statu="status"
+        <div class="syteType">
+            <select name="interest" lay-filter="aihao">
+                <option value="1">新闻</option>
+                <option value="0">其它</option>
+            </select>
+        </div>
+    </xblock>
+    <table id="layui-table" lay-filter="layui-table"></table>
+</div>
+<div id="view-member-div" class="x-body" style="padding: 1% 5%;display: none">
+    <table class="layui-table" id="view-member-table"></table>
+</div>
+<div id="view-detail-div" class="x-body" style="display: none">
+    <xblock>
+        <button class="layui-btn" onclick="x_admin_show('添加网站','./member-add.html',450,250)"><i class="layui-icon"></i>添加
+        </button>
+        <span class="layui-unselect layui-form-switch  screenBtn gather" data-statu="status"
               lay-skin="_switch">
           <em>可采集</em>
           <i></i>
         </span>
-        <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn monitor" data-statu="checked"
+        <span class="layui-unselect layui-form-switch  screenBtn monitor" data-statu="checked"
               lay-skin="_switch">
           <em>已监测</em>
           <i></i>
         </span>
         <!--        <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭" id="sta">-->
     </xblock>
-    <table id="layui-table" lay-filter="layui-table"></table>
-</div>
-<div id="view-member-div" style="padding: 1% 5%;display: none">
-    <table class="layui-table" id="view-member-table"></table>
+    <table class="layui-table" id="view-detail-table"></table>
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="可采集|有bug" lay-filter="status"
+               {{
+               d.status== 1 ? 'checked' : '' }}>
+    </script>
+    <script type="text/html" id="switchTps">
+        <input type="checkbox" name="checked" value="{{d.id}}" lay-skin="switch" lay-text="已检测|未检测" lay-filter="checked"
+               {{
+               d.checked== 1 ? 'checked' : '' }}>
+    </script>
 </div>
 <script type="text/html" id="barDemo">
     <a title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
     <a title="检测" lay-event="check"><i class="layui-icon">&#xe601;</i></a>
-
 </script>
-<script type="text/html" id="switchTpl">
-    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="可采集|有bug" lay-filter="status" {{
-           d.status== 1 ? 'checked' : '' }}>
-</script>
-<script type="text/html" id="switchTps">
-    <input type="checkbox" name="checked" value="{{d.id}}" lay-skin="switch" lay-text="已检测|未检测" lay-filter="checked" {{
-           d.checked== 1 ? 'checked' : '' }}>
-</script>
-
 <script>
     layui.use(['table', 'layer', 'laydate', 'jquery'], function () {
         var table = layui.table,
             form = layui.form,
-            $ = layui.jquery;
-
+            $ = layui.jquery,
+            gatherState = 1,
+            monitorState = 1,
+            siteState = 1;
         table.render({
             elem: '#layui-table'
             , url: 'http://localhost:5000/web_site/select_all'
@@ -103,20 +134,14 @@
             , title: '用户数据表'
             , cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                , {field: 'domain', title: '网站名称'}
+                , {field: 'pid', title: '网站id', hide: true}
+                , {field: 'address', title: '网站名称'}
                 , {field: 'webSite', title: '网址'}
-                // , {field: 'add_time', title: '添加时间'}
-                // // ,{field:'agent', title:'代理情况'}
-                 ,{field:'sort', title:'网站类型'}
-                // , {field: 'remark', title: '备注', edit: 'text'}
-                //
-                // , {field: 'status', title: '网站状态', templet: '#switchTpl', unresize: true}
-                // , {field: 'checked', title: '是否检测', templet: '#switchTps', unresize: true}
-
+                , {field: 'sort', title: '网站类型'}
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo'}]]
             , page: true
         });
-
+        // 关键词查询
         $('#search').on('click', function () {
             let hoaveAttr = $(".gather")[0].classList.contains('layui-form-onswitch');
             // 搜索条件
@@ -137,8 +162,71 @@
                     curr: 1
                 }
             });
+            detailHandler()
         });
 
+        // 网站类型选择
+        $('.syteType select').on('change', function () {
+            console.log(this.value)
+            table.reload('layui-table', {
+                where: {
+                    'sort': this.value,
+                }
+                , page: {
+                    curr: 1
+                }
+            });
+             detailHandler()
+        })
+
+        // 网站子模块弹框详情
+        function detailHandler() {
+            $('table tbody').on('click', 'tr', function (event) {
+                var id = $(this).children()[1].innerText
+                console.log(id)
+                layer.open({
+                    type: 1,
+                    content: $('#view-detail-div'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    title: '新闻数据',
+                    area: ['1000px', '800px'],
+                    success: function (layero, index) {
+                        layui.use('table', function () {
+                            var table = layui.table;
+                            var cols = [[
+                                {type: 'checkbox', fixed: 'left'}
+                                , {field: 'web_name', title: '网站名称'}
+                                , {field: 'url', title: '网址'}
+                                , {field: 'add_time', title: '添加时间'}
+                                // ,{field:'agent', title:'代理情况'}
+                                , {field: 'sort', title: '网站类型'}
+                                , {field: 'remark', title: '备注', edit: 'text'}
+
+                                , {field: 'status', title: '网站状态', templet: '#switchTpl', unresize: true}
+                                , {field: 'checked', title: '是否检测', templet: '#switchTps', unresize: true}
+
+                                , {fixed: 'right', title: '操作', toolbar: '#barDemo'}]]
+                            //展示已知数据
+                            table.render({
+                                elem: '#view-detail-table'
+                                , url: 'http://localhost:5000/web/select_all'
+                                , size: 'sm'
+                                , cols: cols
+                                , where: {
+                                    pid: id
+                                }
+                                , even: true
+                                // , height: '300'
+                                , page: true
+                            });
+
+                        });
+                    }
+
+                });
+            })
+        }
+         detailHandler()
+        // 采集监测
         $('.screenBtn').on('click', function () {
             let onSwitch = this.classList.contains('layui-form-onswitch'),
                 condition = 0,
@@ -154,31 +242,37 @@
                     condition = 0;
                     if (AttrStatu === 'status') {
                         $(this).find('em').text('不可采集')
+                        gatherState = 0
                     } else {
                         $(this).find('em').text('未监测')
+                        monitorState = 0
                     }
                 } else {
                     this.classList.add('layui-form-onswitch')
                     condition = 1;
                     if (AttrStatu === 'status') {
                         $(this).find('em').text('可采集')
+                        gatherState = 1
                     } else {
                         $(this).find('em').text('已监测')
+                        monitorState = 1
                     }
                 }
 
                 var obj = {};
                 obj[AttrStatu] = condition
-                table.reload('layui-table', {
-                    where: obj
+                table.reload('view-detail-table', {
+                    where: {
+                        status: gatherState,
+                        checked: monitorState
+                    }
                     , page: {
                         curr: 1
                     }
                 });
+                window.gather = obj
             }
-
         });
-
         form.on('switch(status)', function (obj) {
             // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
             var status = 0
@@ -234,7 +328,6 @@
             })
         });
 
-
         table.on('edit(layui-table)', function (obj) {
             layer.confirm('确定对此行进行编辑吗', function () {
                 var data = obj.data //得到所在行所有键值
@@ -257,7 +350,6 @@
                     }
                 })
             })
-
 
         });
         //监听行工具事件
@@ -330,11 +422,5 @@
     });
 
 </script>
-
-
-<!--弹出-->
-
-
 </body>
-
 </html>

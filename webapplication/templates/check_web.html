@@ -31,6 +31,7 @@
         .screenBtn.layui-form-onswitch {
             background-color: #009688;
         }
+
     </style>
 </head>
 
@@ -47,16 +48,7 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="x-body">
-    <div class="layui-row">
-
-        <div class="layui-form layui-col-md12 x-so">
-            <input type="text" placeholder="请输入网站名称" autocomplete="off" class="layui-input" id="keyword">
-            <button class="layui-btn" lay-submit="" lay-filter="search" id="search"><i class="layui-icon">&#xe615;</i>
-            </button>
-        </div>
-    </div>
     <xblock>
-        <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
         <button class="layui-btn" onclick="x_admin_show('添加网站','./member-add.html',450,250)"><i class="layui-icon"></i>添加
         </button>
         <span class="layui-unselect layui-form-switch layui-form-onswitch screenBtn gather" data-statu="status"
@@ -94,8 +86,10 @@
     layui.use(['table', 'layer', 'laydate', 'jquery'], function () {
         var table = layui.table,
             form = layui.form,
-            $ = layui.jquery;
-
+            $ = layui.jquery,
+            gatherState = 1,
+            monitorState = 1,
+            siteState = 1;
         table.render({
             elem: '#layui-table'
             , url: 'http://localhost:5000/web/select_all'
@@ -107,7 +101,7 @@
                 , {field: 'url', title: '网址'}
                 , {field: 'add_time', title: '添加时间'}
                 // ,{field:'agent', title:'代理情况'}
-                 ,{field:'sort', title:'网站类型',edit: 'text'}
+                , {field: 'sort', title: '网站类型'}
                 , {field: 'remark', title: '备注', edit: 'text'}
 
                 , {field: 'status', title: '网站状态', templet: '#switchTpl', unresize: true}
@@ -117,27 +111,6 @@
             , page: true
         });
 
-        $('#search').on('click', function () {
-            let hoaveAttr = $(".gather")[0].classList.contains('layui-form-onswitch');
-            // 搜索条件
-            var keyword = $('#keyword').val();
-
-            if (hoaveAttr) {
-                status = 1
-            } else {
-                status = 0
-            }
-
-            table.reload('layui-table', {
-                where: {
-                    'keyword': keyword,
-                    'status': status
-                }
-                , page: {
-                    curr: 1
-                }
-            });
-        });
 
         $('.screenBtn').on('click', function () {
             let onSwitch = this.classList.contains('layui-form-onswitch'),
@@ -154,16 +127,20 @@
                     condition = 0;
                     if (AttrStatu === 'status') {
                         $(this).find('em').text('不可采集')
+                        gatherState = 0
                     } else {
                         $(this).find('em').text('未监测')
+                        monitorState = 0
                     }
                 } else {
                     this.classList.add('layui-form-onswitch')
                     condition = 1;
                     if (AttrStatu === 'status') {
                         $(this).find('em').text('可采集')
+                        gatherState = 1
                     } else {
                         $(this).find('em').text('已监测')
+                        monitorState = 1
                     }
                 }
 
@@ -175,10 +152,9 @@
                         curr: 1
                     }
                 });
+                window.gather = obj
             }
-
         });
-
         form.on('switch(status)', function (obj) {
             // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
             var status = 0

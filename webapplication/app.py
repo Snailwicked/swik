@@ -90,6 +90,7 @@ def get_datas_on():
     params = request.args.to_dict()
     print(params)
     data = select.select_all(params)
+    print(data)
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
 # 全部网址

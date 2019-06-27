@@ -28,8 +28,8 @@ class baseUrl(xPathTexts):
 class filterUrl(baseUrl):
     def __init__(self):
         super(baseUrl, self).__init__()
-        self.clf = joblib.load('E:/swik/algorithm/pkl/url_SDG.pkl')
-        self.vocabulary = joblib.load('E:/swik/algorithm/pkl/url_Vocabulary.pkl')
+        self.clf = joblib.load('E:/pycharm/swik/algorithm/pkl/url_SDG.pkl')
+        self.vocabulary = joblib.load('E:/pycharm/swik/algorithm/pkl/url_Vocabulary.pkl')
         self.tv = TfidfVectorizer(tokenizer=self.cut,
                                   vocabulary=self.vocabulary)
         self.transurls = transUrls()
