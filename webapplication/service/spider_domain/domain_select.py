@@ -24,16 +24,17 @@ class domain_Select:
 
         try:
             sort = int(data['sort'])
-            sql = "select * from main_url where sort = {} and webSite LIKE '%{}%'limit {}, {};".format(sort,keyword, (page - 1) * limit,
-                                                                                         limit)
-            count_sql = "select count(*) from main_url where sort = {} and webSite LIKE '%{}%';".format(sort,keyword)
+
         except Exception as e:
-            sql = "select * from main_url where webSite LIKE '%{}%'limit {}, {};".format(keyword, (page - 1) * limit,
-                                                                                         limit)
-            count_sql = "select count(*) from main_url where webSite LIKE '%{}%';".format(keyword)
+            sort = 0
 
-
-
+            # sql = "select * from main_url where webSite LIKE '%{}%'limit {}, {};".format(keyword, (page - 1) * limit,
+            #                                                                              limit)
+            # count_sql = "select count(*) from main_url where webSite LIKE '%{}%';".format(keyword)
+        sql = "select * from main_url where sort = {} and webSite LIKE '%{}%'limit {}, {};".format(sort, keyword,
+                                                                                                   (page - 1) * limit,
+                                                                                                   limit)
+        count_sql = "select count(*) from main_url where sort = {} and webSite LIKE '%{}%';".format(sort, keyword)
 
 
         cursors = self.db.cursor()
