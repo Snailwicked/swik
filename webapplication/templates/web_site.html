@@ -77,8 +77,8 @@
         </button>
         <div class="syteType">
             <select name="interest" lay-filter="aihao">
-                <option value="1">新闻</option>
-                <option value="0">其它</option>
+                <option value="0">新闻</option>
+                <option value="1">论坛</option>
             </select>
         </div>
     </xblock>
@@ -103,7 +103,7 @@
         </span>
         <!--        <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭" id="sta">-->
     </xblock>
-    <table class="layui-table" id="view-detail-table"></table>
+    <table class="layui-table" id="view-detail-table" lay-filter="detail"></table>
     <script type="text/html" id="switchTpl">
         <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="可采集|有bug" lay-filter="status"
                {{
@@ -126,7 +126,8 @@
             $ = layui.jquery,
             gatherState = 1,
             monitorState = 1,
-            siteState = 1;
+            siteState = 1,
+            sort = 0;
         table.render({
             elem: '#layui-table'
             , url: 'http://localhost:5000/web_site/select_all'
@@ -134,10 +135,10 @@
             , title: '用户数据表'
             , cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                , {field: 'pid', title: '网站id', hide: true}
-                , {field: 'address', title: '网站名称'}
-                , {field: 'webSite', title: '网址'}
-                , {field: 'sort', title: '网站类型'}
+                , {field: 'pid', title: '网站id', hide: true, event: 'skip'}
+                , {field: 'address', title: '网站名称', event: 'skip'}
+                , {field: 'webSite', title: '网址', event: 'skip'}
+                , {field: 'sort', title: '网站类型', event: 'skip'}
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo'}]]
             , page: true
         });
@@ -156,13 +157,12 @@
             table.reload('layui-table', {
                 where: {
                     'keyword': keyword,
-                    'status': status
+                    sort: sort
                 }
                 , page: {
                     curr: 1
                 }
             });
-            detailHandler()
         });
 
         // 网站类型选择
@@ -176,56 +176,54 @@
                     curr: 1
                 }
             });
-             detailHandler()
         })
 
-        // 网站子模块弹框详情
-        function detailHandler() {
-            $('table tbody').on('click', 'tr', function (event) {
-                var id = $(this).children()[1].innerText
-                console.log(id)
+        // 点击详情子页面内容下载
+        table.on('tool(detail)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'urlSkip') {
+                return;
+            } else if (obj.event === 'check') {
                 layer.open({
                     type: 1,
-                    content: $('#view-detail-div'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    content: $('#view-member-div'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     title: '新闻数据',
-                    area: ['1000px', '800px'],
+                    area: ['800px', '420px'],
                     success: function (layero, index) {
                         layui.use('table', function () {
                             var table = layui.table;
-                            var cols = [[
-                                {type: 'checkbox', fixed: 'left'}
-                                , {field: 'web_name', title: '网站名称'}
+                            var cols = [[ //标题栏
+                                // {field:'num', title: '序号',align: 'center'}
+                                {field: 'title', title: '标题'}
+                                , {field: 'authors', title: '作者'}
+
+                                , {field: 'summary', title: '摘要'}
+                                , {field: 'publishing_date', title: '发布时间'}
                                 , {field: 'url', title: '网址'}
-                                , {field: 'add_time', title: '添加时间'}
-                                // ,{field:'agent', title:'代理情况'}
-                                , {field: 'sort', title: '网站类型'}
-                                , {field: 'remark', title: '备注', edit: 'text'}
 
-                                , {field: 'status', title: '网站状态', templet: '#switchTpl', unresize: true}
-                                , {field: 'checked', title: '是否检测', templet: '#switchTps', unresize: true}
-
-                                , {fixed: 'right', title: '操作', toolbar: '#barDemo'}]]
+                                , {field: 'content', title: '内容'}
+                                // ,{field:'remainingPoints', title: '剩余积分',align: 'center'}
+                                // ,{field:'time', title: '领卡时间',align: 'center'}
+                            ]]
                             //展示已知数据
                             table.render({
-                                elem: '#view-detail-table'
-                                , url: 'http://localhost:5000/web/select_all'
+                                elem: '#view-member-table'
+                                , url: 'http://127.0.0.1:5000/task/on'
                                 , size: 'sm'
+                                , method: 'post'
                                 , cols: cols
-                                , where: {
-                                    pid: id
-                                }
+                                , where: {url: data.url}
                                 , even: true
-                                // , height: '300'
-                                , page: true
+                                , height: '300'
                             });
 
                         });
                     }
 
                 });
-            })
-        }
-         detailHandler()
+
+            }
+        })
         // 采集监测
         $('.screenBtn').on('click', function () {
             let onSwitch = this.classList.contains('layui-form-onswitch'),
@@ -287,16 +285,10 @@
                 data: {'id': this.value, "status": status},
                 dataType: 'JSON',
                 success: function () {
-                    layer.alert("更新成功", {icon: 6}, function () {
-                        layer.closeAll();
-                        parent.reload()
-                    })
+                    layer.alert("更新成功", {icon: 6})
                 },
                 error: function () {
-                    layer.alert("更新失败", {icon: 6}, function () {
-                        layer.closeAll();
-                        parent.reload()
-                    })
+                    layer.alert("更新失败", {icon: 6})
                 }
             })
         });
@@ -314,16 +306,10 @@
                 data: {'id': this.value, "checked": checked},
                 dataType: 'JSON',
                 success: function () {
-                    layer.alert("更新成功", {icon: 6}, function () {
-                        layer.closeAll();
-                        parent.reload()
-                    })
+                    layer.alert("更新成功", {icon: 6})
                 },
                 error: function () {
-                    layer.alert("更新失败", {icon: 6}, function () {
-                        layer.closeAll();
-                        parent.reload()
-                    })
+                    layer.alert("更新失败", {icon: 6})
                 }
             })
         });
@@ -408,9 +394,56 @@
                                 , size: 'sm'
                                 , method: 'post'
                                 , cols: cols
-                                , where: {url: data.url}
+                                , where: {url: data.address}
                                 , even: true
                                 , height: '300'
+                            });
+
+                        });
+                    }
+
+                });
+            }
+            if (obj.event === 'skip') {
+                var id = obj.data.pid;
+                layer.open({
+                    type: 1,
+                    content: $('#view-detail-div'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    title: '新闻数据',
+                    area: ['1000px', '650px'],
+                    success: function (layero, index) {
+                        layui.use('table', function () {
+                            var table = layui.table;
+                            var cols = [[
+                                {type: 'checkbox', fixed: 'left'}
+                                , {field: 'web_name', title: '网站名称'}
+                                , {field: 'url', title: '网址', event: 'urlSkip'}
+                                , {field: 'add_time', title: '添加时间'}
+                                // ,{field:'agent', title:'代理情况'}
+                                , {field: 'sort', title: '网站类型'}
+                                , {field: 'remark', title: '备注', edit: 'text'}
+
+                                , {field: 'status', title: '网站状态', templet: '#switchTpl', unresize: true}
+                                , {field: 'checked', title: '是否检测', templet: '#switchTps', unresize: true}
+
+                                , {fixed: 'right', title: '操作', toolbar: '#barDemo'}]]
+                            //展示已知数据
+                            table.render({
+                                elem: '#view-detail-table'
+                                , url: 'http://localhost:5000/web/select_all'
+                                , size: 'sm'
+                                , cols: cols
+                                , where: {
+                                    pid: id
+                                }
+                                , even: true
+                                // , height: '300'
+                                , page: true
+                                , done: function () {
+                                    $('#view-detail-div').find('.layui-table-main tr').find('td:eq(2)').on('dblclick', function () {
+                                        window.open($(this).text())
+                                    })
+                                }
                             });
 
                         });

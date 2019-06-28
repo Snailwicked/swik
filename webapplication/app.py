@@ -63,6 +63,7 @@ def get_tasks_off():
 @app.route('/task/on', methods=["POST"])
 def get_tasks_on():
     params = request.values.to_dict()
+    print(params)
     # update = TaskUpdate()
     parse = Parse()
     # data = request.values().decode('utf-8')
