@@ -24,7 +24,6 @@ class domain_Select:
 
         try:
             sort = int(data['sort'])
-
         except Exception as e:
             sort = 0
 
