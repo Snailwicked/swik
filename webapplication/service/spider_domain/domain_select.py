@@ -57,6 +57,6 @@ class domain_Select:
 
 if __name__ == '__main__':
     select = domain_Select()
-    data = {'sort': '0', 'page': '1', 'limit': '10','status':1}
+    data = {'sort': '0', 'page': '1', 'limit': '10','status':0}
     for item in select.select_all(data).get("data"):
         print(item)

@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify,render_template
 from flask_cors import *
 from webapplication.service.spider_webs.select import Select
 from webapplication.service.spider_domain.domain_select import domain_Select
+from webapplication.service.spider_domain.domain_update import domain_Update
 
 from webapplication.service.spider_webs.add import Add
 from webapplication.service.spider_webs.delete import Delete
@@ -103,7 +104,12 @@ def get_web_site_data():
     data = select.select_all(params)
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
-
+@app.route('/web_site/update', methods=['POST'])
+def update_web_site():
+    update = domain_Update()
+    params = request.args.to_dict()
+    update.update(params)
+    return jsonify({"code": 1, "msg": "更新成功"})
 
 # 网页待启动网址
 # @app.route('/web/select_off')
