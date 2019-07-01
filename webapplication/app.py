@@ -109,7 +109,7 @@ def update_web_site():
     update = domain_Update()
     params = request.args.to_dict()
     update.update(params)
-    return jsonify({"code": 1, "msg": "更新成功"})
+    return jsonify({"code": 0, "msg": "更新成功"})
 
 # 网页待启动网址
 # @app.route('/web/select_off')
