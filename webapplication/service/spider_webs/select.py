@@ -15,7 +15,7 @@ class Select:
         """
         page = int(data['page'])
         limit = int(data['limit'])
-        pid = str(data['pid'])
+        pid = int(data['pid'])
         if len(data)==3:
             try:
                 sql = "select * from webinfo where pid = {} limit {}, {};".format(pid,(page - 1) * limit, limit)

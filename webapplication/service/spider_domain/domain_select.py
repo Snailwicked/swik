@@ -27,13 +27,18 @@ class domain_Select:
         except Exception as e:
             sort = 0
 
+        try:
+            status = int(data['status'])
+        except Exception as e:
+                status = 0
+
             # sql = "select * from main_url where webSite LIKE '%{}%'limit {}, {};".format(keyword, (page - 1) * limit,
             #                                                                              limit)
             # count_sql = "select count(*) from main_url where webSite LIKE '%{}%';".format(keyword)
-        sql = "select * from main_url where sort = {} and webSite LIKE '%{}%'limit {}, {};".format(sort, keyword,
+        sql = "select * from main_url where status = {} and sort = {} and webSite LIKE '%{}%'limit {}, {};".format(status,sort, keyword,
                                                                                                    (page - 1) * limit,
                                                                                                    limit)
-        count_sql = "select count(*) from main_url where sort = {} and webSite LIKE '%{}%';".format(sort, keyword)
+        count_sql = "select count(*) from main_url where status = {} and sort = {} and webSite LIKE '%{}%';".format(status,sort, keyword)
 
 
         cursors = self.db.cursor()
@@ -52,6 +57,6 @@ class domain_Select:
 
 if __name__ == '__main__':
     select = domain_Select()
-    data = {'sort': '0', 'page': '1', 'limit': '10'}
+    data = {'sort': '0', 'page': '1', 'limit': '10','status':1}
     for item in select.select_all(data).get("data"):
         print(item)
