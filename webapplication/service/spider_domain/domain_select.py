@@ -1,7 +1,7 @@
 import pymysql
 
 
-class domain_Select:
+class DomainSelect:
     def __init__(self):
         self.db = pymysql.connect(host='101.132.113.50', user='root', password='BlueSnail123!', db='spider_manage',
                              charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
@@ -12,29 +12,12 @@ class domain_Select:
         :param data:
         :return:
         """
-        try:
-            page = int(data['page'])
-            limit = int(data['limit'])
-        except Exception as e:
-            print(e)
-        try:
-            keyword = str(data['keyword'])
-        except Exception as e:
-            keyword = ""
+        page = int(data['page'])
+        limit = int(data['limit'])
+        status = int(data['status'])
+        keyword = str(data['keyword'])
+        sort = int(data['sort'])
 
-        try:
-            sort = int(data['sort'])
-        except Exception as e:
-            sort = 0
-
-        try:
-            status = int(data['status'])
-        except Exception as e:
-                status = 0
-
-            # sql = "select * from main_url where webSite LIKE '%{}%'limit {}, {};".format(keyword, (page - 1) * limit,
-            #                                                                              limit)
-            # count_sql = "select count(*) from main_url where webSite LIKE '%{}%';".format(keyword)
         sql = "select * from main_url where status = {} and sort = {} and webSite LIKE '%{}%'limit {}, {};".format(status,sort, keyword,
                                                                                                    (page - 1) * limit,
                                                                                                    limit)
@@ -56,7 +39,7 @@ class domain_Select:
             self.db.close()
 
 if __name__ == '__main__':
-    select = domain_Select()
+    select = DomainSelect()
     data = {'sort': '0', 'page': '1', 'limit': '10','status':0}
     for item in select.select_all(data).get("data"):
         print(item)

@@ -424,7 +424,7 @@ class ContentExtractor(object):
 
 
 if __name__ == "__main__":
-    url = "http://shipin.people.com.cn/n/2014/1017/c85914-25855894.html"
+    url = "http://www.cnepaper.com/cebianlan/page/cebianlan/page/cebianlan/page/cebianlan/page/2019-06/26/content_642734.htm"
     import requests
     res = requests.get(url)
     html = res.text

@@ -105,6 +105,9 @@ class seCooData():
                     self.state, self.sale_price, self.discount,
                     self.price_font, self.brand, self.type, self.human, self.addtime, self.imgs,self.material,self.size,self.colour,self.origin)
 
+    def json(self):
+        return {"uuid":self.uuid,"url":self.url,"title":self.title,"state":self.state,"sale_price":self.sale_price,"discount":self.discount,
+                "price_font":self.price_font,"brand":self.brand,"type":self.type,"human":self.human,"addtime":self.addtime,"imgs":self.imgs,"material":self.material,"size":self.size,"colour":self.colour,"origin":self.origin}
 
 class baseUrl(xPathTexts):
     def __init__(self):
@@ -190,9 +193,11 @@ class parseUrl(baseUrl):
             scd.origin = ""
         return scd
 from dbs.mongodbclient import MongodbClient
-
+'''
+http://search.secoo.com/search?keyword=%25E8%25A1%25A3%25E6%259C%258D&firstcategoryid=0&secondcategoryid=0&thirdcategoryid=0&brandId=0&level=0&orderType=1&filterType=0&source=&pageNo=2&st=10&price=0&prop=0&warehouse=100&actscr=0&expKey=#J_Filter
+'''
 momgodb = MongodbClient(
-            mongodb_conf={'host': '192.168.30.66', 'port': 27017, 'db_name': 'xs_spider', 'table_name': 'seco_datas'})
+            mongodb_conf={'host': '61.147.124.76', 'port': 27017, 'db_name': 'xs_spider', 'table_name': 'seco_datas'})
 bloomFilter = filterutil("secoo_data.blm")
 pre_page_time = int(round(time.time() * 1000))
 for item in range(1,1000):
@@ -282,7 +287,10 @@ for item in range(1,1000):
                 scd.colour = ""
                 scd.origin = ""
 
-            item = "{" + str(scd.__str__()) + "}"
             import json
-            print(scd.__str__())
-            momgodb.insert(json.loads(str(item).replace("'", '"')))
+            print(scd.json())
+            momgodb.collection.insert(scd.json())
+            # try:
+            #     momgodb.insert(json.loads(str(item).replace("'", '"')))
+            # except:
+            #     pass

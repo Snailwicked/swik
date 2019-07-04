@@ -1,16 +1,23 @@
 from flask import Flask, request, jsonify,render_template
 from flask_cors import *
-from webapplication.service.spider_webs.select import Select
-from webapplication.service.spider_domain.domain_select import domain_Select
-from webapplication.service.spider_domain.domain_update import domain_Update
+from webapplication.service.spider_domain.domain_select import DomainSelect
+from webapplication.service.spider_domain.domain_update import DomainUpdate
 
-from webapplication.service.spider_webs.add import Add
-from webapplication.service.spider_webs.delete import Delete
-from webapplication.service.spider_webs.update import Update
-from webapplication.service.spider_tasks.taskselect import TaskSelect
-from webapplication.service.spider_tasks.taskupdate import TaskUpdate
-from webapplication.service.spider_tasks.taskdelete import TaskDelete
-from webapplication.service.spider_tasks.taskadd import TaskAdd
+
+from webapplication.service.spider_webs.web_add import WebAdd
+from webapplication.service.spider_webs.web_delete import WebDelete
+from webapplication.service.spider_webs.web_update import WebUpdate
+from webapplication.service.spider_webs.web_select import WebSelect
+
+
+from webapplication.service.spider_tasks.task_add import TaskAdd
+from webapplication.service.spider_tasks.task_select import TaskSelect
+from webapplication.service.spider_tasks.task_update import TaskUpdate
+from webapplication.service.spider_tasks.task_delete import TaskDelete
+
+from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
+
+
 import json
 from utils.spiderutils.parse import Parse
 import threading
@@ -26,43 +33,76 @@ app.secret_key = SECRET_KEY
 # cele.config_from_object('celery_config')
 data = []
 news = []
-# 添加任务
-@app.route('/task/add', methods=['POST'])
-def task_add():
+
+########################################################################################################################
+'''
+    站点模块代码
+    get_tasks_on：  更新站点站点子类信息
+
+'''
+@app.route('/task/add')
+def add_task():
     add = TaskAdd()
-    task_name = request.form['task_name']
-    data = {'task_name': task_name}
-    add.add_task(data)
+    task_name = request.values.to_dict()
+    add.add_task(task_name)
     return "1"
 
-# @app.route('/')
-# def task_adds():
-#
-#     return render_template('index.html')
 
-
-# 删除任务
-@app.route('/task/delete', methods=['POST'])
+@app.route('/task/delete')
 def delete_task():
     delete = TaskDelete()
-    data = request.get_data().decode('utf-8')
-    delete.delete_one(json.loads(data))
+    params = request.values.to_dict()
+    delete.delete_one(params)
     return jsonify({"code": 1, "msg": "删除成功"})
 
-# 待启动任务
-@app.route('/task/select_off')
-def get_tasks_off():
+@app.route('/task/select')
+def select_tasks():
     select = TaskSelect()
-    page = request.args.get('page')
-    limit = request.args.get('limit')
-    params = {'page': page, 'limit': limit}
-    data = select.select_off(params)
+    params = request.values.to_dict()
+
+    data = select.select_task(params)
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
 
-# @cele.task
-@app.route('/task/on', methods=["POST"])
-def get_tasks_on():
+@app.route('/task/update', methods=['POST'])
+def update_task():
+    update = TaskUpdate()
+    data = request.get_data().decode('utf-8')
+    update.update(json.loads(data))
+    return jsonify({"code": 1, "msg": "更新成功"})
+
+
+
+########################################################################################################################
+'''
+    站点模块代码
+    get_tasks_on：  更新站点站点子类信息
+
+'''
+
+@app.route('/task_config/select')
+def select_task_config():
+    select = TaskSelect()
+    params = request.values.to_dict()
+    data = select.select_task_config(params)
+    return jsonify({"code": 0, "msg": "",  "data": data[0]})
+
+
+@app.route('/task_config/update')
+def update_task_config():
+    update = TaskConfigUpdate()
+    params = request.values.to_dict()
+    data = update.update(params)
+    return jsonify({"code": 0, "msg": "",  "data": data})
+
+########################################################################################################################
+'''
+    站点模块代码
+    get_tasks_on：  更新站点站点子类信息
+
+'''
+@app.route('/task/spider')
+def tasks_spider():
     params = request.values.to_dict()
     print(params)
     # update = TaskUpdate()
@@ -77,54 +117,55 @@ def get_tasks_on():
     data = parse.get_data(urls)
     return jsonify({"code": 0, "msg": "", "count": len(data), "data": data})
 
+########################################################################################################################
+'''
+    站点模块代码
+    update_web_site：  更新站点站点子类信息
+    select_web_site：  查询站点站点子类信息
 
-@app.route('/task/update', methods=['POST'])
-def update_task():
-    update = TaskUpdate()
-    data = request.get_data().decode('utf-8')
-    update.update(json.loads(data))
-    return jsonify({"code": 1, "msg": "更新成功"})
+'''
+@app.route('/web_site/select_all')
+def select_web_site():
+    select = DomainSelect()
+    params = request.args.to_dict()
+    print(request.url)
+    print(params)
+    data = select.select_all(params)
+    return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
-# 全部网址
+@app.route('/web_site/update')
+def update_web_site():
+    update = DomainUpdate()
+    params = request.args.to_dict()
+    print(request.url)
+    update.update(params)
+    return jsonify({"code": 0, "msg": "更新成功"})
+
+
+
+
+########################################################################################################################
+'''
+    站点子模块代码
+    delete_sub_web：  删除站点子类
+    add_sub_web：     新增站点子类
+    update_sub_web：  更新站点站点子类信息
+    select_sub_web：  查询站点站点子类信息
+
+'''
 @app.route('/web/select_all')
-def get_datas_on():
-    select = Select()
+def select_sub_web():
+    select = WebSelect()
     params = request.args.to_dict()
     print(params)
     data = select.select_all(params)
     print(data)
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
-# 全部网址
-@app.route('/web_site/select_all')
-def get_web_site_data():
-    select = domain_Select()
-    params = request.args.to_dict()
-    print(params)
-    data = select.select_all(params)
-    return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
-
-@app.route('/web_site/update', methods=['POST'])
-def update_web_site():
-    update = domain_Update()
-    params = request.args.to_dict()
-    update.update(params)
-    return jsonify({"code": 0, "msg": "更新成功"})
-
-# 网页待启动网址
-# @app.route('/web/select_off')
-# def get_datas_off():
-#     select = Select()
-#     page = request.args.get('page')
-#     limit = request.args.get('limit')
-#     params = {'page': page, 'limit': limit}
-#     data = select.select_off(params)
-#     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
-
 
 @app.route('/web/delete', methods=["POST"])
-def delete_data():
-    delete = Delete()
+def delete_sub_web():
+    delete = WebDelete()
     if request.method == 'POST':
         data = request.get_data().decode('utf-8')
         delete.delete_one(json.loads(data))
@@ -132,8 +173,8 @@ def delete_data():
 
 
 @app.route('/web/add', methods=["POST"])
-def add_data():
-    add = Add()
+def add_sub_web():
+    add = WebAdd()
     if request.method == 'POST':
         web_name = request.form['web_name']
         web_url = request.form['web_url']
@@ -143,23 +184,12 @@ def add_data():
     return "1"
 
 
-@app.route('/web/update', methods=["POST"])
-def update():
-    update = Update()
-    if request.method == 'POST':
-        data = request.values.to_dict()
-        print(data)
-        update.update(data)
-    return jsonify({"code": 1, "msg": "更新成功"})
-
-
-@app.route('/web/on', methods=["POST"])
-def state_on():
-    update = Update()
-    if request.method == 'POST':
-        data = request.values.to_dict()
-        print(data)
-        update.update_status(data)
+@app.route('/web/update')
+def update_sub_web():
+    update = WebUpdate()
+    data = request.values.to_dict()
+    print(data)
+    update.update(data)
     return jsonify({"code": 1, "msg": "更新成功"})
 
 

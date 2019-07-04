@@ -24,12 +24,11 @@ class baseUrl(xPathTexts):
                 data.add(url)
         return list(data)
 
-
 class filterUrl(baseUrl):
     def __init__(self):
         super(baseUrl, self).__init__()
-        self.clf = joblib.load('E:/pycharm/swik/algorithm/pkl/url_SDG.pkl')
-        self.vocabulary = joblib.load('E:/pycharm/swik/algorithm/pkl/url_Vocabulary.pkl')
+        self.clf = joblib.load('../algorithm/pkl/url_SDG.pkl')
+        self.vocabulary = joblib.load('../algorithm/pkl/url_Vocabulary.pkl')
         self.tv = TfidfVectorizer(tokenizer=self.cut,
                                   vocabulary=self.vocabulary)
         self.transurls = transUrls()
@@ -55,9 +54,8 @@ class filterUrls(filterUrl):
     def FilterUrls(self,urls):
         for url in urls:
             yield from self.getFilterUrls(url)
-
 if __name__ == "__main__":
-    url = ["https://news.sina.com.cn/"]
+    url = ["http://www.jsjjw.cn/news/page/node_1061.htm"]
     mainurl = filterUrls()
     for url in mainurl.FilterUrls(url):
         print(url)

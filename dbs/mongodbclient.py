@@ -27,57 +27,7 @@ class MongodbClient(object):
         作者 ：王明辉
         创建时间 ：2018-8-14 19.09
     """
-    def select_all(self):
-        return self.collection.find()
 
-
-    def insert(self ,data):
-        self.collection.insert(data)
-
-    """ 
-               名称 ：对mongodb进行查询操作
-               参数 ：无
-               说明 ：查询任务中的需要采集的网址和新闻正则匹配表达式
-               返回值类型 ：string
-               作者 ：王明辉
-               创建时间 ：2018-8-24 14.16
-        """
-    def select_one_and_delete(self):
-        result= self.collection.find_one_and_delete({})
-        main_url = result.get("main_url")
-        re_json = result.get("re_url")
-        re = json.loads(re_json)
-        re_url =re.get('re0')
-
-        return main_url ,re_url
-
-
-
-    def delete_one(self):
-        pass
-
-
-    def delete_all(self):
-        self.collection.drop()
-
-    """ 
-           名称 ：对mongodb进行更新操作
-           参数 ：condition ，newdata
-           说明 ：condition ={'main_url':'http://ti.zangdiyg.com/'}定位到需要更新的的数据 
-                  newdata 对原先的数据进行更改后的数据 newdata =olddata["main_url"] = "http://www.baidu.com"
-           类型 ：json
-           返回值类型 ：
-           作者 ：王明辉
-           创建时间 ：2018-8-21 14.16
-    """
-    def update_one(self,condition ,newdata):
-        return self.collection.update_one(condition, {'$set': newdata})
-
-    def close(self):
-        # 如果数据打开，则关闭；否则没有操作
-        if self.collection:
-            self.collection.close()
-        return True
 
 if __name__ == "__main__":
     db = MongodbClient(mongodb_conf ={'host': '101.132.113.50', 'port': 27017, 'db_name': 'spider_manage', 'table_name': 'config'})

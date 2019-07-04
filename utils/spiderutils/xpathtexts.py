@@ -74,7 +74,7 @@ class xPathTexts(object):
         return contens
 
 if __name__ == "__main__":
-    url = "http://www.sohu.com/a/304311876_123753"
+    url = "http://shipin.people.com.cn/n1/2018/0425/c85914-29948123.html"
     X_path= "//a//@href"
     headers = {
         'Connection': 'keep-alive',
@@ -99,7 +99,8 @@ if __name__ == "__main__":
     #             <li data-id="" data-tag-id="78040" ><a href="//search.sohu.com/?keyword=股票&queryType=outside">股票</a></li>
     #             <li data-id="" data-tag-id="78042" ><a href="//search.sohu.com/?keyword=世界杯&queryType=outside">世界杯</a></li>
     #         </ul>'''
-    contens = xpt.get_contents(url=url ,X_path=X_path,headers=headers)
-    import requests
-    for item in contens:
-        print(item)
+    print(xpt.getHtml(url=url,headers= headers))
+    # contens = xpt.get_contents(url=url ,X_path=X_path,headers=headers)
+    # import requests
+    # for item in contens:
+    #     print(item)

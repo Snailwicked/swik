@@ -145,7 +145,7 @@ class myThread(threading.Thread):
         threading.Thread.__init__(self)
         self.__flag = threading.Event()
         self.momgodb = MongodbClient(
-            mongodb_conf={'host': '192.168.30.66', 'port': 27017, 'db_name': 'xs_spider', 'table_name': 'xs_datas'})
+            mongodb_conf={'host': '61.147.124.76', 'port': 27017, 'db_name': 'xs_spider', 'table_name': 'xs_datas'})
         self.sort = sort
         self.baseurl = parseUrl()
 
@@ -173,7 +173,7 @@ class myThread(threading.Thread):
                 else:
                     item = "{" + str(item) + "}"
                     print(item)
-                    self.momgodb.insert(json.loads(str(item).replace("'", '"')))
+                    self.momgodb.collection.insert(json.loads(str(item).replace("'", '"')))
             i = i + 1
 
 if __name__ == '__main__':
