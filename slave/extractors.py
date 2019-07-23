@@ -27,7 +27,7 @@ class StringReplacement(object):
         if not string:
             return ''
         return string.replace(self.pattern, self.replaceWith)
-def load_stopwords(path='../slave/stop_word'):
+def load_stopwords(path='E:/Workspace/swik/slave/stop_word'):
     with open(path, encoding="utf-8") as f:
         stopwords = list(map(lambda x: x.strip(), f.readlines()))
     stopwords.extend([' ', '\t', '\n'])
@@ -419,8 +419,6 @@ class ContentExtractor(object):
         import time
         millis = int(round(time.time() * 1000))
         return millis
-
-
 
 
 if __name__ == "__main__":
