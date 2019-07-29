@@ -2,27 +2,27 @@ from master.collectionurl import filterUrls
 from slave.extractors import ContentExtractor
 from utils.spiderutils.xpathtexts import xPathTexts
 
+xpath = xPathTexts()
+
 
 class Parse:
     def __init__(self):
         self.master = filterUrls()
-        self.xpath = xPathTexts()
 
     def get_data(self, urls):
         data = []
         for url in self.master.FilterUrls(urls):
             item= {}
             try:
-                html = self.xpath.getHtml(url)
-                ce = ContentExtractor(html=html, url=url)
+                xpath.set_parameter(url=url)
+                ce = ContentExtractor(html=xpath.html, url=url)
                 item["url"] = url
                 item["title"] = ce.get_title()
                 item["authors"] = ce.get_authors()
                 item["publishing_date"] = ce.get_publishing_date()
                 item["content"] = ce.get_content()
                 item["summary"] = ce.get_summary()
-                print(item)
-
+                print(url,item)
                 data.append(item)
             except Exception as e:
                 print(e)

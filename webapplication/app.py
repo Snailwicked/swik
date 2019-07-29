@@ -16,23 +16,83 @@ from webapplication.service.spider_tasks.task_update import TaskUpdate
 from webapplication.service.spider_tasks.task_delete import TaskDelete
 
 from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
+from celery import Celery
 
 
 import json
 from utils.spiderutils.parse import Parse
-import threading
 
-# from celery import Celery
+
+
+from webapplication.service.celery_task.task_spider import add
+from celery.result import AsyncResult
 
 
 SECRET_KEY = 'This is the key'
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = SECRET_KEY
-# cele = Celery('app', app.config['CELERY_BROKER_URL'])
-# cele.config_from_object('celery_config')
+
+
+app.config['CELERY_BROKER_URL'] = 'redis://101.132.113.50:6379/2'
+app.config['CELERY_RESULT_BACKEND'] = 'redis://101.132.113.50:6379/3'
+app.config['CELERY_TASK_SERIALIZER'] = 'json'
+app.config['CELERY_RESULT_SERIALIZER'] = 'json'
+app.config['CELERY_ACCEPT_CONTENT'] = ["json"]
+celery = Celery('tasks', broker=app.config['CELERY_BROKER_URL'], backend=app.config['CELERY_RESULT_BACKEND'])
+
+
+celery.conf.update(app.config)
+
+
+
 data = []
 news = []
+
+
+
+########################################################################################################################
+'''
+    站点模块代码
+    get_tasks_on：  更新站点站点子类信息
+
+'''
+@celery.task(name='app.async_crawl')
+def async_crawl(url):
+    parse = Parse()
+    result = parse.get_data(url)
+    return result
+
+
+@celery.task(name='app.async_task')
+def async_task(uuid):
+    """
+    :param uuid: 通过uuid 获取mongdb数据库中的url 进行采集
+    :return:
+    """
+    print(uuid)
+    pass
+
+
+
+
+@app.route('/task/test')
+def tasks_test():
+    params = request.values.to_dict()
+    urls = params.get("url")
+    task = async_crawl.apply_async(eval(urls))
+    # parse = Parse()
+    # data = parse.get_data(urls)
+    return jsonify({"code": 0, "msg": "", "task_id": task.id})
+
+
+
+@app.route('/task/result')
+def result_task():
+    params = request.values.to_dict()
+    task_id = params.get("task_id")
+    result = async_crawl.AsyncResult(task_id).get()
+    return str(result)
 
 ########################################################################################################################
 '''
@@ -73,6 +133,13 @@ def update_task():
 
 
 
+@app.route('/task/start')
+def tasks_start():
+    params = request.values.to_dict()
+    uuid = params.get("uuid")
+    task = async_task.apply_async(uuid)
+    return jsonify({"code": 0, "msg": "成功启动", "task_id": task.id})
+
 ########################################################################################################################
 '''
     站点模块代码
@@ -105,17 +172,11 @@ def update_task_config():
 def tasks_spider():
     params = request.values.to_dict()
     print(params)
-    # update = TaskUpdate()
-    parse = Parse()
-    # data = request.values().decode('utf-8')
-    # update.update_status(json.loads(data))
-    # update_other = TaskUpdate()
-    # urls = update_other.query_mongo_urls(json.loads(data))
     urls = []
     urls.append(params.get("url"))
-    print(len(urls))
-    data = parse.get_data(urls)
-    return jsonify({"code": 0, "msg": "", "count": len(data), "data": data})
+    from tasks import task_check
+    task_check.excute_check_task(urls)
+    return jsonify({"code": 0, "msg": "任务已启动"})
 
 ########################################################################################################################
 '''
