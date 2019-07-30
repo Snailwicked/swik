@@ -18,6 +18,7 @@ class WebAdd:
         status = 0
         web_name = data['web_name']
         sort = int(data['sort'])
+        pid = int(data['pid'])
         cursors = self.db.cursor()
         try:
             sql = 'insert into webinfo(id, url, add_time, agent, status, web_name, sort) values ("%s", "%s", "%s", "%d", "%d", "%s", "%d")' % (id, web_url, add_time, agent, status, web_name, sort)

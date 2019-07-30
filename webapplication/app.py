@@ -1,26 +1,18 @@
 from flask import Flask, request, jsonify,render_template
 from flask_cors import *
-from db.dao import MainUrlOper
+from db.dao import MainUrlOper,WebInfoOper
 from webapplication.service.spider_domain.domain_update import DomainUpdate
 
-
-from webapplication.service.spider_webs.web_add import WebAdd
 from webapplication.service.spider_webs.web_delete import WebDelete
 from webapplication.service.spider_webs.web_update import WebUpdate
-from webapplication.service.spider_webs.web_select import WebSelect
-
 
 from webapplication.service.spider_tasks.task_add import TaskAdd
 from webapplication.service.spider_tasks.task_select import TaskSelect
 from webapplication.service.spider_tasks.task_update import TaskUpdate
 from webapplication.service.spider_tasks.task_delete import TaskDelete
-
 from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
-from celery import Celery
-
-
 import json
-from utils.spiderutils.parse import Parse
+webinfo = WebInfoOper()
 mainurl = MainUrlOper()
 
 
@@ -147,33 +139,24 @@ def update_web_site():
 '''
 @app.route('/web/select_all')
 def select_sub_web():
-    select = WebSelect()
     params = request.args.to_dict()
-    print(params)
-    data = select.select_all(params)
-    print(data)
-    return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
+    data = webinfo.select_by_parameter(params)
+    return jsonify(data)
 
 
 @app.route('/web/delete')
 def delete_sub_web():
     delete = WebDelete()
-    if request.method == 'POST':
-        data = request.get_data().decode('utf-8')
-        delete.delete_one(json.loads(data))
+    parameter = request.values.to_dict()
+    delete.delete_one(parameter)
     return jsonify({"code": 1, "msg": "删除成功"})
 
 
-@app.route('/web/add', methods=["POST"])
+@app.route('/web/add')
 def add_sub_web():
-    add = WebAdd()
-    if request.method == 'POST':
-        web_name = request.form['web_name']
-        web_url = request.form['web_url']
-        agent = request.form['agent']
-        sort = request.form['sort']
-        add.add_one({"web_name": web_name, "web_url": web_url, "agent": agent, "sort": sort})
-    return "1"
+    parameter = request.values.to_dict()
+    webinfo.add_one(parameter)
+    return jsonify({"code": 1, "msg": "添加成功"})
 
 
 @app.route('/web/update')
