@@ -1,6 +1,10 @@
 import threading
 import time
-from spiders.xinshang import function
+def fuction(parameters):
+    print("parameters是json参数")
+    '''
+    这里书写你的爬虫程序
+    '''
 
 class oneThread(threading.Thread):
 

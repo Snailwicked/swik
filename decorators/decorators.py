@@ -1,7 +1,6 @@
-# -*-coding:utf-8 -*-
-from functools import wraps
-from traceback import format_tb
-from dbs.basic_db import db_session
+from functools import wraps, partial
+
+from db.basic import db_session
 
 
 def db_commit_decorator(func):
@@ -10,6 +9,6 @@ def db_commit_decorator(func):
         try:
             return func(*args, **kwargs)
         except Exception as e:
-            print("数据更新异常")
+            print('DB operation error，here are details:{}'.format(e))
             db_session.rollback()
     return session_commit

@@ -40,6 +40,7 @@ class DomainSelect:
 
 if __name__ == '__main__':
     select = DomainSelect()
-    data = {'sort': '0', 'page': '1', 'limit': '10','status':0}
-    for item in select.select_all(data).get("data"):
-        print(item)
+    data = {'sort': '0', 'page': '1', 'limit': '10','status':1,'keyword':''}
+    print(select.select_all(data).get("count"))
+    # for item in select.select_all(data).get("data"):
+    #     #     print(item)

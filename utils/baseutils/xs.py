@@ -1,6 +1,4 @@
-import requests
-from lxml import etree
-from dbs.mongodbclient import MongodbClient
+from utils.dbutils.mongodbclient import MongodbClient
 # html = requests.get("http://91xinshang.com/bag/a0/?isduo=no##").text
 # tree = etree.HTML(html)
 # ""

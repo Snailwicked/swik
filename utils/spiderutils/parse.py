@@ -17,10 +17,8 @@ class Parse:
                 xpath.set_parameter(url=url)
                 ce = ContentExtractor(html=xpath.html, url=url)
                 item["url"] = url
-                item["title"] = ce.get_title()
                 item["authors"] = ce.get_authors()
                 item["publishing_date"] = ce.get_publishing_date()
-                item["content"] = ce.get_content()
                 item["summary"] = ce.get_summary()
                 print(url,item)
                 data.append(item)

@@ -37,7 +37,7 @@ class filterUrl():
         for after in after_urls:
             if "1_" in after:
                 yield after[2:]
-
+#
 class filterUrls(filterUrl):
 
     def FilterUrls(self,urls):

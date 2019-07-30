@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify,render_template
 from flask_cors import *
-from webapplication.service.spider_domain.domain_select import DomainSelect
+from db.dao import MainUrlOper
 from webapplication.service.spider_domain.domain_update import DomainUpdate
 
 
@@ -21,11 +21,8 @@ from celery import Celery
 
 import json
 from utils.spiderutils.parse import Parse
+mainurl = MainUrlOper()
 
-
-
-from webapplication.service.celery_task.task_spider import add
-from celery.result import AsyncResult
 
 
 SECRET_KEY = 'This is the key'
@@ -34,65 +31,9 @@ CORS(app, supports_credentials=True)
 app.secret_key = SECRET_KEY
 
 
-app.config['CELERY_BROKER_URL'] = 'redis://101.132.113.50:6379/2'
-app.config['CELERY_RESULT_BACKEND'] = 'redis://101.132.113.50:6379/3'
-app.config['CELERY_TASK_SERIALIZER'] = 'json'
-app.config['CELERY_RESULT_SERIALIZER'] = 'json'
-app.config['CELERY_ACCEPT_CONTENT'] = ["json"]
-celery = Celery('tasks', broker=app.config['CELERY_BROKER_URL'], backend=app.config['CELERY_RESULT_BACKEND'])
-
-
-celery.conf.update(app.config)
-
-
 
 data = []
 news = []
-
-
-
-########################################################################################################################
-'''
-    站点模块代码
-    get_tasks_on：  更新站点站点子类信息
-
-'''
-@celery.task(name='app.async_crawl')
-def async_crawl(url):
-    parse = Parse()
-    result = parse.get_data(url)
-    return result
-
-
-@celery.task(name='app.async_task')
-def async_task(uuid):
-    """
-    :param uuid: 通过uuid 获取mongdb数据库中的url 进行采集
-    :return:
-    """
-    print(uuid)
-    pass
-
-
-
-
-@app.route('/task/test')
-def tasks_test():
-    params = request.values.to_dict()
-    urls = params.get("url")
-    task = async_crawl.apply_async(eval(urls))
-    # parse = Parse()
-    # data = parse.get_data(urls)
-    return jsonify({"code": 0, "msg": "", "task_id": task.id})
-
-
-
-@app.route('/task/result')
-def result_task():
-    params = request.values.to_dict()
-    task_id = params.get("task_id")
-    result = async_crawl.AsyncResult(task_id).get()
-    return str(result)
 
 ########################################################################################################################
 '''
@@ -130,15 +71,6 @@ def update_task():
     data = request.get_data().decode('utf-8')
     update.update(json.loads(data))
     return jsonify({"code": 1, "msg": "更新成功"})
-
-
-
-@app.route('/task/start')
-def tasks_start():
-    params = request.values.to_dict()
-    uuid = params.get("uuid")
-    task = async_task.apply_async(uuid)
-    return jsonify({"code": 0, "msg": "成功启动", "task_id": task.id})
 
 ########################################################################################################################
 '''
@@ -187,12 +119,11 @@ def tasks_spider():
 '''
 @app.route('/web_site/select_all')
 def select_web_site():
-    select = DomainSelect()
     params = request.args.to_dict()
     print(request.url)
     print(params)
-    data = select.select_all(params)
-    return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
+    data = mainurl.select_by_parameter(params)
+    return jsonify(data)
 
 @app.route('/web_site/update')
 def update_web_site():
@@ -224,7 +155,7 @@ def select_sub_web():
     return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
 
 
-@app.route('/web/delete', methods=["POST"])
+@app.route('/web/delete')
 def delete_sub_web():
     delete = WebDelete()
     if request.method == 'POST':
