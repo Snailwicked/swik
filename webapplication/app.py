@@ -3,7 +3,6 @@ from flask_cors import *
 from db.dao import MainUrlOper,WebInfoOper
 from webapplication.service.spider_domain.domain_update import DomainUpdate
 
-from webapplication.service.spider_webs.web_delete import WebDelete
 from webapplication.service.spider_webs.web_update import WebUpdate
 
 from webapplication.service.spider_tasks.task_add import TaskAdd
