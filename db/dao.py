@@ -2,7 +2,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError as SqlalchemyIntegrityError
 from pymysql.err import IntegrityError as PymysqlIntegrityError
 from sqlalchemy.exc import InvalidRequestError
-import hashlib
+import hashlib,uuid
 import datetime
 
 from db.basic import db_session
@@ -10,6 +10,12 @@ from db.models import (
     MainUrl, WebInfo
 )
 from decorators import db_commit_decorator
+
+
+
+def index_uuid():
+   return uuid.uuid4().hex
+
 
 
 class MainUrlOper:
@@ -80,10 +86,10 @@ class WebInfoOper:
     @classmethod
     @db_commit_decorator
     def add_one(cls, parameter):
-        mainurl = MainUrl()
-        mainurl.web_url = parameter['web_url']
+        mainurl = WebInfo()
+        mainurl.url = parameter['url']
         hl = hashlib.md5()
-        hl.update(str(parameter['web_url']).encode("utf8"))
+        hl.update(str(index_uuid).encode("utf8"))
         mainurl.id = hl.hexdigest()
         mainurl.add_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         mainurl.agent = int(parameter['agent'])
@@ -94,6 +100,14 @@ class WebInfoOper:
         db_session.add(mainurl)
         db_session.commit()
 
+    @classmethod
+    @db_commit_decorator
+    def delete_one(cls, parameter):
+        webinfo = db_session.query(WebInfo).filter(
+            WebInfo.id == parameter["id"]).first()
+        db_session.delete(webinfo)
+        db_session.commit()
+
 
     @classmethod
     def select_by_parameter(cls, parameter):
@@ -101,17 +115,16 @@ class WebInfoOper:
 
         page = int(parameter['page'])
         limit = int(parameter['limit'])
-        status = int(parameter['status'])
-        checked = str(parameter['checked'])
         pid = int(parameter['pid'])
+
         try:
-            data = [item.json() for item in
-                    db_session.query(WebInfo).filter(WebInfo.checked == checked, WebInfo.status == status,
-                                                     WebInfo.pid == pid).limit(limit).offset(
-                        (page - 1) * limit)]
-            count = db_session.query(WebInfo).filter(WebInfo.checked == checked, WebInfo.status == status,
+            datas = db_session.query(WebInfo).filter(
+                                             WebInfo.pid == pid).limit(limit).offset(
+                (page - 1) * limit)
+            count = db_session.query(WebInfo).filter(
                                                      WebInfo.pid == pid).count()
-            return {"code": "200", "message": "succeed", "data": data, "count": count}
+
+            return {"code": "200", "message": "succeed", "data": [item.json() for item in datas], "count": count}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             return {"code": "404", "message": "fialed", "data": [], "count": 0}

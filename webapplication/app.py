@@ -146,9 +146,8 @@ def select_sub_web():
 
 @app.route('/web/delete')
 def delete_sub_web():
-    delete = WebDelete()
     parameter = request.values.to_dict()
-    delete.delete_one(parameter)
+    webinfo.delete_one(parameter)
     return jsonify({"code": 1, "msg": "删除成功"})
 
 
