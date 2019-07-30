@@ -192,7 +192,7 @@ class parseUrl(baseUrl):
             scd.colour = ""
             scd.origin = ""
         return scd
-from dbs.mongodbclient import MongodbClient
+from utils.dbutils.mongodbclient import MongodbClient
 '''
 http://search.secoo.com/search?keyword=%25E8%25A1%25A3%25E6%259C%258D&firstcategoryid=0&secondcategoryid=0&thirdcategoryid=0&brandId=0&level=0&orderType=1&filterType=0&source=&pageNo=2&st=10&price=0&prop=0&warehouse=100&actscr=0&expKey=#J_Filter
 '''
@@ -287,7 +287,6 @@ for item in range(1,1000):
                 scd.colour = ""
                 scd.origin = ""
 
-            import json
             print(scd.json())
             momgodb.collection.insert(scd.json())
             # try:
