@@ -153,8 +153,8 @@ def delete_sub_web():
 @app.route('/web/add')
 def add_sub_web():
     parameter = request.values.to_dict()
-    webinfo.add_one(parameter)
-    return jsonify({"code": 1, "msg": "添加成功"})
+    id = webinfo.add_one(parameter)
+    return jsonify({"code": 1, "msg": "添加成功","id":id})
 
 
 @app.route('/web/update')

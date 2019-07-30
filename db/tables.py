@@ -1,7 +1,10 @@
 # -*-coding:utf-8 -*-
 from sqlalchemy import Table, Column, INTEGER, String,DATE
 from db.basic import metadata
+import uuid
 
+def index_uuid():
+   return uuid.uuid4().hex
 
 main_url = Table("main_url", metadata,
                 Column("pid", INTEGER, primary_key=True, autoincrement=True),
@@ -14,7 +17,7 @@ main_url = Table("main_url", metadata,
 
 
 webinfo = Table("webinfo", metadata,
-                Column("id", String(500), primary_key=True),
+                Column("id", String(500), default=index_uuid, primary_key=True),
                 Column("url", String(500), default='', server_default=''),
                 Column("info", String(500), default='', server_default=''),
                 Column("add_time", DATE, default="", server_default=''),

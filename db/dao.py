@@ -86,19 +86,17 @@ class WebInfoOper:
     @classmethod
     @db_commit_decorator
     def add_one(cls, parameter):
-        mainurl = WebInfo()
-        mainurl.url = parameter['url']
-        hl = hashlib.md5()
-        hl.update(str(index_uuid).encode("utf8"))
-        mainurl.id = hl.hexdigest()
-        mainurl.add_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        mainurl.agent = int(parameter['agent'])
-        mainurl.status = 0
-        mainurl.web_name = parameter['web_name']
-        mainurl.sort = int(parameter['sort'])
-        mainurl.pid = int(parameter['pid'])
-        db_session.add(mainurl)
+        webinfo = WebInfo()
+        webinfo.url = parameter['url']
+        webinfo.add_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        webinfo.agent = int(parameter['agent'])
+        webinfo.status = 0
+        webinfo.web_name = parameter['web_name']
+        webinfo.sort = int(parameter['sort'])
+        webinfo.pid = int(parameter['pid'])
+        db_session.add(webinfo)
         db_session.commit()
+        return webinfo.id
 
     @classmethod
     @db_commit_decorator
