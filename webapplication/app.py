@@ -1,10 +1,6 @@
 from flask import Flask, request, jsonify,render_template
 from flask_cors import *
 from db.dao import MainUrlOper,WebInfoOper
-from webapplication.service.spider_domain.domain_update import DomainUpdate
-
-from webapplication.service.spider_webs.web_update import WebUpdate
-
 from webapplication.service.spider_tasks.task_add import TaskAdd
 from webapplication.service.spider_tasks.task_select import TaskSelect
 from webapplication.service.spider_tasks.task_update import TaskUpdate
@@ -14,14 +10,10 @@ import json
 webinfo = WebInfoOper()
 mainurl = MainUrlOper()
 
-
-
 SECRET_KEY = 'This is the key'
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = SECRET_KEY
-
-
 
 data = []
 news = []
@@ -110,18 +102,14 @@ def tasks_spider():
 '''
 @app.route('/web_site/select_all')
 def select_web_site():
-    params = request.args.to_dict()
-    print(request.url)
-    print(params)
-    data = mainurl.select_by_parameter(params)
+    parameter = request.args.to_dict()
+    data = mainurl.select_by_parameter(parameter)
     return jsonify(data)
 
 @app.route('/web_site/update')
 def update_web_site():
-    update = DomainUpdate()
-    params = request.args.to_dict()
-    print(request.url)
-    update.update(params)
+    parameter = request.args.to_dict()
+    mainurl.update_mainurl(parameter)
     return jsonify({"code": 0, "msg": "更新成功"})
 
 
@@ -138,8 +126,8 @@ def update_web_site():
 '''
 @app.route('/web/select_all')
 def select_sub_web():
-    params = request.args.to_dict()
-    data = webinfo.select_by_parameter(params)
+    parameter = request.args.to_dict()
+    data = webinfo.select_by_parameter(parameter)
     return jsonify(data)
 
 
@@ -159,12 +147,9 @@ def add_sub_web():
 
 @app.route('/web/update')
 def update_sub_web():
-    update = WebUpdate()
-    data = request.values.to_dict()
-    print(data)
-    update.update(data)
+    parameter = request.values.to_dict()
+    webinfo.update_webinfo(parameter)
     return jsonify({"code": 1, "msg": "更新成功"})
-
 
 if __name__ == '__main__':
     app.run(debug=True)

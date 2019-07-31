@@ -29,14 +29,17 @@ class filterUrl():
             if "http" in url:
                 data.add(url)
 
-
-        train = self.transurls.transport(list(data))
-        traindata = self.tv.fit_transform(train)
-        pred = self.clf.predict(traindata)
-        after_urls = list(map(lambda x, y: y + "_" + x, list(data), pred))
-        for after in after_urls:
-            if "1_" in after:
-                yield after[2:]
+        try:
+            train = self.transurls.transport(list(data))
+            traindata = self.tv.fit_transform(train)
+            pred = self.clf.predict(traindata)
+            after_urls = list(map(lambda x, y: y + "_" + x, list(data), pred))
+            for after in after_urls:
+                if "1_" in after:
+                    yield after[2:]
+        except:
+            print("解析不到网址")
+            return []
 #
 class filterUrls(filterUrl):
 

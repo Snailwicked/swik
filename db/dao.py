@@ -2,7 +2,6 @@ from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError as SqlalchemyIntegrityError
 from pymysql.err import IntegrityError as PymysqlIntegrityError
 from sqlalchemy.exc import InvalidRequestError
-import hashlib,uuid
 import datetime
 
 from db.basic import db_session
@@ -12,42 +11,28 @@ from db.models import (
 from decorators import db_commit_decorator
 
 
-
-def index_uuid():
-   return uuid.uuid4().hex
-
-
-
 class MainUrlOper:
 
 
-    # @classmethod
-    # @db_commit_decorator
-    # def add_all(cls, datas):
-    #     try:
-    #         db_session.add_all(datas)
-    #         db_session.commit()
-    #     except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
-    #         for data in datas:
-    #             cls.add_one(data)
-
-    '''parameter = {'pid': 5905, 'sign': 'remark', 'content': '网站404'}'''
     @classmethod
     @db_commit_decorator
-    def update_main_url(cls, parameter):
+    def update_mainurl(cls, parameter):
         pid = parameter['pid']
-        sign = parameter['sign']
-        content = parameter['content']
-
         mainurl = db_session.query(MainUrl).filter(MainUrl.pid == pid).first()
-        if sign == "remark":
-            mainurl.remark = content
+        try:
+            remark = parameter['remark']
+            mainurl.remark = remark
             db_session.commit()
-
-        elif sign == "status":
-            mainurl.status = content
+            db_session.close()
+        except:
+            pass
+        try:
+            status = parameter['status']
+            mainurl.status = status
             db_session.commit()
-
+            db_session.close()
+        except:
+            pass
     '''
     parameter = {
             "page":1,
@@ -74,9 +59,12 @@ class MainUrlOper:
                         (page - 1) * limit)]
             count = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
                                                      MainUrl.webSite.like("%{}%".format(keyword))).count()
+            db_session.close()
+
             return {"code": "200", "message": "succeed", "data": data, "count": count}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
 
@@ -96,6 +84,8 @@ class WebInfoOper:
         webinfo.pid = int(parameter['pid'])
         db_session.add(webinfo)
         db_session.commit()
+        db_session.close()
+
         return webinfo.id
 
     @classmethod
@@ -105,6 +95,25 @@ class WebInfoOper:
             WebInfo.id == parameter["id"]).first()
         db_session.delete(webinfo)
         db_session.commit()
+        db_session.close()
+
+    @classmethod
+    @db_commit_decorator
+    def update_webinfo(cls,parameter):
+
+        id = parameter['id']
+        webinfo = db_session.query(WebInfo).filter(WebInfo.id == id).first()
+        try:
+            remark = parameter['remark']
+            webinfo.remark = remark
+        except:
+            status = parameter['status']
+            webinfo.remark = status
+
+        finally:
+            db_session.commit()
+            db_session.close()
+
 
 
     @classmethod
@@ -121,10 +130,12 @@ class WebInfoOper:
                 (page - 1) * limit)
             count = db_session.query(WebInfo).filter(
                                                      WebInfo.pid == pid).count()
+            db_session.close()
 
             return {"code": "200", "message": "succeed", "data": [item.json() for item in datas], "count": count}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
 
