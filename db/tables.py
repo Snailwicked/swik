@@ -1,5 +1,5 @@
 # -*-coding:utf-8 -*-
-from sqlalchemy import Table, Column, INTEGER, String,DATE
+from sqlalchemy import Table, Column, INTEGER, String,DATE,TEXT
 from db.basic import metadata
 import uuid
 
@@ -12,8 +12,10 @@ main_url = Table("main_url", metadata,
                 Column("webSite", String(500), default='', server_default=''),
                 Column("sort", INTEGER, default=101, server_default='101'),
                 Column("status", INTEGER, default=0, server_default='0'),
-                Column("remark", String(200), default='', server_default='')
-            )
+                Column("remark", String(200), default='', server_default=''),
+                Column("rule", TEXT)
+
+)
 
 
 webinfo = Table("webinfo", metadata,
