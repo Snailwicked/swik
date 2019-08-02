@@ -24,27 +24,6 @@ news = []
     get_tasks_on：  更新站点站点子类信息
 
 '''
-
-@app.route('/json/test')
-def json_test():
-    json = {
-        'page': 10,
-        'good_list': "//ul[@id= 'newsListContent']//li//p[@class='title']//a//@href",
-        'domain': 'http://stock.eastmoney.com/a/cdpfx_{}.html',
-        "content_xpath": {
-            'personnel_title': '//h1//text()',
-            'attendance_time': '//div[@class="time"]//text()',
-        },
-        'author': 'snail'}
-    return jsonify(json)
-
-
-########################################################################################################################
-'''
-    站点模块代码
-    get_tasks_on：  更新站点站点子类信息
-
-'''
 @app.route('/task/add')
 def add_task():
     add = TaskAdd()
