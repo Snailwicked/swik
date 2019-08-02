@@ -149,6 +149,7 @@ def update_web_site():
 def select_sub_web():
     parameter = request.args.to_dict()
     data = webinfo.select_by_parameter(parameter)
+    print(data)
     return jsonify(data)
 
 

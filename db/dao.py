@@ -19,6 +19,7 @@ class MainUrlOper:
     def update_mainurl(cls, parameter):
         pid = parameter['pid']
         mainurl = db_session.query(MainUrl).filter(MainUrl.pid == pid).first()
+
         try:
             remark = parameter['remark']
             mainurl.remark = remark
@@ -33,6 +34,15 @@ class MainUrlOper:
             db_session.close()
         except:
             pass
+
+        try:
+            rule = parameter['rule']
+            mainurl.rule = rule
+            db_session.commit()
+            db_session.close()
+        except:
+            pass
+
     '''
     parameter = {
             "page":1,
@@ -140,5 +150,22 @@ class WebInfoOper:
 
 
 
+if __name__ == '__main__':
+    import json
+    rule = json.dumps({
+        'page': 10,
+        'good_list': "//ul[@id= 'newsListContent']//li//p[@class='title']//a//@href",
+        'domain': 'http://stock.eastmoney.com/a/cdpfx_{}.html',
+        "content_xpath": {
+            'personnel_title': '//h1//text()',
+            'attendance_time': '//div[@class="time"]//text()',
+        },
+        'author': 'snail'})
+    parameter = {
+        "pid": 5905,
+        "rule":rule
 
+    }
+    mainurl = MainUrlOper()
+    print(mainurl.update_mainurl(parameter))
 

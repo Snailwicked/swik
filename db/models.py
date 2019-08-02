@@ -1,13 +1,13 @@
 # -*-coding:utf-8 -*-
 from db.basic import Base
 from db.tables import *
-
+import json
 
 
 class MainUrl(Base):
     __table__ = main_url
     def json(self):
-        return {"pid":self.pid,"address":self.address,"webSite":self.webSite,"sort":self.sort,"status":self.status,"remark":self.remark}
+        return {"pid":self.pid,"address":self.address,"webSite":self.webSite,"sort":self.sort,"status":self.status,"remark":self.remark,'rule':json.loads(self.rule)}
 
 
 class WebInfo(Base):
