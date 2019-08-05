@@ -2,7 +2,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError as SqlalchemyIntegrityError
 from pymysql.err import IntegrityError as PymysqlIntegrityError
 from sqlalchemy.exc import InvalidRequestError
-import datetime
+import datetime,json
 
 from db.basic import db_session
 from db.models import (
@@ -36,8 +36,8 @@ class MainUrlOper:
             pass
 
         try:
-            rule = parameter['rule']
-            mainurl.rule = rule
+            rule= parameter['rule']
+            mainurl.rule =  json.dumps(rule)
             db_session.commit()
             db_session.close()
         except:
