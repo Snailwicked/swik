@@ -6,7 +6,7 @@ from config.conf import get_broker_and_backend
 platforms.C_FORCE_ROOT = True
 broker, backend = get_broker_and_backend()
 #
-tasks = ['tasks.task_check']
+tasks = ['tasks.task_check',"tasks.crawler_check"]
 
 app = Celery('spider_task', include=tasks, broker=broker, backend=backend)
 
@@ -23,7 +23,11 @@ app.conf.update(
                 'routing_key': 'check_queue'
             },
 
-
+        'tasks.crawler_check.excute_check_crawler':
+            {
+                'queue': 'crawler_queue',
+                'routing_key': 'crawler_queue'
+            },
 
     },
 
@@ -32,6 +36,11 @@ app.conf.update(
             "exchange": "check_queue",
             "exchange_type": "direct",
             "routing_key": "check_queue"
+        },
+        "crawler_queue": {
+            "exchange": "crawler_queue",
+            "exchange_type": "direct",
+            "routing_key": "crawler_queue"
         }
     }
 

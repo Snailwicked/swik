@@ -7,8 +7,6 @@ from urllib.parse import urljoin
 from core.headers import random_headers
 
 
-
-
 class Crawler:
     def __init__(self, maxtasks=100):
         self.loop = None
@@ -62,8 +60,9 @@ class Crawler:
         try:
             resp = yield from self.session.get(url,headers=random_headers)
         except Exception as exc:
-            print('...', url, 'has error', repr(str(exc)))
-            self.done[url] = False
+            # print('...', url, 'has error', repr(str(exc)))
+            # self.done[url] = False
+            pass
         else:
             if (resp.status == 200):
                 html = (yield from resp.read())
@@ -74,28 +73,32 @@ class Crawler:
                 except:
                     charset = "utf-8"
                 data = html.decode(charset.lower(), 'replace')
-
                 try:
-                        for item in etree.HTML(str(data)).xpath("//a//@href"):
-                                suburl = urljoin(url, item)
-                                if suburl.startswith("http"):
-                                        if suburl not in self.dataset:
-                                                self.dataset.add(suburl)
-                                                asyncio.ensure_future(self.addurls([(suburl, url)]), loop=self.loop)
-                                        else:
-                                                continue
+                    urls = etree.HTML(str(data)).xpath("//a//@href")
+                    TEMP = []
+                    for item in urls:
+                        try:
+                            suburl = urljoin(url, item)
+                            if suburl.startswith("http"):
+                                result = re.findall(self.parameter['re_Rule'], url)
+                                if result:
+                                    asyncio.ensure_future(self.response((url)), loop=self.loop)
+                                else:
+                                    if len(self.dataset)>int(self.parameter['limit']):
+                                        loop = asyncio._get_running_loop()
+                                        loop.close()
+                                    elif suburl not in self.dataset:
+                                        self.dataset.add(suburl)
+                                        TEMP.append(suburl)
+                        except:
+                            print("网址不同源")
+                    asyncio.ensure_future(self.addurls([(suburl, url) for suburl in TEMP]), loop=self.loop)
+
                 except:
-                        pass
-                result = re.findall(self.parameter['re_Rule'], url)
-                if result:
-                        asyncio.ensure_future(self.response((url)), loop=self.loop)
-                else:
-                        pass
+                    pass
             resp.close()
             self.done[url] = True
         self.busy.remove(url)
-        print(len(self.done), 'completed tasks,', len(self.tasks),
-              'still pending, todo', len(self.todo))
 
 
 class Crawleruning(Crawler):
@@ -132,16 +135,12 @@ class Crawleruning(Crawler):
 if __name__ == '__main__':
     parameter = {
         "url": "http://news.sohu.com/",
-        "re_Rule": "http://www.sohu.com/a/\d+_\d+"
+        "re_Rule": "http://www.sohu.com/a/\d+_\d+",
+        "limit":500
     }
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()
-
-
-
-
-
 
 
 

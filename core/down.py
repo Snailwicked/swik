@@ -235,12 +235,14 @@ class Crawling:
         self.parameters = None
 
     def set_parameters(self, parameters):
-        self.parameters = parameters
+        import json
+        self.parameters =  json.loads(parameters)
+
 
     def run(self):
-        start_url = 'http://www.sohu.com/'
-        capture = 'http://www.sohu.com/a/\d+_\d+'
-        max_crawl = 50
+        start_url = self.parameters.get("url")
+        capture = self.parameters.get("rule")["filter_rule"]
+        max_crawl = self.parameters.get("rule")["page_size"]
         web_crawler = AWebSpider(capture, max_crawl=max_crawl, start_url=start_url)
         loop = asyncio.get_event_loop()
         try:
