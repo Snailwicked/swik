@@ -118,8 +118,11 @@ def update_web_site():
 def spider_web_site():
     parameter = request.args.to_dict()
     print(parameter)
-    crawler.set_parameters(parameter)
-    crawler.run()
+
+    from tasks import crawler_check
+    crawler_check.excute_check_crawler(parameter)
+    # crawler.set_parameters(parameter)
+    # crawler.run()
     return jsonify({"code": 0, "msg": "更新成功"})
 
 

@@ -37,7 +37,7 @@ class MainUrlOper:
 
         try:
             rule= parameter['rule']
-            mainurl.rule =  json.dumps(rule)
+            mainurl.rule =  rule
             db_session.commit()
             db_session.close()
         except:
@@ -152,20 +152,28 @@ class WebInfoOper:
 
 if __name__ == '__main__':
     import json
-    rule = json.dumps({
-        'page': 10,
-        'good_list': "//ul[@id= 'newsListContent']//li//p[@class='title']//a//@href",
-        'domain': 'http://stock.eastmoney.com/a/cdpfx_{}.html',
-        "content_xpath": {
-            'personnel_title': '//h1//text()',
-            'attendance_time': '//div[@class="time"]//text()',
-        },
-        'author': 'snail'})
-    parameter = {
-        "pid": 5905,
-        "rule":rule
+    # rule = json.dumps({
+    #     'page': 10,
+    #     'good_list': "//ul[@id= 'newsListContent']//li//p[@class='title']//a//@href",
+    #     'domain': 'http://stock.eastmoney.com/a/cdpfx_{}.html',
+    #     "content_xpath": {
+    #         'personnel_title': '//h1//text()',
+    #         'attendance_time': '//div[@class="time"]//text()',
+    #     },
+    #     'author': 'snail'})
+    # parameter = {
+    #     "pid": 5905,
+    #     "rule":rule
+    #
+    # }
 
+    parameter = {
+        "page": 1,
+        "limit": 10,
+        "status": 1,
+        "sort": 0,
+        "keyword": ""
     }
     mainurl = MainUrlOper()
-    print(mainurl.update_mainurl(parameter))
+    print(mainurl.select_by_parameter(parameter))
 
