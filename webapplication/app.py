@@ -112,7 +112,11 @@ def update_web_site():
     mainurl.update_mainurl(parameter)
     return jsonify({"code": 0, "msg": "更新成功"})
 
-
+@app.route('/web_site/spider')
+def spider_web_site():
+    parameter = request.args.to_dict()
+    print(parameter)
+    return jsonify({"code": 0, "msg": "更新成功"})
 
 
 ########################################################################################################################
