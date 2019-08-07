@@ -6,9 +6,7 @@ from webapplication.service.spider_tasks.task_select import TaskSelect
 from webapplication.service.spider_tasks.task_update import TaskUpdate
 from webapplication.service.spider_tasks.task_delete import TaskDelete
 from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
-from core.down import Crawling
 import json
-crawler = Crawling()
 webinfo = WebInfoOper()
 mainurl = MainUrlOper()
 
@@ -114,12 +112,10 @@ def update_web_site():
     mainurl.update_mainurl(parameter)
     return jsonify({"code": 0, "msg": "更新成功"})
 
-@app.route('/web_site/spider')
-def spider_web_site():
+@app.route('/web_site/update_json')
+def update_json():
     parameter = request.args.to_dict()
     print(parameter)
-    crawler.set_parameters(parameter)
-    crawler.run()
     return jsonify({"code": 0, "msg": "更新成功"})
 
 
@@ -157,6 +153,7 @@ def add_sub_web():
 @app.route('/web/update')
 def update_sub_web():
     parameter = request.values.to_dict()
+
     webinfo.update_webinfo(parameter)
     return jsonify({"code": 1, "msg": "更新成功"})
 

@@ -33,7 +33,7 @@ class Parse:
 
 
 if __name__ == "__main__":
-    urls = ["https://news.sina.com.cn/"]
+    urls = ["http://media.people.com.cn/"]
     parse = Parse()
     result = parse.get_data(urls)
     print(result)
