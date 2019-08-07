@@ -6,7 +6,9 @@ from webapplication.service.spider_tasks.task_select import TaskSelect
 from webapplication.service.spider_tasks.task_update import TaskUpdate
 from webapplication.service.spider_tasks.task_delete import TaskDelete
 from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
+from core.down import Crawling
 import json
+crawler = Crawling()
 webinfo = WebInfoOper()
 mainurl = MainUrlOper()
 
@@ -116,6 +118,8 @@ def update_web_site():
 def spider_web_site():
     parameter = request.args.to_dict()
     print(parameter)
+    crawler.set_parameters(parameter)
+    crawler.run()
     return jsonify({"code": 0, "msg": "更新成功"})
 
 
