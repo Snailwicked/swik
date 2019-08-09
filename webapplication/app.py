@@ -6,7 +6,9 @@ from webapplication.service.spider_tasks.task_select import TaskSelect
 from webapplication.service.spider_tasks.task_update import TaskUpdate
 from webapplication.service.spider_tasks.task_delete import TaskDelete
 from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
+from core.down import Crawling
 import json
+crawler = Crawling()
 webinfo = WebInfoOper()
 mainurl = MainUrlOper()
 
@@ -112,12 +114,20 @@ def update_web_site():
     mainurl.update_mainurl(parameter)
     return jsonify({"code": 0, "msg": "更新成功"})
 
-@app.route('/web_site/update_json')
-def update_json():
+@app.route('/web_site/spider')
+def spider_web_site():
     parameter = request.args.to_dict()
+    parameter["rule"] = json.loads(parameter["rule"])
     print(parameter)
+    crawler.set_parameters(parameter)
+    crawler.run()
     return jsonify({"code": 0, "msg": "更新成功"})
+'''
+http://jiangsu.sina.com.cn/news/m/2019-08-07/detail-ihytcitm7447402.shtml
 
+/http://jiangsu.sina.com.cn/news/m/(\d{4}-)(\d{2}-)(\d{2})\/detail-(.*).shtml/
+
+'''
 
 ########################################################################################################################
 '''
@@ -153,7 +163,6 @@ def add_sub_web():
 @app.route('/web/update')
 def update_sub_web():
     parameter = request.values.to_dict()
-
     webinfo.update_webinfo(parameter)
     return jsonify({"code": 1, "msg": "更新成功"})
 
