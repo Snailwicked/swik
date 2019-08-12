@@ -7,8 +7,9 @@ from webapplication.service.spider_tasks.task_update import TaskUpdate
 from webapplication.service.spider_tasks.task_delete import TaskDelete
 from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
 from core.down import Crawling
+from core.crawler import Crawleruning
+
 import json
-crawler = Crawling()
 webinfo = WebInfoOper()
 mainurl = MainUrlOper()
 
@@ -117,16 +118,27 @@ def update_web_site():
 @app.route('/web_site/spider')
 def spider_web_site():
     parameter = request.args.to_dict()
-    print(parameter)
-    parameter["rule"] = json.loads(parameter["rule"])
-    print(parameter)
-    # crawler.set_parameters(parameter)
-    # crawler.run()
+    parameter["rule"] = json.loads(parameter["rule"].replace("@","+"))
+    # print(parameter)
+    # print(type(parameter))
+    # print(parameter)
+    # # parameter = {
+    # #     "url": "https://www.legalweekly.cn/",
+    # #     "rule": {'author': '', 'filter_rule': 'https://www.legalweekly.cn/\w+/\d+.html', 'page_size': '1',
+    # #              'content': '', 'header': '', 'issueTime': ''},
+    # # }
+    # print(parameter)
+    # print(type(parameter))
+
+    crawler = Crawleruning()
+    crawler.set_parameter(parameter)
+    crawler.start()
+
     return jsonify({"code": 0, "msg": "更新成功"})
 '''
 http://jiangsu.sina.com.cn/news/m/2019-08-07/detail-ihytcitm7447402.shtml
-
-/http://jiangsu.sina.com.cn/news/m/(\d{4}-)(\d{2}-)(\d{2})\/detail-(.*).shtml/
+https://www.legalweekly.cn/fzsb/16165.html
+/https://www.legalweekly.cn/\w+\/d+.shtml/
 
 '''
 

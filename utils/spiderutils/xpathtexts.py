@@ -44,5 +44,5 @@ class xPathTexts(object):
 
 if __name__ == '__main__':
     xpath = xPathTexts()
-    xpath.set_parameter(url = "http://search.360kad.com/?pageText=%E5%96%B7%E9%9B%BE%E5%89%82&pageIndex=1")
-    print(xpath.get_contents("//p[@class= 't']//a//@href"))
+    xpath.set_parameter(url = "http://esf.focus.cn")
+    print(xpath.get_contents("//a//@href"))

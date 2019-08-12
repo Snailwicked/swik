@@ -2,7 +2,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError as SqlalchemyIntegrityError
 from pymysql.err import IntegrityError as PymysqlIntegrityError
 from sqlalchemy.exc import InvalidRequestError
-import datetime,json
+import datetime
 
 from db.basic import db_session
 from db.models import (
@@ -61,17 +61,16 @@ class MainUrlOper:
         keyword = str(parameter['keyword'])
         sort = int(parameter['sort'])
         try:
-            data = [item.json() for item in
-                    db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
+            datas = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
                                                      MainUrl.webSite.like(
                                                          "%{}%".format(keyword))).limit(
                         limit).offset(
-                        (page - 1) * limit)]
+                        (page - 1) * limit)
             count = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
                                                      MainUrl.webSite.like("%{}%".format(keyword))).count()
             db_session.close()
 
-            return {"code": "200", "message": "succeed", "data": data, "count": count}
+            return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
@@ -171,8 +170,8 @@ if __name__ == '__main__':
     parameter = {
             "page":1,
             "limit":10,
-            "status":1,
-            "sort":0,
+            "status":0,
+            "sort":1,
             "keyword":""
         }
     mainurl = MainUrlOper()

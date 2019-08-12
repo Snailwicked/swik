@@ -46,19 +46,19 @@ class AWebSpider:
                  start_url=None, retries=2):
 
 
-        self.base = base_url
+        self.base = start_url
         self.start_url = start_url
         self.capture = re.compile(capture_pattern)
-        self.exclude = [':']
-
-
+        self.lock_crawled = asyncio.Lock()
+        self.lock_parsing = asyncio.Lock()
+        self.exclude = ["void(0)"]
         self.concurrency = concurrency
         self.timeout = timeout
         self.delay = delay
         self.retries = retries
 
-        self.q_crawl = BQueue(capacity=max_crawl)
-        self.q_parse = BQueue(capacity=max_crawl*100)
+        self.q_crawl = BQueue(capacity=int(max_crawl/2))
+        self.q_parse = BQueue(capacity=max_crawl)
 
         self.brief = defaultdict(set)
         self.data = []
@@ -78,20 +78,24 @@ class AWebSpider:
         """
         raise NotImplementedError
 
-    def get_urls(self, document):
+    def get_urls(self, document,url):
+        print(url)
         urls = []
         urls_to_parse = []
         temp = set()
         dom = html.fromstring(document)
         [temp.add(item) for item in dom.xpath('//a/@href')]
         for href in temp:
+            # url = urljoin(url, href)
             if any(e in href for e in self.exclude):
                 continue
-            url = unquote(urljoin(self.base, urldefrag(href)[0]))
+            url = urljoin(self.base, href)
             if self.capture.search(url):
-                urls_to_parse.append(url)
-            else:
+                if "#" in url:
+                    urls_to_parse.append(str(url).split("#")[0])
+            elif len(re.findall('http', url))==1:
                 urls.append(url)
+
         return urls, urls_to_parse
 
     async def get_html_from_url(self, url):
@@ -102,7 +106,7 @@ class AWebSpider:
 
     async def get_links_from_url(self, url):
         document = await self.get_html_from_url(url)
-        return self.get_urls(document)
+        return self.get_urls(document,url)
 
     async def __wait(self, name):
 
@@ -113,40 +117,40 @@ class AWebSpider:
     async def crawl_url(self):
         current_url = await self.q_crawl.get()
         try:
-            if self.scheme in current_url:
-                if (current_url not in self.brief['crawled']) and (current_url not in self.brief['crawling']):
-                    self.brief['crawling'].add(current_url)
-                    urls, urls_to_parse = await self.get_links_from_url(current_url)
-                    self.brief['crawled'].add(current_url)
-
-                    for url in urls:
-                        if self.q_crawl.is_reached:
-                            break
-
-                        if self.scheme in url:
-                            if (url not in self.brief['crawled']) and (url not in self.brief['crawling']):
-
-
-                                await self.q_crawl.put(url)
-                            else:
-                                pass
-                        else:
-                            pass
-
-                    for url in urls_to_parse:
-                        if self.q_parse.is_reached:
-                            print('Maximum parse length has been reached')
-                            break
-                        if url not in self.brief['parsing']:
-                            await self.q_parse.put(url)
-                            self.brief['parsing'].add(url)
-
-                    if not self.can_parse and self.q_parse.qsize() > 0:
-                            self.can_parse = True
+            # await self.lock.acquire()
+            # lock = (current_url not in self.brief['crawled']) and (current_url not in self.brief['crawling'])
+            # self.lock.release()
+            # if lock:
+            self.brief['crawling'].add(current_url)
+            urls, urls_to_parse = await self.get_links_from_url(current_url)
+            self.brief['crawled'].add(current_url)
+            for url in urls:
+                if self.scheme in url:
+                    await self.lock_crawled.acquire()
+                    lock_crawled = (url not in self.brief['crawled']) and (url not in self.brief['crawling'])
+                    self.lock_crawled.release()
+                    if lock_crawled:
+                        await self.q_crawl.put(url)
+                    else:
+                        pass
                 else:
                     pass
-            else:
-                pass
+            for url in urls_to_parse:
+                if self.q_parse.is_reached:
+                    self.q_crawl.capacity = self.q_crawl.put_counter
+                    break
+                await self.lock_parsing.acquire()
+                lock_parsing = url not in self.brief['parsing']
+                self.lock_parsing.release()
+                if lock_parsing:
+                    await self.q_parse.put(url)
+                    self.brief['parsing'].add(url)
+
+            if not self.can_parse and self.q_parse.qsize() > 0:
+                    self.can_parse = True
+            # else:
+            #     pass
+
         except Exception as exc:
             print('Exception {}:'.format(exc))
 
@@ -232,17 +236,20 @@ class AWebSpider:
 class Crawling:
 
     def __int__(self):
-        self.parameters = None
+        self.parameters = {"url":"http://www.legalweekly.cn/","rule":{"filter_rule":"https://www.legalweekly.cn/\w+\/d+.shtml","page_size":50}}
 
     def set_parameters(self, parameters):
-        import json
-        self.parameters =  json.loads(parameters)
-
+        self.parameters =  parameters
+        print(self.parameters)
 
     def run(self):
-        start_url = self.parameters.get("url")
-        capture = self.parameters.get("rule")["filter_rule"]
-        max_crawl = self.parameters.get("rule")["page_size"]
+        start_url = "http://www.legalweekly.cn/"
+        capture = "https://www.legalweekly.cn/\w+\/d+.shtml"
+        max_crawl = 50
+        print(start_url)
+        print(capture)
+        print(max_crawl)
+
         web_crawler = AWebSpider(capture, max_crawl=max_crawl, start_url=start_url)
         loop = asyncio.get_event_loop()
         try:
@@ -250,3 +257,12 @@ class Crawling:
         finally:
             loop.close()
 
+if __name__ == '__main__':
+
+    #
+    # crawler = Crawling()
+    # crawler.run()
+    url = "http://www.legalweekly.cn/whlh/16163.html"
+    res = "http://www.legalweekly.cn/\w+/\d+.html"
+    result = re.findall(res, url)
+    print(result)

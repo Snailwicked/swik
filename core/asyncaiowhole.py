@@ -6,7 +6,6 @@ from lxml import etree
 from urllib.parse import urljoin
 from core.headers import random_headers
 
-
 class Crawler:
     def __init__(self, maxtasks=100):
         self.loop = None
@@ -85,21 +84,18 @@ class Crawler:
                                     asyncio.ensure_future(self.response((url)), loop=self.loop)
                                 else:
                                     if len(self.dataset)>int(self.parameter['limit']):
-                                        loop = asyncio._get_running_loop()
-                                        loop.close()
+                                        break
                                     elif suburl not in self.dataset:
                                         self.dataset.add(suburl)
                                         TEMP.append(suburl)
                         except:
                             print("网址不同源")
                     asyncio.ensure_future(self.addurls([(suburl, url) for suburl in TEMP]), loop=self.loop)
-
                 except:
                     pass
             resp.close()
             self.done[url] = True
         self.busy.remove(url)
-
 
 class Crawleruning(Crawler):
 

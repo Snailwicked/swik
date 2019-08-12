@@ -410,7 +410,7 @@ class ScalableBloomFilter(object):
         """Returns the total number of elements stored in this SBF"""
         return sum(f.count for f in self.filters)
 
-class filterutil:
+class filter:
     def __init__(self,path=None):
         self.path = path
         self.ispath = self._check_path(self.path)
@@ -425,7 +425,7 @@ class filterutil:
             return True
         return False
 
-    def filtertext(self,text):
+    def filter_text(self,text):
         if text in self.bf:
             return False
         self.bf.add(text)
@@ -437,5 +437,5 @@ if __name__ == "__main__":
 
     verify_text = ["b","c","d","e","c"]
     for i in verify_text:
-        fu = filterutil("./test.blm")
-        print(fu.filtertext(i))
+        fu = filter("./test.blm")
+        print(fu.filter_text(i))

@@ -1,63 +1,80 @@
-import asyncio
-import re
-import urllib.parse
-from lxml import etree
 from urllib.parse import urljoin
-from core.headers import random_headers
+import re
 from utils.spiderutils.xpathtexts import xPathTexts
-import queue
+from collections import defaultdict
+from sklearn.externals import joblib
+from sklearn.feature_extraction.text import TfidfVectorizer
+from utils.urlutils.transurl import transUrls
 
-class QueueUtil:
-    def __init__(self):
-        self.queue = queue.Queue()
-
-    def put(self, data):
-        self.queue.put(data)
-
-    def get(self):
-        while not self.queue.empty():
-            if self.queue.qsize() < 10:
-                import time
-                time.sleep(5)
-            yield self.queue.get()
 
 
 class Crawler:
     def __init__(self):
-        self.todo = set()
-        self.busy = set()
-        self.done = {}
         self.dataset = set()
         self.xpath = xPathTexts()
+        self.brief = defaultdict(set)
+        self.count = 0
+        self.sit = 0
 
     def run(self,parameter):
        self.parameter = parameter
-       self.xpath_urls([self.parameter["url"]])
+       self.point = 0
+       self.xpath_urls([(self.parameter["url"],self.point)])
+
+
+    def cut(self,url):
+        url = url.replace("//", "/").replace("///", "/").replace("////", "/").replace("/////", "/").replace("//////","/").replace(
+            "///////", "/").replace("////////", "/").replace("/////////", "/")
+        text = url.split("/")
+        return text
+
+    def get_hrefs(self,url):
+        self.xpath.set_parameter(url)
+        urls = set(self.xpath.get_contents("//a//@href"))
+        temp = set()
+
+        for item in urls:
+            suburl = urljoin(url, item)
+            if suburl.startswith("http"):
+                temp.add(suburl)
+        return temp
 
 
     def xpath_urls(self, urls):
-        for url in urls:
-            self.xpath.set_parameter(url)
-            urls = self.xpath.get_contents("//a//@href")
-
-            TEMP = []
-            for item in urls:
-                try:
-                    suburl = urljoin(url, item)
-                    if suburl.startswith("http"):
-                        result = re.findall(self.parameter['re_Rule'], url)
-                        if result:
-                            print(result)
-                        else:
-                            if len(self.dataset)>int(self.parameter['limit']):
-                               break
-                            elif suburl not in self.dataset:
-                                self.dataset.add(suburl)
-                                TEMP.append(suburl)
-                except:
-                    print("网址不同源")
-            self.xpath_urls(TEMP)
-
+        if self.parameter['rule']["filter_rule"]:
+            for url ,point in urls:
+                self.point = point
+                if point == int(self.parameter['rule']["page_size"]):
+                    break
+                TEMP = set()
+                for item in self.get_hrefs(url):
+                    result = re.findall(self.parameter['rule']["filter_rule"], item)
+                    if result and item not in self.brief["parsing"]:
+                        print(item)
+                        self.brief["parsing"].add(item)
+                    else:
+                        if item not in self.brief["crawled"]:
+                            self.brief["crawled"].add(item)
+                            TEMP.add(item)
+                self.xpath_urls([(item ,self.point+1)for item in TEMP])
+        else:
+            self.clf = joblib.load('E:/Workspace/swik/algorithm/pkl/url_SDG.pkl')
+            self.vocabulary = joblib.load('E:/Workspace/swik/algorithm/pkl/url_Vocabulary.pkl')
+            self.tv = TfidfVectorizer(tokenizer=self.cut,
+                                      vocabulary=self.vocabulary)
+            self.transurls = transUrls()
+            for url, point in urls:
+                urls = self.get_hrefs(url)
+                train = self.transurls.transport(list(urls))
+                traindata = self.tv.fit_transform(train)
+                pred = self.clf.predict(traindata)
+                after_urls = list(map(lambda x, y: y + "_" + x, list(urls), pred))
+                result = []
+                for after in after_urls:
+                    if "1_" in after:
+                        print(after[2:])
+                        result.append(after[2:])
+                return result
     def process(self, url):
         print(url)
 
@@ -68,19 +85,21 @@ class Crawleruning(Crawler):
         super(Crawleruning, self).__init__()
 
     def start(self):
-        for parameter in self.parameters:
-            self.run(parameter)
+        self.run(self.parameters)
 
     def set_parameter(self,parameter):
         self.parameters = parameter
 
 
+
+base_url = 'http://www.sohu.com/'
+capture = 'http://www.sohu.com/a/\d+_\d+'
+
 if __name__ == '__main__':
-    parameter = [{
-        "url": "http://news.sohu.com/",
-        "re_Rule": "http://www.sohu.com/a/\d+_\d+",
-        "limit":500
-    }]
+    parameter = {
+        "url": "http://www.sohu.com/",
+        "rule": {'author': '', 'filter_rule': '', 'page_size': '1', 'content': '', 'header': '', 'issueTime': ''},
+    }
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()

@@ -6,8 +6,9 @@ import json
 
 class MainUrl(Base):
     __table__ = main_url
-    def json(self):
-        return {"pid":self.pid,"address":self.address,"webSite":self.webSite,"sort":self.sort,"status":self.status,"remark":self.remark,'rule':self.rule}
+
+    def single_to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class WebInfo(Base):
