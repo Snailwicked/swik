@@ -5,7 +5,9 @@ from collections import defaultdict
 from sklearn.externals import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from utils.urlutils.transurl import transUrls
+from config.conf import get_algorithm
 
+args = get_algorithm()
 
 
 class Crawler:
@@ -58,8 +60,9 @@ class Crawler:
                             TEMP.add(item)
                 self.xpath_urls([(item ,self.point+1)for item in TEMP])
         else:
-            self.clf = joblib.load('E:/Workspace/swik/algorithm/pkl/url_SDG.pkl')
-            self.vocabulary = joblib.load('E:/Workspace/swik/algorithm/pkl/url_Vocabulary.pkl')
+
+            self.clf = joblib.load(args["url_SDG"])
+            self.vocabulary = joblib.load(args["url_Vocabulay"])
             self.tv = TfidfVectorizer(tokenizer=self.cut,
                                       vocabulary=self.vocabulary)
             self.transurls = transUrls()

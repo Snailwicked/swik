@@ -43,6 +43,30 @@ class MainUrlOper:
         except:
             pass
 
+    @classmethod
+    @db_commit_decorator
+    def delete_one(cls, parameter):
+        maininfo = db_session.query(MainUrl).filter(
+            MainUrl.pid == parameter["pid"]).first()
+        db_session.delete(maininfo)
+        db_session.commit()
+        db_session.close()
+
+    @classmethod
+    @db_commit_decorator
+    def add_one(cls, parameter):
+        mainurl = MainUrl()
+        mainurl.address = parameter['address']
+        mainurl.webSite = parameter['webSite']
+        mainurl.status = 0
+        mainurl.remark = ""
+        mainurl.sort = int(parameter['sort'])
+        db_session.add(mainurl)
+        db_session.commit()
+        db_session.close()
+        return mainurl.pid
+
+
     '''
     parameter = {
             "page":1,
@@ -94,7 +118,6 @@ class WebInfoOper:
         db_session.add(webinfo)
         db_session.commit()
         db_session.close()
-
         return webinfo.id
 
     @classmethod

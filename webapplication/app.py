@@ -109,6 +109,20 @@ def select_web_site():
     data = mainurl.select_by_parameter(parameter)
     return jsonify(data)
 
+@app.route('/web_site/delete')
+def delete_web_site():
+    parameter = request.args.to_dict()
+    # parameter = {"pid":7406}
+    mainurl.delete_one(parameter)
+    return ""
+
+@app.route('/web_site/add')
+def add_web_site():
+    parameter = request.args.to_dict()
+    # parameter = {"address":"test","webSite":"test","sort":0}
+    mainurl.add_one(parameter)
+    return ""
+
 @app.route('/web_site/update')
 def update_web_site():
     parameter = request.args.to_dict()
@@ -135,6 +149,7 @@ def spider_web_site():
     crawler.start()
 
     return jsonify({"code": 0, "msg": "更新成功"})
+
 '''
 http://jiangsu.sina.com.cn/news/m/2019-08-07/detail-ihytcitm7447402.shtml
 https://www.legalweekly.cn/fzsb/16165.html

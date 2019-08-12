@@ -14,6 +14,9 @@ def get_db_args():
     return cf.get('db')
 
 
+def get_algorithm():
+    return cf.get('algorithm')
+
 def get_redis_args():
     return cf.get('redis')
 
@@ -61,6 +64,8 @@ def get_broker_and_backend():
     broker_url = 'redis://{}:{}/{}'.format(host, port, db)
     backend_url = 'redis://{}:{}/{}'.format(host, port, backend_db)
     return broker_url, backend_url
+
+
 
 
 def get_redis_master():

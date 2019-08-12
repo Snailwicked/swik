@@ -80,3 +80,8 @@ email:
     subject: Warning Of Weibo Spider
     warning_info: Please find out the reason why the spider stops working
 
+
+algorithm:
+    url_SDG: E:/Workspace/swik/algorithm/pkl/url_SDG.pkl
+    url_Vocabulay: E:/Workspace/swik/algorithm/pkl/url_Vocabulary.pkl
+    stop_word: E:/Workspace/swik/algorithm/pkl/stop_word
