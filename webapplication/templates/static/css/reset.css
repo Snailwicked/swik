@@ -265,3 +265,8 @@ a:hover {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+th.column-money,
+td.column-money {
+  text-align: right !important;
+}

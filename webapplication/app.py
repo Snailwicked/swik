@@ -117,10 +117,11 @@ def update_web_site():
 @app.route('/web_site/spider')
 def spider_web_site():
     parameter = request.args.to_dict()
+    print(parameter)
     parameter["rule"] = json.loads(parameter["rule"])
     print(parameter)
-    crawler.set_parameters(parameter)
-    crawler.run()
+    # crawler.set_parameters(parameter)
+    # crawler.run()
     return jsonify({"code": 0, "msg": "更新成功"})
 '''
 http://jiangsu.sina.com.cn/news/m/2019-08-07/detail-ihytcitm7447402.shtml
