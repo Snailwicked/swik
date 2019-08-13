@@ -119,6 +119,7 @@ def delete_web_site():
 @app.route('/web_site/add')
 def add_web_site():
     parameter = request.args.to_dict()
+    print(parameter)
     # parameter = {"address":"test","webSite":"test","sort":0}
     mainurl.add_one(parameter)
     return ""
