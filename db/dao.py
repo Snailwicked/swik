@@ -6,7 +6,7 @@ import datetime
 
 from db.basic import db_session
 from db.models import (
-    MainUrl, WebInfo
+    MainUrl, WebInfo,SpiderTask
 )
 from decorators import db_commit_decorator
 
@@ -170,7 +170,54 @@ class WebInfoOper:
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
+class SpiderTaskOper:
 
+
+    @classmethod
+    @db_commit_decorator
+    def delete_one(cls, parameter):
+        spider_task = db_session.query(SpiderTask).filter(
+            SpiderTask.id == parameter["id"]).first()
+        db_session.delete(spider_task)
+        db_session.commit()
+        db_session.close()
+
+    @classmethod
+    @db_commit_decorator
+    def add_one(cls, parameter):
+
+        spider_task = SpiderTask()
+        spider_task.task_name = parameter['task_name']
+        spider_task.create_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        spider_task.status = 0
+        spider_task.creater = 'admin'
+        db_session.add(spider_task)
+        db_session.commit()
+        db_session.close()
+        return spider_task.id
+
+    @classmethod
+    def select_by_parameter(cls, parameter):
+
+        page = int(parameter['page'])
+        limit = int(parameter['limit'])
+        status = int(parameter['status'])
+        keyword = str(parameter['keyword'])
+        try:
+            datas = db_session.query(SpiderTask).filter(SpiderTask.status == status,
+                                                        SpiderTask.task_name.like(
+                                                         "%{}%".format(keyword))).limit(
+                        limit).offset(
+                        (page - 1) * limit)
+            count = db_session.query(SpiderTask).filter(SpiderTask.status == status,
+                                                        SpiderTask.task_name.like("%{}%".format(keyword))).count()
+            db_session.close()
+
+            return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
+
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
 if __name__ == '__main__':
     import json
@@ -189,14 +236,15 @@ if __name__ == '__main__':
     #
     # }
     #
-
-    parameter = {
-            "page":1,
-            "limit":10,
-            "status":0,
-            "sort":1,
-            "keyword":""
-        }
-    mainurl = MainUrlOper()
-    print(mainurl.select_by_parameter(parameter))
+    # spider = SpiderTaskOper()
+    # parameter = {
+    #         "page":1,
+    #         "limit":10,
+    #         "status":0,
+    #         "keyword":""
+    #     }
+    # print(spider.select_by_parameter(parameter))
+    #
+    parameter = {"task_name":"test"}
+        #     # spider.add_one(parameter)
 

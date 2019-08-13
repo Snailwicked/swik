@@ -33,8 +33,16 @@ webinfo = Table("webinfo", metadata,
                 Column("remark", String(500), default="", server_default=''),
                 Column("spider_name", String(500), default="", server_default=''),
                 Column("pid", INTEGER, default=0, server_default='0')
+                )
 
+spider_task = Table("spider_task", metadata,
+                Column("id", String(500), default=index_uuid, primary_key=True),
+                Column("task_name", String(500), default='', server_default=''),
+                Column("create_time", DATE, default="", server_default=''),
+                Column("status", INTEGER, default=0, server_default='0'),
+                Column("creater", String(500), default="", server_default=''),
+                Column("config", String(500), default=index_uuid, server_default=''),
                 )
 
 
-__all__ = ['main_url','webinfo']
+__all__ = ['main_url','webinfo','spider_task']

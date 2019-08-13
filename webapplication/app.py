@@ -1,10 +1,9 @@
 from flask import Flask, request, jsonify,render_template
 from flask_cors import *
-from db.dao import MainUrlOper,WebInfoOper
+from db.dao import MainUrlOper,WebInfoOper,SpiderTaskOper
 from webapplication.service.spider_tasks.task_add import TaskAdd
 from webapplication.service.spider_tasks.task_select import TaskSelect
 from webapplication.service.spider_tasks.task_update import TaskUpdate
-from webapplication.service.spider_tasks.task_delete import TaskDelete
 from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
 from core.down import Crawling
 from core.crawler import Crawleruning
@@ -12,7 +11,7 @@ from core.crawler import Crawleruning
 import json
 webinfo = WebInfoOper()
 mainurl = MainUrlOper()
-
+spidertask = SpiderTaskOper()
 SECRET_KEY = 'This is the key'
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -29,26 +28,22 @@ news = []
 '''
 @app.route('/task/add')
 def add_task():
-    add = TaskAdd()
-    task_name = request.values.to_dict()
-    add.add_task(task_name)
+    parameter = request.values.to_dict()
+    spidertask.add_one(parameter)
     return "1"
 
 
 @app.route('/task/delete')
 def delete_task():
-    delete = TaskDelete()
-    params = request.values.to_dict()
-    delete.delete_one(params)
+    parameter = request.values.to_dict()
+    spidertask.delete_one(parameter)
     return jsonify({"code": 1, "msg": "删除成功"})
 
 @app.route('/task/select')
 def select_tasks():
-    select = TaskSelect()
-    params = request.values.to_dict()
-
-    data = select.select_task(params)
-    return jsonify({"code": 0, "msg": "", "count": data['count'], "data": data['data']})
+    parameter = request.values.to_dict()
+    data = spidertask.select_by_parameter(parameter)
+    return jsonify(data)
 
 
 @app.route('/task/update', methods=['POST'])
