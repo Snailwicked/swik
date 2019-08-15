@@ -29,6 +29,7 @@ news = []
 @app.route('/task/add')
 def add_task():
     parameter = request.values.to_dict()
+    print(parameter)
     spidertask.add_one(parameter)
     return "1"
 
@@ -42,6 +43,7 @@ def delete_task():
 @app.route('/task/select')
 def select_tasks():
     parameter = request.values.to_dict()
+    print(parameter)
     data = spidertask.select_by_parameter(parameter)
     return jsonify(data)
 
