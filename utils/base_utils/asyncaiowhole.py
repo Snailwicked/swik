@@ -84,10 +84,14 @@ class Crawler:
                                     asyncio.ensure_future(self.response((url)), loop=self.loop)
                                 else:
                                     if len(self.dataset)>int(self.parameter['limit']):
-                                        break
-                                    elif suburl not in self.dataset:
-                                        self.dataset.add(suburl)
-                                        TEMP.append(suburl)
+                                        for task in asyncio.Task.all_tasks():
+                                            task.cancel()
+                                        self.loop.stop()
+
+                                    else:
+                                        if suburl not in self.dataset:
+                                            self.dataset.add(suburl)
+                                            TEMP.append(suburl)
                         except:
                             print("网址不同源")
                     asyncio.ensure_future(self.addurls([(suburl, url) for suburl in TEMP]), loop=self.loop)

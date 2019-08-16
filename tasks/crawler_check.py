@@ -1,8 +1,7 @@
 # coding:utf-8
-import time
 
 from tasks.workers import app
-from core.down  import Crawling
+from utils.base_utils.down import Crawling
 @app.task(ignore_result=True)
 def check_crawler(parameters):
     crawler = Crawling()
