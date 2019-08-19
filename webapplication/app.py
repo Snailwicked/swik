@@ -1,11 +1,9 @@
-from flask import Flask, request, jsonify,render_template
+from flask import Flask, request, jsonify
 from flask_cors import *
 from db.dao import MainUrlOper,WebInfoOper,SpiderTaskOper
-from webapplication.service.spider_tasks.task_add import TaskAdd
 from webapplication.service.spider_tasks.task_select import TaskSelect
 from webapplication.service.spider_tasks.task_update import TaskUpdate
 from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
-from core.down import Crawling
 from core.crawler import Crawleruning
 
 import json

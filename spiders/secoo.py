@@ -1,8 +1,8 @@
 import requests
 from utils.spiderutils.xpathtexts import xPathTexts
-from utils.baseutils.headers import headers
+from utils.base_utils.headers import headers
 import time
-from utils.baseutils.bloomfilter import filterutil
+from utils.base_utils.bloomfilter import filterutil
 from urllib.parse import urljoin
 
 page = 2
@@ -192,7 +192,7 @@ class parseUrl(baseUrl):
             scd.colour = ""
             scd.origin = ""
         return scd
-from utils.dbutils.mongodbclient import MongodbClient
+from utils.db_utils.mongodbclient import MongodbClient
 '''
 http://search.secoo.com/search?keyword=%25E8%25A1%25A3%25E6%259C%258D&firstcategoryid=0&secondcategoryid=0&thirdcategoryid=0&brandId=0&level=0&orderType=1&filterType=0&source=&pageNo=2&st=10&price=0&prop=0&warehouse=100&actscr=0&expKey=#J_Filter
 '''

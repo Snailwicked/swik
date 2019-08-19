@@ -1,8 +1,8 @@
 from utils.spiderutils.xpathtexts import xPathTexts
-from utils.baseutils.headers import headers
+from utils.base_utils.headers import headers
 from urllib.parse import urljoin
-from utils.dbutils.mongodbclient import MongodbClient
-from utils.baseutils.bloomfilter import filterutil
+from utils.db_utils.mongodbclient import MongodbClient
+from utils.base_utils.bloomfilter import filterutil
 import uuid
 import time
 
