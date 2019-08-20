@@ -2,7 +2,6 @@ import aiofiles
 
 from core import AttrField, TextField, Item, Spider
 
-
 class HackerNewsItem(Item):
     target_item = TextField(css_select='a')
     url = AttrField(css_select='a', attr='href')
@@ -18,6 +17,7 @@ class HackerNewsSpider(Spider):
         items = await HackerNewsItem.get_items(html=res.html)
         for item in items:
             self.start_urls.append(item.url)
+
             print(item.url)
 
 

@@ -1,16 +1,29 @@
-import asyncio
+from ruia import Spider, Middleware
 
-from pprint import pprint
-
-from core import AttrField, TextField, Item
+middleware = Middleware()
 
 
-class HackerNewsItem(Item):
-    target_item = TextField(css_select='a')
-    url = AttrField(css_select='a', attr='href')
+@middleware.request
+async def print_on_request(spider_ins, request):
+    request.metadata = {"url": request.url}
+    print(f"request: {request.metadata}")
+    # Just operate request object, and do not return anything.
 
 
-target_url = "http://news.sohu.com/"
-loop = asyncio.get_event_loop()
-items = loop.run_until_complete(HackerNewsItem.get_items(url=target_url))
-pprint(items)
+@middleware.response
+async def print_on_response(spider_ins, request, response):
+    print(f"response: {response.metadata}")
+
+
+class MiddlewareSpiderDemo(Spider):
+    start_urls = ["https://httpbin.org/get"]
+    concurrency = 10
+
+    async def parse(self, response):
+        pages = [f"https://httpbin.org/get?p={i}" for i in range(1, 2)]
+        async for resp in self.multiple_request(urls=pages):
+            print(resp.url)
+
+
+if __name__ == "__main__":
+    MiddlewareSpiderDemo.start(middleware=middleware)

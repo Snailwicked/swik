@@ -19,7 +19,6 @@ class MainUrlOper:
     def update_mainurl(cls, parameter):
         pid = parameter['pid']
         mainurl = db_session.query(MainUrl).filter(MainUrl.pid == pid).first()
-
         try:
             remark = parameter['remark']
             mainurl.remark = remark
@@ -34,7 +33,6 @@ class MainUrlOper:
             db_session.close()
         except:
             pass
-
         try:
             rule= parameter['rule']
             mainurl.rule =  rule
@@ -219,6 +217,71 @@ class SpiderTaskOper:
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
+
+
+class TaskConfigOper:
+
+
+    @classmethod
+    def select_by_id(cls, parameter):
+
+        spider_name = int(parameter['id'])
+        page = int(parameter['page'])
+        limit = int(parameter['limit'])
+
+        try:
+            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name).limit(
+                        limit).offset(
+                        (page - 1) * limit)
+            count = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name).count()
+            db_session.close()
+
+            return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
+
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed", "data": [], "count": 0}
+
+    @classmethod
+    def select_all(cls, parameter):
+
+        page = int(parameter['page'])
+        limit = int(parameter['limit'])
+
+        try:
+            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == 0,MainUrl.status==1).limit(
+                        limit).offset(
+                        (page - 1) * limit)
+            count = db_session.query(MainUrl).filter(MainUrl.spider_name == 0,MainUrl.status==1).count()
+            db_session.close()
+
+            return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
+
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed", "data": [], "count": 0}
+
+
+    @db_commit_decorator
+    @classmethod
+    def update_task_name(cls, parameter):
+
+        spider_name = int(parameter['task_id'])
+        main_url_pids = list(parameter['main_url_pids'])
+
+        try:
+            for main_url_pid in main_url_pids:
+                main_url = db_session.query(MainUrl).filter(
+                    MainUrl.pid == main_url_pid).first()
+                main_url.spider_name = spider_name
+
+            db_session.close()
+            return {"code": "200", "message": "更新成功"}
+
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "更新失败"}
+
 if __name__ == '__main__':
     import json
     # rule = json.dumps({
@@ -236,14 +299,13 @@ if __name__ == '__main__':
     #
     # }
     #
-    # spider = SpiderTaskOper()
-    # parameter = {
-    #         "page":1,
-    #         "limit":10,
-    #         "status":0,
-    #         "keyword":""
-    #     }
-    # print(spider.select_by_parameter(parameter))
+    spider = TaskConfigOper()
+    parameter = {
+            "page":2,
+            "limit":10,
+            "sort":0
+        }
+    print(spider.select_all(parameter))
     #
     parameter = {"task_name":"test"}
         #     # spider.add_one(parameter)

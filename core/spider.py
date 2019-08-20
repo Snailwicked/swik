@@ -8,6 +8,8 @@ from types import AsyncGeneratorType
 from inspect import isawaitable
 from core.middleware import Middleware
 from core.request import Request
+from core.response import Response
+
 from core.utils import get_logger
 from signal import SIGINT, SIGTERM
 
@@ -36,7 +38,7 @@ class Spider:
         self.sem = asyncio.Semaphore(getattr(self, 'concurrency', 3))
         self.middleware = middleware or Middleware()
 
-    async def parse(self, res):
+    async def parse(self, res: Response):
         raise NotImplementedError
 
     async def start_master(self):
@@ -45,7 +47,7 @@ class Spider:
                                   callback=self.parse,
                                   headers=getattr(self, 'headers', None),
                                   load_js=getattr(self, 'load_js', False),
-                                  metadata=getattr(self, 'metadata', None),
+                                  metadata=getattr(self, 'metadata', {}),
                                   request_config=getattr(self, 'request_config'),
                                   request_session=getattr(self, 'request_session', None),
                                   res_type=getattr(self, 'res_type', 'text'),
@@ -84,15 +86,15 @@ class Spider:
         self.loop.stop()
 
     @classmethod
-    def start(cls,after_start=None, before_stop=None, middleware=None,loop=None):
+    def start(cls,after_start=None, before_stop=None, middleware=None,loop=None,close_event_loop=True):
         spider_ins = cls(middleware=middleware,loop=loop)
         spider_ins.logger.info('Spider started!')
         start_time = datetime.now()
 
         if after_start:
-            result = after_start(spider_ins.loop)
-            if isawaitable(result):
-                spider_ins.loop.run_until_complete(result)
+            func_after_start = after_start(spider_ins)
+            if isawaitable(func_after_start):
+                spider_ins.loop.run_until_complete(func_after_start)
 
 
 
@@ -108,9 +110,9 @@ class Spider:
         finally:
 
             if before_stop:
-                result = before_stop(spider_ins.loop)
-                if isawaitable(result):
-                    spider_ins.loop.run_until_complete(result)
+                func_before_stop = before_stop(spider_ins)
+                if isawaitable(func_before_stop):
+                    spider_ins.loop.run_until_complete(func_before_stop)
 
 
             end_time = datetime.now()
@@ -120,7 +122,8 @@ class Spider:
             spider_ins.logger.info(f'Time usage: {end_time - start_time}')
             spider_ins.logger.info('Spider finished!')
             spider_ins.loop.run_until_complete(spider_ins.loop.shutdown_asyncgens())
-            spider_ins.loop.close()
+            if close_event_loop:
+                spider_ins.loop.close()
 
     async def _run_request_middleware(self, request):
         if self.middleware.request_middleware:
@@ -142,7 +145,7 @@ class Spider:
                     self.logger.error('Middleware must be a coroutine function')
                     result = None
 
-    async def handle_request(self, request):
+    async def handle_request(self, request:Request):
         # request middleware
         await self._run_request_middleware(request)
         # make a request

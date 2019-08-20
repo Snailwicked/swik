@@ -13,7 +13,8 @@ main_url = Table("main_url", metadata,
                 Column("sort", INTEGER, default=101, server_default='101'),
                 Column("status", INTEGER, default=0, server_default='0'),
                 Column("remark", String(200), default='', server_default=''),
-                Column("rule", JSON)
+                Column("spider_name", INTEGER, default=0, server_default='0'),
+                 Column("rule", JSON)
 
 )
 
@@ -36,7 +37,7 @@ webinfo = Table("webinfo", metadata,
                 )
 
 spider_task = Table("spider_task", metadata,
-                Column("id", String(500), default=index_uuid, primary_key=True),
+                Column("id", INTEGER, primary_key=True, autoincrement=True),
                 Column("task_name", String(500), default='', server_default=''),
                 Column("create_time", DATE, default="", server_default=''),
                 Column("status", INTEGER, default=0, server_default='0'),

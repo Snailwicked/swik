@@ -34,7 +34,6 @@ class Crawler:
         self.xpath.set_parameter(url)
         urls = set(self.xpath.get_contents("//a//@href"))
         temp = set()
-
         for item in urls:
             suburl = urljoin(url, item)
             if suburl.startswith("http"):

@@ -11,10 +11,7 @@ async def print_on_response(request, response):
 
 
 class DoubanItem(Item):
-    target_item = TextField(css_select='div.item')
-    title = TextField(css_select='span.title')
-    cover = AttrField(css_select='div.pic>a>img', attr='src')
-    abstract = TextField(css_select='span.inq')
+    cover = AttrField(css_select='a', attr='href')
 
     async def clean_title(self, title):
         if isinstance(title, str):
@@ -48,7 +45,7 @@ class DoubanSpider(Spider):
     async def parse_item(self, res):
         items_data = await DoubanItem.get_items(html=res.html)
         for item in items_data:
-            print(item.title)
+            print(item.cover)
         print(res)
 
 

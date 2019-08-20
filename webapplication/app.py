@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import *
-from db.dao import MainUrlOper,WebInfoOper,SpiderTaskOper
+from db.dao import MainUrlOper,WebInfoOper,SpiderTaskOper,TaskConfigOper
 from webapplication.service.spider_tasks.task_select import TaskSelect
 from webapplication.service.spider_tasks.task_update import TaskUpdate
 from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
@@ -9,6 +9,7 @@ from core.crawler import Crawleruning
 import json
 webinfo = WebInfoOper()
 mainurl = MainUrlOper()
+taskconfig = TaskConfigOper()
 spidertask = SpiderTaskOper()
 SECRET_KEY = 'This is the key'
 app = Flask(__name__)
@@ -60,20 +61,27 @@ def update_task():
 
 '''
 
-@app.route('/task_config/select')
-def select_task_config():
-    select = TaskSelect()
-    params = request.values.to_dict()
-    data = select.select_task_config(params)
-    return jsonify({"code": 0, "msg": "",  "data": data[0]})
+@app.route('/task_config/select_by_id')
+def select_task_config_by_id():
+    parameter = request.values.to_dict()
+    data = taskconfig.select_by_id(parameter)
+    return jsonify(data)
 
 
-@app.route('/task_config/update')
-def update_task_config():
-    update = TaskConfigUpdate()
-    params = request.values.to_dict()
-    data = update.update(params)
-    return jsonify({"code": 0, "msg": "",  "data": data})
+@app.route('/task_config/select_all')
+def select_all_task_config():
+    parameter = request.values.to_dict()
+    data = taskconfig.select_all(parameter)
+    return jsonify(data)
+
+
+@app.route('/task_config/spider_name')
+def task_config_spider_name():
+    parameter = request.values.to_dict()
+    data = taskconfig.update_task_name(parameter)
+    return jsonify(data)
+
+
 
 ########################################################################################################################
 '''
