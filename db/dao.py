@@ -230,10 +230,10 @@ class TaskConfigOper:
         limit = int(parameter['limit'])
 
         try:
-            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name).limit(
+            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).limit(
                         limit).offset(
                         (page - 1) * limit)
-            count = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name).count()
+            count = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).count()
             db_session.close()
 
             return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
