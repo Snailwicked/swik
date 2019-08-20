@@ -226,13 +226,9 @@ class TaskConfigOper:
     def select_by_id(cls, parameter):
 
         spider_name = int(parameter['id'])
-        page = int(parameter['page'])
-        limit = int(parameter['limit'])
 
         try:
-            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).limit(
-                        limit).offset(
-                        (page - 1) * limit)
+            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).all()
             count = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).count()
             db_session.close()
 
@@ -270,13 +266,18 @@ class TaskConfigOper:
 
         spider_name = int(parameter['task_id'])
         main_url_pids = list(parameter['main_url_pids'])
+        main_url_remove_pids = list(parameter['main_url_remove_pids'])
 
         try:
             for main_url_pid in main_url_pids:
                 main_url = db_session.query(MainUrl).filter(
                     MainUrl.pid == main_url_pid).first()
                 main_url.spider_name = spider_name
-
+                
+            for main_url_pid in main_url_remove_pids:
+                main_url = db_session.query(MainUrl).filter(
+                    MainUrl.pid == main_url_pid).first()
+                main_url.spider_name = 0
             db_session.close()
             return {"code": "200", "message": "更新成功"}
 
@@ -302,13 +303,15 @@ if __name__ == '__main__':
     # }
     #
     spider = TaskConfigOper()
+    # parameter = {
+    #         "page":2,
+    #         "limit":10,
+    #         "sort":0
+    #     }
+    # print(spider.select_all(parameter))
     parameter = {
-            "page":2,
-            "limit":10,
-            "sort":0
+            "id":1
         }
-    print(spider.select_all(parameter))
-    #
-    parameter = {"task_name":"test"}
+    print(spider.select_by_id(parameter))
         #     # spider.add_one(parameter)
 

@@ -11,7 +11,7 @@ def get_logger(name='aspider'):
 
     logging.basicConfig(
         format=logging_format,
-        level=logging.DEBUG
+        level=logging.WARNING
     )
     logging.getLogger("asyncio").setLevel(logging.INFO)
     logging.getLogger("pyppeteer").setLevel(logging.INFO)
