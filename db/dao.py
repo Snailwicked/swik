@@ -247,12 +247,14 @@ class TaskConfigOper:
 
         page = int(parameter['page'])
         limit = int(parameter['limit'])
+        sort = int(parameter['sort'])
+
 
         try:
-            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == 0,MainUrl.status==1).limit(
+            datas = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.spider_name == 0,MainUrl.status==1).limit(
                         limit).offset(
                         (page - 1) * limit)
-            count = db_session.query(MainUrl).filter(MainUrl.spider_name == 0,MainUrl.status==1).count()
+            count = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.spider_name == 0,MainUrl.status==1).count()
             db_session.close()
 
             return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
