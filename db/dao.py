@@ -90,6 +90,7 @@ class MainUrlOper:
                         (page - 1) * limit)
             count = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
                                                      MainUrl.webSite.like("%{}%".format(keyword))).count()
+
             db_session.close()
 
             return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
@@ -259,15 +260,15 @@ class TaskConfigOper:
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
-
-    @db_commit_decorator
     @classmethod
+    @db_commit_decorator
     def update_task_name(cls, parameter):
 
         spider_name = int(parameter['task_id'])
-        main_url_pids = list(parameter['main_url_pids'])
-        main_url_remove_pids = list(parameter['main_url_remove_pids'])
-
+        main_url_pids = eval(parameter['main_url_pids'])
+        main_url_remove_pids = eval(parameter['main_url_remove_pids'])
+        print(main_url_pids)
+        print(type(main_url_pids))
         try:
             for main_url_pid in main_url_pids:
                 main_url = db_session.query(MainUrl).filter(
@@ -278,6 +279,8 @@ class TaskConfigOper:
                 main_url = db_session.query(MainUrl).filter(
                     MainUrl.pid == main_url_pid).first()
                 main_url.spider_name = 0
+
+            db_session.commit()
             db_session.close()
             return {"code": "200", "message": "更新成功"}
 
