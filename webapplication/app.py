@@ -1,16 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import *
 from db.dao import MainUrlOper,WebInfoOper,SpiderTaskOper,TaskConfigOper
-from webapplication.service.spider_tasks.task_select import TaskSelect
 from webapplication.service.spider_tasks.task_update import TaskUpdate
-from webapplication.service.spider_tasks.task_config_update import TaskConfigUpdate
 from core.crawler import Crawleruning
-
+from utils.base_utils.system import System
 import json
 webinfo = WebInfoOper()
 mainurl = MainUrlOper()
 taskconfig = TaskConfigOper()
 spidertask = SpiderTaskOper()
+system = System()
 SECRET_KEY = 'This is the key'
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -18,6 +17,12 @@ app.secret_key = SECRET_KEY
 
 data = []
 news = []
+
+@app.route('/system/info')
+def system_info():
+    return jsonify(system.infos())
+
+
 
 ########################################################################################################################
 '''
