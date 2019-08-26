@@ -85,7 +85,7 @@ def task_config_spider_name():
 @app.route('/start/spider_task')
 def start_spider_task():
     parameter = request.values.to_dict()
-    print(parameter)
+    taskconfig.start_task(parameter)
     return jsonify(parameter)
 
 
