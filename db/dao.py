@@ -286,6 +286,17 @@ class TaskConfigOper:
             db_session.close()
             return {"code": "404", "message": "更新失败"}
 
+    @classmethod
+    @db_commit_decorator
+    def start_task(cls, parameter):
+
+        spider_name = int(parameter['id'])
+        main_url = db_session.query(MainUrl).filter(
+                    MainUrl.pid == spider_name).first()
+        main_url.status = 1
+        db_session.commit()
+        db_session.close()
+
 if __name__ == '__main__':
     import json
     # rule = json.dumps({
