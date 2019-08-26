@@ -9,8 +9,8 @@ def db_commit_decorator(func):
         try:
             return func(*args, **kwargs)
         except Exception as e:
-            print('DB operation error，here are details:{}'.format(e))
             db_session.rollback()
+            print('DB operation error，here are details:{}'.format(e))
     return session_commit
 
 

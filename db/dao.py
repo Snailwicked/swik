@@ -267,8 +267,6 @@ class TaskConfigOper:
         spider_name = int(parameter['task_id'])
         main_url_pids = eval(parameter['main_url_pids'])
         main_url_remove_pids = eval(parameter['main_url_remove_pids'])
-        print(main_url_pids)
-        print(type(main_url_pids))
         try:
             for main_url_pid in main_url_pids:
                 main_url = db_session.query(MainUrl).filter(

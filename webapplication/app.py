@@ -21,9 +21,6 @@ news = []
 @app.route('/system/info')
 def system_info():
     return jsonify(system.infos())
-
-
-
 ########################################################################################################################
 '''
     站点模块代码
@@ -33,7 +30,6 @@ def system_info():
 @app.route('/task/add')
 def add_task():
     parameter = request.values.to_dict()
-    print(parameter)
     spidertask.add_one(parameter)
     return "1"
 
@@ -47,7 +43,6 @@ def delete_task():
 @app.route('/task/select')
 def select_tasks():
     parameter = request.values.to_dict()
-    print(parameter)
     data = spidertask.select_by_parameter(parameter)
     return jsonify(data)
 
@@ -87,6 +82,12 @@ def task_config_spider_name():
     return jsonify(data)
 
 
+@app.route('/start/spider_task')
+def start_spider_task():
+    parameter = request.values.to_dict()
+    print(parameter)
+    return jsonify(parameter)
+
 
 ########################################################################################################################
 '''
@@ -120,15 +121,12 @@ def select_web_site():
 @app.route('/web_site/delete')
 def delete_web_site():
     parameter = request.args.to_dict()
-    # parameter = {"pid":7406}
     mainurl.delete_one(parameter)
     return ""
 
 @app.route('/web_site/add')
 def add_web_site():
     parameter = request.args.to_dict()
-    print(parameter)
-    # parameter = {"address":"test","webSite":"test","sort":0}
     mainurl.add_one(parameter)
     return ""
 
@@ -142,17 +140,6 @@ def update_web_site():
 def spider_web_site():
     parameter = request.args.to_dict()
     parameter["rule"] = json.loads(parameter["rule"].replace("@","+"))
-    # print(parameter)
-    # print(type(parameter))
-    # print(parameter)
-    # # parameter = {
-    # #     "url": "https://www.legalweekly.cn/",
-    # #     "rule": {'author': '', 'filter_rule': 'https://www.legalweekly.cn/\w+/\d+.html', 'page_size': '1',
-    # #              'content': '', 'header': '', 'issueTime': ''},
-    # # }
-    # print(parameter)
-    # print(type(parameter))
-
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()
@@ -179,7 +166,6 @@ https://www.legalweekly.cn/fzsb/16165.html
 def select_sub_web():
     parameter = request.args.to_dict()
     data = webinfo.select_by_parameter(parameter)
-    print(data)
     return jsonify(data)
 
 
