@@ -222,7 +222,6 @@ class SpiderTaskOper:
 
 class TaskConfigOper:
 
-
     @classmethod
     def select_by_id(cls, parameter):
 
@@ -296,6 +295,10 @@ class TaskConfigOper:
         main_url.status = 1
         db_session.commit()
         db_session.close()
+
+        data = cls.select_by_id(parameter)["data"]
+        for item in data:
+            print(item)
 
 if __name__ == '__main__':
     import json

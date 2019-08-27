@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import *
 from db.dao import MainUrlOper,WebInfoOper,SpiderTaskOper,TaskConfigOper
 from webapplication.service.spider_tasks.task_update import TaskUpdate
-from core.crawler import Crawleruning
+from tasks.crawler import Crawleruning
 from utils.base_utils.system import System
 import json
 webinfo = WebInfoOper()

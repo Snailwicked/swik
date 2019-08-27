@@ -8,9 +8,9 @@ class JianshuItem(Item):
 
 
 class JianshuSpider(Spider):
-    start_urls = ['https://www.jianshu.com/']
+    start_urls = ['https://nj.58.com/ershoufang/39157699356818x.shtml?putid=11863594']
     concurrency = 10
-    load_js = True
+    # load_js = True
 
     async def parse(self, res):
         print(res.html)

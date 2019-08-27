@@ -1,4 +1,4 @@
-from utils.spiderutils.xpathtexts import xPathTexts
+from utils.spider_utils.xpathtexts import xPathTexts
 from utils.base_utils.headers import headers
 from urllib.parse import urljoin
 from utils.db_utils.mongodbclient import MongodbClient

@@ -1,6 +1,6 @@
-from master.collectionurl import filterUrls
-from slave.extractors import ContentExtractor
-from utils.spiderutils.xpathtexts import xPathTexts
+from utils.master import filterUrls
+from utils.slave import ContentExtractor
+from utils.spider_utils.xpathtexts import xPathTexts
 from decorators import parse_text
 
 xpath = xPathTexts()

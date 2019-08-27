@@ -1,12 +1,11 @@
 from urllib.parse import urljoin
 import re
-from utils.spiderutils.xpathtexts import xPathTexts
 from collections import defaultdict
 from sklearn.externals import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
-from utils.urlutils.transurl import transUrls
+from utils import transUrls
 from config.conf import get_algorithm
-
+from utils import xPathTexts
 args = get_algorithm()
 
 
@@ -42,7 +41,11 @@ class Crawler:
 
 
     def xpath_urls(self, urls):
-        if self.parameter['rule']["filter_rule"]:
+        try:
+            filter_rule = self.parameter['rule']["filter_rule"]
+        except:
+            filter_rule = None
+        if filter_rule:
             for url ,point in urls:
                 self.point = point
                 if point == int(self.parameter['rule']["page_size"]):
@@ -65,10 +68,15 @@ class Crawler:
             self.tv = TfidfVectorizer(tokenizer=self.cut,
                                       vocabulary=self.vocabulary)
             self.transurls = transUrls()
+            result = []
+
             for url, point in urls:
                 urls = self.get_hrefs(url)
                 train = self.transurls.transport(list(urls))
-                traindata = self.tv.fit_transform(train)
+                try:
+                    traindata = self.tv.fit_transform(train)
+                except:
+                    return result
                 pred = self.clf.predict(traindata)
                 after_urls = list(map(lambda x, y: y + "_" + x, list(urls), pred))
                 result = []
@@ -87,7 +95,8 @@ class Crawleruning(Crawler):
         super(Crawleruning, self).__init__()
 
     def start(self):
-        self.run(self.parameters)
+        for parameter in self.parameters:
+            self.run(parameter)
 
     def set_parameter(self,parameter):
         self.parameters = parameter
@@ -98,10 +107,10 @@ base_url = 'http://www.sohu.com/'
 capture = 'http://www.sohu.com/a/\d+_\d+'
 
 if __name__ == '__main__':
-    parameter = {
+    parameter = [{
         "url": "http://www.sohu.com/",
         "rule": {'author': '', 'filter_rule': '', 'page_size': '1', 'content': '', 'header': '', 'issueTime': ''},
-    }
+    }]
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()
