@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import requests
 from lxml import etree
 from urllib.parse import urljoin
 import random
 from multiprocessing.dummy import Pool as ThreadPool
-import re
+import re,urllib
 import json
 import time
 import datetime
@@ -11,6 +13,8 @@ import pymysql
 from algorithm.fakerspider.tools import check_text, remove_emoji, get_host
 from pypinyin import lazy_pinyin
 import pysnooper
+from urllib.parse import quote
+import string
 
 headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
            'Accept-Encoding': 'gzip, deflate, br',
@@ -368,14 +372,21 @@ def tieba_crawl(url):
         print(e)
 
 if __name__ == '__main__':
-    origin_urls = ['http://tieba.baidu.com/f/search/res?isnew=1&kw=&qw=%CB%A2%B5%A5%20%2C%20%2BVX', 'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E5%88%B7%E5%8D%95%2C%E5%BE%AE%E4%BF%A1&red_tag=w0862132222',
+
+
+    # key_words = ["刷单,+VX","刷单,微信","刷单,威信","淘宝信誉,+VX","淘宝信誉,微信","淘宝信誉,威信","代办信用卡,微信"]
+
+    origin_urls = ['http://tieba.baidu.com/f/search/res?isnew=1&kw=&qw=%CB%A2%B5%A5%20%2C%20%2BVX',
+                   'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E5%88%B7%E5%8D%95%2C%E5%BE%AE%E4%BF%A1',
                    'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E5%88%B7%E5%8D%95%2C%E5%A8%81%E4%BF%A1',
-                   'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E6%B7%98%E5%AE%9D%E4%BF%A1%E8%AA%89%2C%2BVX&red_tag=e1106962408',
+                   'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E6%B7%98%E5%AE%9D%E4%BF%A1%E8%AA%89%2C%2BVX',
                    'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E6%B7%98%E5%AE%9D%E4%BF%A1%E8%AA%89%2C%E5%BE%AE%E4%BF%A1',
                    'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E6%B7%98%E5%AE%9D%E4%BF%A1%E8%AA%89%2C%E5%A8%81%E4%BF%A1',
-                   'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E4%BB%A3%E5%8A%9E%E4%BF%A1%E7%94%A8%E5%8D%A1%2C%E5%BE%AE%E4%BF%A1&red_tag=d1825314021',
+                   'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E4%BB%A3%E5%8A%9E%E4%BF%A1%E7%94%A8%E5%8D%A1%2C%E5%BE%AE%E4%BF%A1',
                   ]
     tburl_list = []
+
+
     try:
         for origin_url in origin_urls:
             r = requests.get(url=origin_url, headers=headers, timeout=1.5).text
