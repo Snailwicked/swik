@@ -100,76 +100,26 @@ class MainUrlOper:
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
 
-class WebInfoOper:
-
-
-    @classmethod
-    @db_commit_decorator
-    def add_one(cls, parameter):
-        webinfo = WebInfo()
-        webinfo.url = parameter['url']
-        webinfo.add_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        webinfo.agent = int(parameter['agent'])
-        webinfo.status = 0
-        webinfo.web_name = parameter['web_name']
-        webinfo.sort = int(parameter['sort'])
-        webinfo.pid = int(parameter['pid'])
-        db_session.add(webinfo)
-        db_session.commit()
-        db_session.close()
-        return webinfo.id
-
-    @classmethod
-    @db_commit_decorator
-    def delete_one(cls, parameter):
-        webinfo = db_session.query(WebInfo).filter(
-            WebInfo.id == parameter["id"]).first()
-        db_session.delete(webinfo)
-        db_session.commit()
-        db_session.close()
-
-    @classmethod
-    @db_commit_decorator
-    def update_webinfo(cls,parameter):
-
-        id = parameter['id']
-        webinfo = db_session.query(WebInfo).filter(WebInfo.id == id).first()
-        try:
-            remark = parameter['remark']
-            webinfo.remark = remark
-        except:
-            status = parameter['status']
-            webinfo.remark = status
-
-        finally:
-            db_session.commit()
-            db_session.close()
-
-
-
-    @classmethod
-    def select_by_parameter(cls, parameter):
-
-
-        page = int(parameter['page'])
-        limit = int(parameter['limit'])
-        pid = int(parameter['pid'])
-
-        try:
-            datas = db_session.query(WebInfo).filter(
-                                             WebInfo.pid == pid).limit(limit).offset(
-                (page - 1) * limit)
-            count = db_session.query(WebInfo).filter(
-                                                     WebInfo.pid == pid).count()
-            db_session.close()
-
-            return {"code": "200", "message": "succeed", "data": [item.json() for item in datas], "count": count}
-
-        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
-            db_session.close()
-            return {"code": "404", "message": "fialed", "data": [], "count": 0}
-
 class SpiderTaskOper:
+
+    def __int__(self):
+        pass
+
+    @classmethod
+    @db_commit_decorator
+    def start_task(cls, parameter):
+
+        spider_name = int(parameter['id'])
+        spider_task = db_session.query(SpiderTask).filter(
+            SpiderTask.id == spider_name).first()
+        spider_task.status = 1
+        db_session.commit()
+        datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name, MainUrl.status == 1).all()
+        for item in datas:
+            print(item)
+
+        db_session.close()
+
 
 
     @classmethod
@@ -200,16 +150,13 @@ class SpiderTaskOper:
 
         page = int(parameter['page'])
         limit = int(parameter['limit'])
-        status = int(parameter['status'])
         keyword = str(parameter['keyword'])
         try:
-            datas = db_session.query(SpiderTask).filter(SpiderTask.status == status,
-                                                        SpiderTask.task_name.like(
+            datas = db_session.query(SpiderTask).filter(SpiderTask.task_name.like(
                                                          "%{}%".format(keyword))).limit(
                         limit).offset(
                         (page - 1) * limit)
-            count = db_session.query(SpiderTask).filter(SpiderTask.status == status,
-                                                        SpiderTask.task_name.like("%{}%".format(keyword))).count()
+            count = db_session.query(SpiderTask).filter(SpiderTask.task_name.like("%{}%".format(keyword))).count()
             db_session.close()
 
             return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
@@ -285,20 +232,7 @@ class TaskConfigOper:
             db_session.close()
             return {"code": "404", "message": "更新失败"}
 
-    @classmethod
-    @db_commit_decorator
-    def start_task(cls, parameter):
 
-        spider_name = int(parameter['id'])
-        main_url = db_session.query(MainUrl).filter(
-                    MainUrl.pid == spider_name).first()
-        main_url.status = 1
-        db_session.commit()
-        db_session.close()
-
-        data = cls.select_by_id(parameter)["data"]
-        for item in data:
-            print(item)
 
 if __name__ == '__main__':
     import json

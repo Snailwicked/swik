@@ -1,11 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import *
-from db.dao import MainUrlOper,WebInfoOper,SpiderTaskOper,TaskConfigOper
-from webapplication.service.spider_tasks.task_update import TaskUpdate
+from db.dao import MainUrlOper,SpiderTaskOper,TaskConfigOper
 from tasks.crawler import Crawleruning
 from utils.base_utils.system import System
 import json
-webinfo = WebInfoOper()
 mainurl = MainUrlOper()
 taskconfig = TaskConfigOper()
 spidertask = SpiderTaskOper()
@@ -46,14 +44,6 @@ def select_tasks():
     data = spidertask.select_by_parameter(parameter)
     return jsonify(data)
 
-
-@app.route('/task/update', methods=['POST'])
-def update_task():
-    update = TaskUpdate()
-    data = request.get_data().decode('utf-8')
-    update.update(json.loads(data))
-    return jsonify({"code": 1, "msg": "更新成功"})
-
 ########################################################################################################################
 '''
     站点模块代码
@@ -85,25 +75,11 @@ def task_config_spider_name():
 @app.route('/start/spider_task')
 def start_spider_task():
     parameter = request.values.to_dict()
-    taskconfig.start_task(parameter)
+    spidertask.start_task(parameter)
     return jsonify(parameter)
 
 
-########################################################################################################################
-'''
-    站点模块代码
-    get_tasks_on：  更新站点站点子类信息
 
-'''
-@app.route('/task/spider')
-def tasks_spider():
-    params = request.values.to_dict()
-    print(params)
-    urls = []
-    urls.append(params.get("url"))
-    from tasks import task_check
-    task_check.excute_check_task(urls)
-    return jsonify({"code": 0, "msg": "任务已启动"})
 
 ########################################################################################################################
 '''
@@ -140,54 +116,14 @@ def update_web_site():
 def spider_web_site():
     parameter = request.args.to_dict()
     parameter["rule"] = json.loads(parameter["rule"].replace("@","+"))
+    parameters = []
+    parameters.append(parameter)
     crawler = Crawleruning()
-    crawler.set_parameter(parameter)
+    crawler.set_parameter(parameters)
     crawler.start()
-
     return jsonify({"code": 0, "msg": "更新成功"})
 
-'''
-http://jiangsu.sina.com.cn/news/m/2019-08-07/detail-ihytcitm7447402.shtml
-https://www.legalweekly.cn/fzsb/16165.html
-/https://www.legalweekly.cn/\w+\/d+.shtml/
 
-'''
-
-########################################################################################################################
-'''
-    站点子模块代码
-    delete_sub_web：  删除站点子类
-    add_sub_web：     新增站点子类
-    update_sub_web：  更新站点站点子类信息
-    select_sub_web：  查询站点站点子类信息
-
-'''
-@app.route('/web/select_all')
-def select_sub_web():
-    parameter = request.args.to_dict()
-    data = webinfo.select_by_parameter(parameter)
-    return jsonify(data)
-
-
-@app.route('/web/delete')
-def delete_sub_web():
-    parameter = request.values.to_dict()
-    webinfo.delete_one(parameter)
-    return jsonify({"code": 1, "msg": "删除成功"})
-
-
-@app.route('/web/add')
-def add_sub_web():
-    parameter = request.values.to_dict()
-    id = webinfo.add_one(parameter)
-    return jsonify({"code": 1, "msg": "添加成功","id":id})
-
-
-@app.route('/web/update')
-def update_sub_web():
-    parameter = request.values.to_dict()
-    webinfo.update_webinfo(parameter)
-    return jsonify({"code": 1, "msg": "更新成功"})
 
 if __name__ == '__main__':
     app.run(debug=True)

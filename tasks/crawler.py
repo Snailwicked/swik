@@ -102,10 +102,6 @@ class Crawleruning(Crawler):
         self.parameters = parameter
 
 
-
-base_url = 'http://www.sohu.com/'
-capture = 'http://www.sohu.com/a/\d+_\d+'
-
 if __name__ == '__main__':
     parameter = [{
         "url": "http://www.sohu.com/",
