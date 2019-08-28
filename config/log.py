@@ -2,12 +2,15 @@
 import os
 import logging
 import logging.config as log_conf
+from config.conf import get_logging_args
+args = get_logging_args()
 
-log_dir = os.path.dirname(os.path.dirname(__file__))+'/logs'
+
+log_dir = os.path.dirname(os.path.dirname(__file__))+args["log_dir"]
 if not os.path.exists(log_dir):
     os.mkdir(log_dir)
 
-log_path = os.path.join(log_dir, 'spider.log')
+log_path = os.path.join(log_dir,args["log_name"])
 
 log_config = {
     'version': 1.0,
@@ -57,17 +60,11 @@ log_config = {
 }
 
 log_conf.dictConfig(log_config)
-
 other = logging.getLogger('other')
 crawler = logging.getLogger('crawler')
 parser = logging.getLogger('page_parser')
 storage = logging.getLogger('storage')
 
-
-__all__ = ['crawler', 'parser', 'other', 'storage']
-
-
-import logging
 
 
 def get_logger(name='aspider'):
@@ -84,4 +81,10 @@ def get_logger(name='aspider'):
     logging.getLogger("pyppeteer").setLevel(logging.INFO)
     logging.getLogger("websockets").setLevel(logging.INFO)
     return logging.getLogger(name)
+
+
+__all__ = ['crawler', 'parser', 'other', 'storage']
+
+
+
 

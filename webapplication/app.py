@@ -118,7 +118,6 @@ def update_web_site():
 def spider_web_site():
     parameter = request.args.to_dict()
     parameter["rule"] = json.loads(parameter["rule"].replace("@","+"))
-
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()
@@ -128,3 +127,8 @@ def spider_web_site():
 
 if __name__ == '__main__':
     app.run(debug=True)
+'''
+http://news.cyol.com/app/2019-08/24/content_18127145.htm
+http://news.cyol.com/app/\d[5]-\d[2]/\d[2]/content_+d+.htm
+
+'''

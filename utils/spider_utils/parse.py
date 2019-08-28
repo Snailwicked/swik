@@ -5,11 +5,11 @@ from decorators import parse_text
 
 xpath = xPathTexts()
 
-@parse_text
 class Parse:
     def __init__(self):
         self.master = filterUrls()
 
+    @parse_text
     def get_data(self, urls):
         data = []
         sub_urls = self.master.FilterUrls(urls)
@@ -20,6 +20,8 @@ class Parse:
                     xpath.set_parameter(url=url)
                     ce = ContentExtractor(html=xpath.html, url=url)
                     item["url"] = url
+                    item["title"] = ce.get_title()
+                    item["content"] = ce.get_content()
                     item["authors"] = ce.get_authors()
                     item["publishing_date"] = ce.get_publishing_date()
                     item["summary"] = ce.get_summary()

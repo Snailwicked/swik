@@ -6,7 +6,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from utils import transUrls
 from config.conf import get_algorithm
 from utils import xPathTexts
+from utils.spider_utils import Parse
 args = get_algorithm()
+parse = Parse()
 
 
 class Crawler:
@@ -48,13 +50,19 @@ class Crawler:
         if filter_rule:
             for url ,point in urls:
                 self.point = point
-                if point == int(self.parameter['rule']["page_size"]):
+                try:
+                    page_size = int(self.parameter['rule']["page_size"])
+                except:
+                    page_size = 1
+                if point == page_size:
                     break
                 TEMP = set()
                 for item in self.get_hrefs(url):
                     result = re.findall(self.parameter['rule']["filter_rule"], item)
                     if result and item not in self.brief["parsing"]:
-                        print(item)
+                        temp = []
+                        temp.append(item)
+                        parse.get_data(temp)
                         self.brief["parsing"].add(item)
                     else:
                         if item not in self.brief["crawled"]:
@@ -83,6 +91,11 @@ class Crawler:
                 for after in after_urls:
                     if "1_" in after:
                         print(after[2:])
+                        temp = []
+                        temp.append(after[2:])
+                        parse.get_data(temp)
+
+
                         result.append(after[2:])
                 return result
     def process(self, url):
@@ -103,8 +116,8 @@ class Crawleruning(Crawler):
 
 if __name__ == '__main__':
     parameter = {
-        "url": "http://www.sohu.com/",
-        "rule": {'author': '', 'filter_rule': '', 'page_size': '1', 'content': '', 'header': '', 'issueTime': ''},
+        "url": "http://www.cyol.com/",
+        "rule": {'author': '', 'filter_rule': 'http://news.cyol.com/app/\d[5]-\d[2]/\d[2]/content_+d+.htm', 'page_size': '1', 'content': '', 'header': '', 'issueTime': ''},
     }
     crawler = Crawleruning()
     crawler.set_parameter(parameter)

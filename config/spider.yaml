@@ -69,6 +69,13 @@ redis:
     socket_timeout: 5               # sockt timeout for redis sentinel
 
 
+
+logging:
+    log_dir : "/config"
+    log_name : "spider.log"
+
+
+
 # warning by email
 email:
     # your email must open smtp & pop3 service

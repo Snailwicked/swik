@@ -13,7 +13,6 @@ def db_commit_decorator(func):
             print('DB operation error，here are details:{}'.format(e))
     return session_commit
 
-
 def parse_text(func):
     @wraps(func)
     def filter_url(*args, **kwargs):

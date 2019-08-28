@@ -6,6 +6,8 @@ import jieba
 import networkx as nx
 from sklearn.feature_extraction.text import TfidfVectorizer, TfidfTransformer
 import html as hl
+from config.conf import get_algorithm
+args = get_algorithm()
 
 class StringSplitter(object):
     def __init__(self, pattern):
@@ -26,7 +28,7 @@ class StringReplacement(object):
         if not string:
             return ''
         return string.replace(self.pattern, self.replaceWith)
-def load_stopwords(path='E:/Workspace/swik/slave/stop_word'):
+def load_stopwords(path=args["stop_word"]):
     with open(path, encoding="utf-8") as f:
         stopwords = list(map(lambda x: x.strip(), f.readlines()))
     stopwords.extend([' ', '\t', '\n'])

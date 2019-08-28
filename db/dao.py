@@ -58,7 +58,7 @@ class MainUrlOper:
         mainurl.webSite = parameter['webSite']
         mainurl.status = 0
         mainurl.remark = ""
-        mainurl.sort = int(parameter['sort'])
+        mainurl.sort = 0
         db_session.add(mainurl)
         db_session.commit()
         db_session.close()
