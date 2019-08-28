@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import *
 from db.dao import MainUrlOper,SpiderTaskOper,TaskConfigOper
 from tasks.crawler import Crawleruning
+from tasks import excute_start_crawler
 from utils.base_utils.system import System
 import json
 mainurl = MainUrlOper()
@@ -75,7 +76,8 @@ def task_config_spider_name():
 @app.route('/start/spider_task')
 def start_spider_task():
     parameter = request.values.to_dict()
-    spidertask.start_task(parameter)
+    print(parameter)
+    excute_start_crawler(parameter)
     return jsonify(parameter)
 
 
@@ -116,10 +118,9 @@ def update_web_site():
 def spider_web_site():
     parameter = request.args.to_dict()
     parameter["rule"] = json.loads(parameter["rule"].replace("@","+"))
-    parameters = []
-    parameters.append(parameter)
+
     crawler = Crawleruning()
-    crawler.set_parameter(parameters)
+    crawler.set_parameter(parameter)
     crawler.start()
     return jsonify({"code": 0, "msg": "更新成功"})
 

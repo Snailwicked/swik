@@ -95,18 +95,17 @@ class Crawleruning(Crawler):
         super(Crawleruning, self).__init__()
 
     def start(self):
-        for parameter in self.parameters:
-            self.run(parameter)
+        self.run(self.parameters)
 
     def set_parameter(self,parameter):
         self.parameters = parameter
 
 
 if __name__ == '__main__':
-    parameter = [{
+    parameter = {
         "url": "http://www.sohu.com/",
         "rule": {'author': '', 'filter_rule': '', 'page_size': '1', 'content': '', 'header': '', 'issueTime': ''},
-    }]
+    }
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()

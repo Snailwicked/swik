@@ -2,11 +2,11 @@ from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError as SqlalchemyIntegrityError
 from pymysql.err import IntegrityError as PymysqlIntegrityError
 from sqlalchemy.exc import InvalidRequestError
-import datetime
+import datetime,json
 
 from db.basic import db_session
 from db.models import (
-    MainUrl, WebInfo,SpiderTask
+    MainUrl,SpiderTask
 )
 from decorators import db_commit_decorator
 
@@ -115,11 +115,25 @@ class SpiderTaskOper:
         spider_task.status = 1
         db_session.commit()
         datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name, MainUrl.status == 1).all()
-        for item in datas:
-            print(item)
-
         db_session.close()
+        parameters = []
+        for item in [item.single_to_dict() for item in datas]:
+            parameter = {}
+            url = item.get("address")
+            try:
+                rule = item["rule"]
+                filter_rule =json.loads(rule)["filter_rule"]
 
+            except:
+                filter_rule = ""
+            if filter_rule and filter_rule!="":
+                rule = json.loads(item["rule"].replace("@","+"))
+            else:
+                rule = None
+            parameter["url"] = url
+            parameter["rule"] = rule
+            parameters.append(parameter)
+        return parameters
 
 
     @classmethod
