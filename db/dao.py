@@ -1,4 +1,4 @@
-from sqlalchemy import text
+from config import *
 from sqlalchemy.exc import IntegrityError as SqlalchemyIntegrityError
 from pymysql.err import IntegrityError as PymysqlIntegrityError
 from sqlalchemy.exc import InvalidRequestError
@@ -8,7 +8,7 @@ from db.basic import db_session
 from db.models import (
     MainUrl,SpiderTask
 )
-from decorators import db_commit_decorator
+from utils.exception_utils import db_commit_decorator
 
 
 class MainUrlOper:
@@ -108,7 +108,6 @@ class SpiderTaskOper:
     @classmethod
     @db_commit_decorator
     def start_task(cls, parameter):
-
         spider_name = int(parameter['id'])
         spider_task = db_session.query(SpiderTask).filter(
             SpiderTask.id == spider_name).first()
@@ -120,18 +119,16 @@ class SpiderTaskOper:
         for item in [item.single_to_dict() for item in datas]:
             parameter = {}
             url = item.get("address")
-            try:
+            if item["rule"] == None:
+                crawler_info.info("{} : has no filtering rules, default algorithm acquisition".format(url))
+                parameter["rule"] = {'filter_rule': '', 'page_size': '1', 'header': '', 'author': '', 'issueTime': '', 'content': ''}
+            else:
                 rule = item["rule"]
                 filter_rule =json.loads(rule)["filter_rule"]
-
-            except:
-                filter_rule = ""
-            if filter_rule and filter_rule!="":
-                rule = json.loads(item["rule"].replace("@","+"))
-            else:
-                rule = None
+                if filter_rule and filter_rule!="":
+                    rule = json.loads(item["rule"].replace("@","+"))
+                    parameter["rule"] = rule
             parameter["url"] = url
-            parameter["rule"] = rule
             parameters.append(parameter)
         return parameters
 

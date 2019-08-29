@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from config import *
 from flask_cors import *
 from db.dao import MainUrlOper,SpiderTaskOper,TaskConfigOper
 from tasks.crawler import Crawleruning
@@ -13,7 +14,6 @@ SECRET_KEY = 'This is the key'
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = SECRET_KEY
-
 data = []
 news = []
 
@@ -58,13 +58,11 @@ def select_task_config_by_id():
     data = taskconfig.select_by_id(parameter)
     return jsonify(data)
 
-
 @app.route('/task_config/select_all')
 def select_all_task_config():
     parameter = request.values.to_dict()
     data = taskconfig.select_all(parameter)
     return jsonify(data)
-
 
 @app.route('/task_config/spider_name')
 def task_config_spider_name():
@@ -76,7 +74,6 @@ def task_config_spider_name():
 @app.route('/start/spider_task')
 def start_spider_task():
     parameter = request.values.to_dict()
-    print(parameter)
     excute_start_crawler(parameter)
     return jsonify(parameter)
 
@@ -118,6 +115,7 @@ def update_web_site():
 def spider_web_site():
     parameter = request.args.to_dict()
     parameter["rule"] = json.loads(parameter["rule"].replace("@","+"))
+    print(parameter)
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()
@@ -126,6 +124,7 @@ def spider_web_site():
 
 
 if __name__ == '__main__':
+    crawler_info.info("If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line")
     app.run(debug=True)
 '''
 http://news.cyol.com/app/2019-08/24/content_18127145.htm

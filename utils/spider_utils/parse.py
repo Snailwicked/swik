@@ -1,7 +1,7 @@
 from utils.master import filterUrls
 from utils.slave import ContentExtractor
 from utils.spider_utils.xpathtexts import xPathTexts
-from decorators import parse_text
+from utils.exception_utils import parse_text
 
 xpath = xPathTexts()
 

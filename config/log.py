@@ -12,11 +12,18 @@ if not os.path.exists(log_dir):
 
 log_path = os.path.join(log_dir,args["log_name"])
 
+'''
+   logging_format = "[%(asctime)s]-%(name)s-%(levelname)-6s"
+    # logging_format += "%(module)s::%(funcName)s():l%(lineno)d: "
+    logging_format += "%(module)s::l%(lineno)d: "
+    logging_format += "%(message)s"
+
+'''
 log_config = {
     'version': 1.0,
     'formatters': {
         'detail': {
-            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            'format': '%(asctime)s - %(name)s-%(levelname)s - %(module)s ->%(lineno)d ; %(message)s',
             'datefmt': "%Y-%m-%d %H:%M:%S"
         },
         'simple': {
@@ -40,10 +47,20 @@ log_config = {
         },
     },
     'loggers': {
-        'crawler': {
+        'crawler_info': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
+        'crawler_debug': {
             'handlers': ['console', 'file'],
             'level': 'DEBUG',
         },
+
+        'web_info': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
+
         'parser': {
             'handlers': ['file'],
             'level': 'INFO',
@@ -60,30 +77,16 @@ log_config = {
 }
 
 log_conf.dictConfig(log_config)
-other = logging.getLogger('other')
-crawler = logging.getLogger('crawler')
-parser = logging.getLogger('page_parser')
-storage = logging.getLogger('storage')
+other_info = logging.getLogger('other')
+crawler_info = logging.getLogger('crawler_info')
+crawler_debug = logging.getLogger('crawler_debug')
+web_info = logging.getLogger('web_info')
+
+parser_info = logging.getLogger('page_parser')
+storage_info = logging.getLogger('storage')
 
 
-
-def get_logger(name='aspider'):
-    logging_format = "[%(asctime)s]-%(name)s-%(levelname)-6s"
-    # logging_format += "%(module)s::%(funcName)s():l%(lineno)d: "
-    logging_format += "%(module)s::l%(lineno)d: "
-    logging_format += "%(message)s"
-
-    logging.basicConfig(
-        format=logging_format,
-        level=logging.DEBUG
-    )
-    logging.getLogger("asyncio").setLevel(logging.INFO)
-    logging.getLogger("pyppeteer").setLevel(logging.INFO)
-    logging.getLogger("websockets").setLevel(logging.INFO)
-    return logging.getLogger(name)
-
-
-__all__ = ['crawler', 'parser', 'other', 'storage']
+__all__ = ['other_info', 'crawler_info', 'parser_info', 'storage_info',"crawler_debug","web_info"]
 
 
 

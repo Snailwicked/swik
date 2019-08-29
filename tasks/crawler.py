@@ -1,4 +1,6 @@
 from urllib.parse import urljoin
+from config import *
+import sys
 import re
 from collections import defaultdict
 from sklearn.externals import joblib
@@ -7,22 +9,24 @@ from utils import transUrls
 from config.conf import get_algorithm
 from utils import xPathTexts
 from utils.spider_utils import Parse
+import time
 args = get_algorithm()
 parse = Parse()
 
 
 class Crawler:
     def __init__(self):
-        self.dataset = set()
         self.xpath = xPathTexts()
         self.brief = defaultdict(set)
         self.count = 0
-        self.sit = 0
+        self.start_time = time.time()
+
 
     def run(self,parameter):
-       self.parameter = parameter
-       self.point = 0
-       self.xpath_urls([(self.parameter["url"],self.point)])
+        self.parameter = parameter
+        limit = self.parameter['rule']["page_size"]
+        self.limit = int(limit) if limit!="" else 1
+        self.xpath_urls([self.parameter["url"]],0)
 
 
     def cut(self,url):
@@ -42,63 +46,62 @@ class Crawler:
         return temp
 
 
-    def xpath_urls(self, urls):
-        try:
-            filter_rule = self.parameter['rule']["filter_rule"]
-        except:
-            filter_rule = None
-        if filter_rule:
-            for url ,point in urls:
-                self.point = point
-                try:
-                    page_size = int(self.parameter['rule']["page_size"])
-                except:
-                    page_size = 1
-                if point == page_size:
-                    break
-                TEMP = set()
-                for item in self.get_hrefs(url):
-                    result = re.findall(self.parameter['rule']["filter_rule"], item)
-                    if result and item not in self.brief["parsing"]:
-                        temp = []
-                        temp.append(item)
-                        parse.get_data(temp)
-                        self.brief["parsing"].add(item)
-                    else:
-                        if item not in self.brief["crawled"]:
-                            self.brief["crawled"].add(item)
-                            TEMP.add(item)
-                self.xpath_urls([(item ,self.point+1)for item in TEMP])
+    def xpath_urls(self, urls,limit):
+        if limit == self.limit:
+            end_time = time.time()
+            crawler_info.info("{} has been collected and program is finished".format(self.parameter["url"]))
+            crawler_info.info("{} parsesed {} websites and spending time {}".format(self.parameter["url"],self.count,(end_time-self.start_time)))
+            try:
+                sys.exit()
+            except:
+                pass
         else:
+            filter_rule = self.parameter['rule']["filter_rule"]
+            if filter_rule:
+                target_url = []
+                catalogue = []
+                for url  in urls:
+                    for item in self.get_hrefs(url):
+                        result = re.findall(filter_rule, item)
+                        if result and  item not in self.brief["target_url"]:
+                            target_url.append(item)
+                            self.brief["target_url"].add(item)
+                        elif item not in self.brief["catalogue"]:
+                            catalogue.append(item)
+                            self.brief["catalogue"].add(item)
+                self.count = self.count+len(target_url)
+                [self.process(url) for url in target_url]
+                self.xpath_urls(catalogue,limit+1)
+            else:
+                self.clf = joblib.load(args["url_SDG"])
+                self.vocabulary = joblib.load(args["url_Vocabulay"])
+                self.tv = TfidfVectorizer(tokenizer=self.cut, vocabulary=self.vocabulary)
+                self.transurls = transUrls()
+                target_url = []
+                catalogue = []
+                for url in urls:
+                    urls = self.get_hrefs(url)
+                    train = self.transurls.transport(list(urls))
+                    try:
+                        traindata = self.tv.fit_transform(train)
+                    except:
+                        crawler_info.error("{} cannot be parsed by algorithms".format(url))
+                        continue
+                    pred = self.clf.predict(traindata)
+                    after_urls = list(map(lambda x, y: y + "_" + x, list(urls), pred))
+                    for after in after_urls:
+                        if "1_" in after and after not in self.brief["target_url"]:
+                            target_url.append(after[2:])
+                            self.brief["target_url"].add(after[2:])
+                        elif after not in self.brief["catalogue"]:
+                            catalogue.append(after[2:])
+                            self.brief["catalogue"].add(after[2:])
+                [self.process(url) for url in target_url]
+                self.count = self.count+len(target_url)
+                self.xpath_urls(catalogue,limit+1)
 
-            self.clf = joblib.load(args["url_SDG"])
-            self.vocabulary = joblib.load(args["url_Vocabulay"])
-            self.tv = TfidfVectorizer(tokenizer=self.cut,
-                                      vocabulary=self.vocabulary)
-            self.transurls = transUrls()
-            result = []
-
-            for url, point in urls:
-                urls = self.get_hrefs(url)
-                train = self.transurls.transport(list(urls))
-                try:
-                    traindata = self.tv.fit_transform(train)
-                except:
-                    return result
-                pred = self.clf.predict(traindata)
-                after_urls = list(map(lambda x, y: y + "_" + x, list(urls), pred))
-                result = []
-                for after in after_urls:
-                    if "1_" in after:
-                        print(after[2:])
-                        temp = []
-                        temp.append(after[2:])
-                        parse.get_data(temp)
-
-
-                        result.append(after[2:])
-                return result
     def process(self, url):
+        # parse.get_data(target_url)
         print(url)
 
 
@@ -109,7 +112,6 @@ class Crawleruning(Crawler):
 
     def start(self):
         self.run(self.parameters)
-
     def set_parameter(self,parameter):
         self.parameters = parameter
 
@@ -117,7 +119,7 @@ class Crawleruning(Crawler):
 if __name__ == '__main__':
     parameter = {
         "url": "http://www.cyol.com/",
-        "rule": {'author': '', 'filter_rule': 'http://news.cyol.com/app/\d[5]-\d[2]/\d[2]/content_+d+.htm', 'page_size': '1', 'content': '', 'header': '', 'issueTime': ''},
+        "rule": {'author': '', 'filter_rule': '', 'page_size': '1', 'content': '', 'header': '', 'issueTime': ''},
     }
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
