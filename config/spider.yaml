@@ -49,13 +49,14 @@ db:
     db_name: spider_manage
     db_type: mysql
 
-mongodb:
-    host: 101.132.113.50
+
+
+mongo:
+    host: 192.168.30.66
     port: 27017
     user: root
-    password: BlueSnail123!
-    db_name: spider_manage
-    db_type: mysql
+    db_name: spider_data
+    table_name: news_data
 
 
 redis:

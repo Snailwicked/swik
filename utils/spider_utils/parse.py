@@ -2,16 +2,15 @@ from utils.master import filterUrls
 from utils.slave import ContentExtractor
 from utils.spider_utils.xpathtexts import xPathTexts
 from utils.exception_utils import parse_text
-
+from db import News_data
 xpath = xPathTexts()
-
+new_data =News_data()
 class Parse:
     def __init__(self):
         self.master = filterUrls()
 
     @parse_text
     def get_data(self, urls):
-        data = []
         sub_urls = self.master.FilterUrls(urls)
         if sub_urls != []:
             for url in sub_urls:
@@ -23,13 +22,13 @@ class Parse:
                     item["title"] = ce.get_title()
                     item["content"] = ce.get_content()
                     item["authors"] = ce.get_authors()
-                    item["publishing_date"] = ce.get_publishing_date()
+                    item["publishTime"] = ce.get_publishing_date()
                     item["summary"] = ce.get_summary()
-                    print(url,item)
-                    data.append(item)
                 except Exception as e:
                     print(e)
-            return data
+                print(item)
+                new_data.insert(item)
+
         else:
             print("未解析到数据")
 
@@ -37,5 +36,4 @@ class Parse:
 if __name__ == "__main__":
     urls = ["http://media.people.com.cn/"]
     parse = Parse()
-    result = parse.get_data(urls)
-    print(result)
+    parse.get_data(urls)

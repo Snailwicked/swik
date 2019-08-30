@@ -5,6 +5,8 @@ from db.dao import MainUrlOper,SpiderTaskOper,TaskConfigOper
 from tasks.crawler import Crawleruning
 from tasks import excute_start_crawler
 from utils.base_utils.system import System
+from db import News_data
+con = News_data()
 import json
 mainurl = MainUrlOper()
 taskconfig = TaskConfigOper()
@@ -20,6 +22,15 @@ news = []
 @app.route('/system/info')
 def system_info():
     return jsonify(system.infos())
+
+
+@app.route('/new/datas')
+def new_datas():
+    parameter = request.values.to_dict()
+    print(parameter)
+    result = con.select_by_paramters(parameter)
+    return jsonify(result)
+
 ########################################################################################################################
 '''
     站点模块代码

@@ -81,3 +81,7 @@ def get_email_args():
 
 def get_logging_args():
     return cf.get('logging')
+
+
+def get_mongo_args():
+    return cf.get('mongo')
