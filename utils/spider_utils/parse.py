@@ -17,6 +17,8 @@ class Parse:
                 item= {}
                 try:
                     xpath.set_parameter(url=url)
+                    if xpath.html == None:
+                        continue
                     ce = ContentExtractor(html=xpath.html, url=url)
                     item["url"] = url
                     item["title"] = ce.get_title()

@@ -19,14 +19,17 @@ class xPathTexts(object):
             self.headers = random_headers
         try:
             resp = requests.get(url=self.url, headers=self.headers, cookies=self.cookies , timeout=30)
-            reg = '<meta .*(http-equiv="?Content-Type"?.*)?charset="?([a-zA-Z0-9_-]+)"?'
-            try:
-                charset = re.findall(reg, resp.text)[0][1]
-                charset = charset.lower()
-                resp.encoding = charset
-            except:
-                resp.encoding = "utf-8"
-            return resp.text
+            if resp.status_code ==200:
+                reg = '<meta .*(http-equiv="?Content-Type"?.*)?charset="?([a-zA-Z0-9_-]+)"?'
+                try:
+                    charset = re.findall(reg, resp.text)[0][1]
+                    charset = charset.lower()
+                    resp.encoding = charset
+                except:
+                    resp.encoding = "utf-8"
+                return resp.text
+            else:
+                return None
         except Exception as e:
             print(e)
 
