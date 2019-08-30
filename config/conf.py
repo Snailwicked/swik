@@ -66,8 +66,6 @@ def get_broker_and_backend():
     return broker_url, backend_url
 
 
-
-
 def get_redis_master():
     return cf.get('redis').get('master', '')
 
@@ -75,30 +73,11 @@ def get_redis_master():
 def get_code_username():
     return cf.get('yundama_username')
 
-
 def get_code_password():
     return cf.get('yundama_passwd')
 
-
-def get_running_mode():
-    return cf.get('running_mode')
-
-
-def get_crawling_mode():
-    return cf.get('crawling_mode')
-
-
-def get_share_host_count():
-    return cf.get('share_host_count')
-
-
-def get_cookie_expire_time():
-    return cf.get('cookie_expire_time')
-
-
 def get_email_args():
     return cf.get('email')
-
 
 def get_logging_args():
     return cf.get('logging')

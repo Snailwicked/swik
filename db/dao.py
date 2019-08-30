@@ -53,16 +53,16 @@ class MainUrlOper:
     @classmethod
     @db_commit_decorator
     def add_one(cls, parameter):
+        print(parameter)
         mainurl = MainUrl()
         mainurl.address = parameter['address']
         mainurl.webSite = parameter['webSite']
         mainurl.status = 0
         mainurl.remark = ""
-        mainurl.sort = 0
+        mainurl.sort = parameter['sort']
         db_session.add(mainurl)
         db_session.commit()
         db_session.close()
-        return mainurl.pid
 
 
     '''
@@ -119,16 +119,26 @@ class SpiderTaskOper:
         for item in [item.single_to_dict() for item in datas]:
             parameter = {}
             url = item.get("address")
-            if item["rule"] == None:
-                crawler_info.info("{} : has no filtering rules, default algorithm acquisition".format(url))
-                parameter["rule"] = {'filter_rule': '', 'page_size': '1', 'header': '', 'author': '', 'issueTime': '', 'content': ''}
-            else:
+            try:
                 rule = item["rule"]
-                filter_rule =json.loads(rule)["filter_rule"]
-                if filter_rule and filter_rule!="":
-                    rule = json.loads(item["rule"].replace("@","+"))
-                    parameter["rule"] = rule
-            parameter["url"] = url
+                if rule == None or rule == "null":
+                    crawler_info.info("{} : has no filtering rules, default algorithm acquisition".format(url))
+                    parameter["rule"] = {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+                                         'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}
+                else:
+                    filter_rule = json.loads(rule)["filter_rule"]
+                    if filter_rule and filter_rule != "":
+                        rule = json.loads(item["rule"].replace("@", "+"))
+                        parameter["rule"] = rule
+
+            except:
+                crawler_info.info("{} : has no filtering rules, default algorithm acquisition".format(url))
+                parameter["rule"] = {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+                                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}
+
+
+            parameter["url"] = str(url).strip()
+            crawler_info.info(parameter)
             parameters.append(parameter)
         return parameters
 

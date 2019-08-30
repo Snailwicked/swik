@@ -114,8 +114,14 @@ def update_web_site():
 @app.route('/web_site/spider')
 def spider_web_site():
     parameter = request.args.to_dict()
-    parameter["rule"] = json.loads(parameter["rule"].replace("@","+"))
-    print(parameter)
+    parameter["url"] = str(parameter["url"]).strip()
+
+    if parameter["rule"] == "null":
+        parameter["rule"] = {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+                         'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}
+    else:
+        parameter["rule"] = json.loads(parameter["rule"].replace("@","+"))
+
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()

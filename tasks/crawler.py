@@ -12,6 +12,8 @@ from utils.spider_utils import Parse
 import time
 args = get_algorithm()
 parse = Parse()
+from db.redis_db import Url_Parameter
+url_storage = Url_Parameter()
 
 
 class Crawler:
@@ -24,7 +26,7 @@ class Crawler:
 
     def run(self,parameter):
         self.parameter = parameter
-        limit = self.parameter['rule']["page_size"]
+        limit = self.parameter['rule']["deep_limit"]
         self.limit = int(limit) if limit!="" else 1
         self.xpath_urls([self.parameter["url"]],0)
 
@@ -102,7 +104,9 @@ class Crawler:
 
     def process(self, url):
         # parse.get_data(target_url)
-        print(url)
+        parameter = {}
+        parameter["url"] = url
+        url_storage.store_parameter("新闻爬虫",parameter)
 
 
 class Crawleruning(Crawler):

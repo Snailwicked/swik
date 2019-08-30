@@ -22,6 +22,11 @@ app.conf.update(
                 'routing_key': 'crawler_queue'
             },
 
+        'tasks.start_task.excute_parse_url':
+            {
+                'queue': 'parse_queue',
+                'routing_key': 'parse_queue'
+            },
 
     },
 
@@ -30,6 +35,11 @@ app.conf.update(
             "exchange": "crawler_queue",
             "exchange_type": "direct",
             "routing_key": "crawler_queue"
+        },
+        "parse_queue": {
+            "exchange": "parse_queue",
+            "exchange_type": "direct",
+            "routing_key": "parse_queue"
         },
 
     }
