@@ -121,10 +121,6 @@ class SpiderTaskOper:
     @db_commit_decorator
     def start_task(cls, parameter):
         spider_name = int(parameter['id'])
-        spider_task = db_session.query(SpiderTask).filter(
-            SpiderTask.id == spider_name).first()
-        spider_task.status = 1
-        db_session.commit()
         datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name, MainUrl.status == 1).all()
         db_session.close()
         parameters = []

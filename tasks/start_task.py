@@ -12,7 +12,6 @@ def start_crawler(parameter):
         crawler = Crawleruning()
         crawler.set_parameter(item)
         crawler.start()
-    crawler_info.info("已经更改爬虫状态")
     parameters["status"] = 0
     spider_task.update_status(parameters)
 
