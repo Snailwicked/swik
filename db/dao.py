@@ -105,6 +105,18 @@ class SpiderTaskOper:
     def __int__(self):
         pass
 
+
+    # parameter = {"spider_name" ;1,"status":0}
+    @classmethod
+    @db_commit_decorator
+    def update_status(cls, parameter):
+        spider_task = db_session.query(SpiderTask).filter(
+            SpiderTask.id == int(parameter["id"])).first()
+        spider_task.status = int(parameter["status"])
+        db_session.commit()
+        db_session.close()
+
+
     @classmethod
     @db_commit_decorator
     def start_task(cls, parameter):
@@ -121,7 +133,7 @@ class SpiderTaskOper:
             url = item.get("address")
             try:
                 rule = item["rule"]
-                if rule == None or rule == "null":
+                if rule == None or rule == "null" or rule == "":
                     crawler_info.info("{} : has no filtering rules, default algorithm acquisition".format(url))
                     parameter["rule"] = {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
                                          'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}
@@ -130,7 +142,8 @@ class SpiderTaskOper:
                     if filter_rule and filter_rule != "":
                         rule = json.loads(item["rule"].replace("@", "+"))
                         parameter["rule"] = rule
-
+                    else:
+                        parameter["rule"] = rule
             except:
                 crawler_info.info("{} : has no filtering rules, default algorithm acquisition".format(url))
                 parameter["rule"] = {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
@@ -272,16 +285,20 @@ if __name__ == '__main__':
     #
     # }
     #
-    spider = TaskConfigOper()
+    # spider = TaskConfigOper()
+    # # parameter = {
+    # #         "page":2,
+    # #         "limit":10,
+    # #         "sort":0
+    # #     }
+    # # print(spider.select_all(parameter))
     # parameter = {
-    #         "page":2,
-    #         "limit":10,
-    #         "sort":0
+    #         "id":1
     #     }
-    # print(spider.select_all(parameter))
-    parameter = {
-            "id":1
-        }
-    print(spider.select_by_id(parameter))
+    # print(spider.select_by_id(parameter))
         #     # spider.add_one(parameter)
-
+    spider_task = SpiderTaskOper()
+    parameters = {}
+    parameters["id"] = 9
+    parameters["status"] = 0
+    spider_task.update_status(parameters)

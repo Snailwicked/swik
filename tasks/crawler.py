@@ -9,7 +9,7 @@ from utils import transUrls
 from config.conf import get_algorithm
 from utils import xPathTexts
 from utils.spider_utils import Parse
-import time
+import time,json
 args = get_algorithm()
 parse = Parse()
 from db.redis_db import Url_Parameter
@@ -26,8 +26,8 @@ class Crawler:
 
     def run(self,parameter):
         self.parameter = parameter
-        limit = self.parameter['rule']["deep_limit"]
-        self.limit = int(limit) if limit!="" else 1
+        self.rule = json.loads(str(self.parameter['rule']))
+        self.limit = int(self.rule["deep_limit"]) if self.rule["deep_limit"] !="" else 1
         self.xpath_urls([self.parameter["url"]],0)
 
 
@@ -58,7 +58,7 @@ class Crawler:
             except:
                 pass
         else:
-            filter_rule = self.parameter['rule']["filter_rule"]
+            filter_rule =self.rule["filter_rule"]
             if filter_rule:
                 target_url = []
                 catalogue = []
@@ -115,6 +115,7 @@ class Crawleruning(Crawler):
         super(Crawleruning, self).__init__()
 
     def start(self):
+        crawler_info.info(self.parameters)
         self.run(self.parameters)
     def set_parameter(self,parameter):
         self.parameters = parameter
@@ -130,4 +131,6 @@ if __name__ == '__main__':
     crawler.start()
 
 
-
+    # from celery.task.control import revoke
+    #
+    # revoke("de8d5e67-33b6-4980-8846-54e24551dda6", terminate=True)

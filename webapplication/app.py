@@ -85,8 +85,8 @@ def task_config_spider_name():
 @app.route('/start/spider_task')
 def start_spider_task():
     parameter = request.values.to_dict()
-    excute_start_crawler(parameter)
-    return jsonify(parameter)
+    task_id = excute_start_crawler(parameter)
+    return jsonify({"task_id":task_id})
 
 
 
