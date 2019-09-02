@@ -203,9 +203,12 @@ class TaskConfigOper:
     def select_by_id(cls, parameter):
 
         spider_name = int(parameter['id'])
-
+        page = int(parameter['page'])
+        limit = int(parameter['limit'])
         try:
-            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).all()
+            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).limit(
+                        limit).offset(
+                        (page - 1) * limit)
             count = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).count()
             db_session.close()
 
@@ -235,25 +238,26 @@ class TaskConfigOper:
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
-
+    # parameter ={"task_id":1 ,"operation":"import","main_url_pids":[6571,4541,45781,1512]}
     @classmethod
     @db_commit_decorator
     def update_task_name(cls, parameter):
 
         spider_name = int(parameter['task_id'])
         main_url_pids = eval(parameter['main_url_pids'])
-        main_url_remove_pids = eval(parameter['main_url_remove_pids'])
-        try:
-            for main_url_pid in main_url_pids:
-                main_url = db_session.query(MainUrl).filter(
-                    MainUrl.pid == main_url_pid).first()
-                main_url.spider_name = spider_name
-                
-            for main_url_pid in main_url_remove_pids:
-                main_url = db_session.query(MainUrl).filter(
-                    MainUrl.pid == main_url_pid).first()
-                main_url.spider_name = 0
+        operation = str(parameter['operation'])
 
+        try:
+            if operation == "import":
+                for main_url_pid in main_url_pids:
+                    main_url = db_session.query(MainUrl).filter(
+                        MainUrl.pid == main_url_pid).first()
+                    main_url.spider_name = spider_name
+            elif operation == "remove":
+                for main_url_pid in main_url_pids:
+                    main_url = db_session.query(MainUrl).filter(
+                        MainUrl.pid == main_url_pid).first()
+                    main_url.spider_name = 0
             db_session.commit()
             db_session.close()
             return {"code": "200", "message": "更新成功"}
