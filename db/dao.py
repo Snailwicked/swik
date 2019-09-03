@@ -145,7 +145,7 @@ class SpiderTaskOper:
                 parameter["rule"] = {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
                                      'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}
 
-
+            parameter["pid"] = item.get("pid")
             parameter["url"] = str(url).strip()
             crawler_info.info(parameter)
             parameters.append(parameter)
@@ -244,27 +244,29 @@ class TaskConfigOper:
     def update_task_name(cls, parameter):
 
         spider_name = int(parameter['task_id'])
-        main_url_pids = eval(parameter['main_url_pids'])
+        main_url_pids = parameter['main_url_pids']
         operation = str(parameter['operation'])
+        if main_url_pids != "":
+            try:
+                if operation == "import":
+                    for main_url_pid in eval(main_url_pids):
+                        main_url = db_session.query(MainUrl).filter(
+                            MainUrl.pid == main_url_pid).first()
+                        main_url.spider_name = spider_name
+                elif operation == "remove":
+                    for main_url_pid in eval(main_url_pids):
+                        main_url = db_session.query(MainUrl).filter(
+                            MainUrl.pid == main_url_pid).first()
+                        main_url.spider_name = 0
+                db_session.commit()
+                db_session.close()
+                return {"code": "200", "message": "更新成功"}
 
-        try:
-            if operation == "import":
-                for main_url_pid in main_url_pids:
-                    main_url = db_session.query(MainUrl).filter(
-                        MainUrl.pid == main_url_pid).first()
-                    main_url.spider_name = spider_name
-            elif operation == "remove":
-                for main_url_pid in main_url_pids:
-                    main_url = db_session.query(MainUrl).filter(
-                        MainUrl.pid == main_url_pid).first()
-                    main_url.spider_name = 0
-            db_session.commit()
-            db_session.close()
-            return {"code": "200", "message": "更新成功"}
-
-        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
-            db_session.close()
-            return {"code": "404", "message": "更新失败"}
+            except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+                db_session.close()
+                return {"code": "404", "message": "更新失败"}
+        else:
+            return {"code": "202", "message": "并没有移除数据"}
 
 
 
@@ -299,6 +301,6 @@ if __name__ == '__main__':
         #     # spider.add_one(parameter)
     spider_task = SpiderTaskOper()
     parameters = {}
-    parameters["id"] = 9
+    parameters["id"] = 1
     parameters["status"] = 0
     spider_task.update_status(parameters)
