@@ -244,27 +244,29 @@ class TaskConfigOper:
     def update_task_name(cls, parameter):
 
         spider_name = int(parameter['task_id'])
-        main_url_pids = eval(parameter['main_url_pids'])
+        main_url_pids = parameter['main_url_pids']
         operation = str(parameter['operation'])
+        if main_url_pids != "":
+            try:
+                if operation == "import":
+                    for main_url_pid in eval(main_url_pids):
+                        main_url = db_session.query(MainUrl).filter(
+                            MainUrl.pid == main_url_pid).first()
+                        main_url.spider_name = spider_name
+                elif operation == "remove":
+                    for main_url_pid in eval(main_url_pids):
+                        main_url = db_session.query(MainUrl).filter(
+                            MainUrl.pid == main_url_pid).first()
+                        main_url.spider_name = 0
+                db_session.commit()
+                db_session.close()
+                return {"code": "200", "message": "更新成功"}
 
-        try:
-            if operation == "import":
-                for main_url_pid in main_url_pids:
-                    main_url = db_session.query(MainUrl).filter(
-                        MainUrl.pid == main_url_pid).first()
-                    main_url.spider_name = spider_name
-            elif operation == "remove":
-                for main_url_pid in main_url_pids:
-                    main_url = db_session.query(MainUrl).filter(
-                        MainUrl.pid == main_url_pid).first()
-                    main_url.spider_name = 0
-            db_session.commit()
-            db_session.close()
-            return {"code": "200", "message": "更新成功"}
-
-        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
-            db_session.close()
-            return {"code": "404", "message": "更新失败"}
+            except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+                db_session.close()
+                return {"code": "404", "message": "更新失败"}
+        else:
+            return {"code": "202", "message": "并没有移除数据"}
 
 
 
