@@ -145,7 +145,7 @@ class SpiderTaskOper:
                 parameter["rule"] = {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
                                      'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}
 
-
+            parameter["pid"] = item.get("pid")
             parameter["url"] = str(url).strip()
             crawler_info.info(parameter)
             parameters.append(parameter)
@@ -299,6 +299,6 @@ if __name__ == '__main__':
         #     # spider.add_one(parameter)
     spider_task = SpiderTaskOper()
     parameters = {}
-    parameters["id"] = 9
+    parameters["id"] = 1
     parameters["status"] = 0
     spider_task.update_status(parameters)

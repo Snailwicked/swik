@@ -1,4 +1,5 @@
 from urllib.parse import urljoin
+from db.dao import MainUrlOper
 from config import *
 import sys
 import re
@@ -14,6 +15,7 @@ args = get_algorithm()
 parse = Parse()
 from db.redis_db import Url_Parameter
 url_storage = Url_Parameter()
+main_url_oper = MainUrlOper()
 
 
 class Crawler:
@@ -26,16 +28,14 @@ class Crawler:
 
     def run(self,parameter):
         self.parameter = parameter
-        self.rule = json.loads(str(self.parameter['rule']))
+        self.rule = self.parameter['rule']
         self.limit = int(self.rule["deep_limit"]) if self.rule["deep_limit"] !="" else 1
         self.xpath_urls([self.parameter["url"]],0)
 
 
     def cut(self,url):
-        url = url.replace("//", "/").replace("///", "/").replace("////", "/").replace("/////", "/").replace("//////","/").replace(
-            "///////", "/").replace("////////", "/").replace("/////////", "/")
         text = url.split("/")
-        return text
+        return  [element for element in text if element != ""]
 
     def get_hrefs(self,url):
         self.xpath.set_parameter(url)
@@ -53,6 +53,13 @@ class Crawler:
             end_time = time.time()
             crawler_info.info("{} has been collected and program is finished".format(self.parameter["url"]))
             crawler_info.info("{} parsesed {} websites and spending time {}".format(self.parameter["url"],self.count,(end_time-self.start_time)))
+            if self.count<20:
+                pid = self.parameter['pid']
+                parameter = {}
+                parameter["pid"] = pid
+                parameter["status"] = 0
+                main_url_oper.update_mainurl(parameter)
+                crawler_info.info("Exceptions may occur if the number of {} is too small".format(self.parameter["url"]))
             try:
                 sys.exit()
             except:
@@ -122,10 +129,7 @@ class Crawleruning(Crawler):
 
 
 if __name__ == '__main__':
-    parameter = {
-        "url": "http://www.cyol.com/",
-        "rule": {'author': '', 'filter_rule': '', 'page_size': '1', 'content': '', 'header': '', 'issueTime': ''},
-    }
+    parameter = {'url': 'http://www.legalweekly.cn/', 'rule': {'filter_rule': 'https://www.legalweekly.cn/\\w+/\\d+.html', 'selector': 'xpath选择器', 'deep_limit': 1, 'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}}
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()
