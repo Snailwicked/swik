@@ -31,17 +31,23 @@ class Parse:
                 item["title"] = ce.get_title()
                 item["content"] = ce.get_content()
                 item["authors"] = ce.get_authors()
-                item["publishTime"] = ce.get_publishing_date()
+                item["collection_time"] = int(ce.get_thirteenTime())
+                item["publish_time"] = int(ce.get_publishing_date())
                 item["summary"] = ce.get_summary()
+                item["source"] = "中国安全生产网"
+
             except Exception as e:
                 print(e)
                 continue
-            crawler_info.info(item)
+            print(item)
+            # crawler_info.info(item)
             new_data.insert(item)
 
 
 
 if __name__ == "__main__":
-    urls = ["http://media.people.com.cn/"]
-    parse = Parse()
-    parse.get_data(urls)
+    for i in range(20):
+
+        urls = ["http://www.aqsc.cn/qiye/201905/08/c105573.html"]
+        parse = Parse()
+        parse.get_data(urls)

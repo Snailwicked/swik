@@ -113,6 +113,7 @@ class Crawler:
                 self.xpath_urls(catalogue,limit+1)
 
     def process(self):
+
         return self.target_urls
 
     def monitor_info(self):

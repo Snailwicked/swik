@@ -146,6 +146,7 @@ class SpiderTaskOper:
                                      'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}
 
             parameter["pid"] = item.get("pid")
+            parameter["webSite"] = item.get("webSite")
             parameter["url"] = str(url).strip()
             parameters.append(parameter)
         return parameters

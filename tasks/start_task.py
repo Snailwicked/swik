@@ -16,12 +16,12 @@ def start_crawler(parameter):
         crawler = Crawleruning()
         crawler.set_parameter(item)
         crawler.start()
-        target_url = crawler.process()
-        for url in target_url:
-            app.send_task('tasks.start_task.parse_url',
-                          args=(url,),
-                          queue='crawler_queue',
-                          routing_key='for_crawler')
+        # target_url = crawler.process()
+        # for url in target_url:
+        #     app.send_task('tasks.start_task.parse_url',
+        #                   args=(url,),
+        #                   queue='crawler_queue',
+        #                   routing_key='for_crawler')
     parameters["status"] = 0
     spider_task.update_status(parameters)
 
