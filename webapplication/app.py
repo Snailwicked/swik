@@ -138,7 +138,8 @@ def spider_web_site():
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()
-    return jsonify({"code": 0, "msg": "更新成功"})
+    result = crawler.monitor_info()
+    return jsonify(result)
 
 
 

@@ -147,7 +147,6 @@ class SpiderTaskOper:
 
             parameter["pid"] = item.get("pid")
             parameter["url"] = str(url).strip()
-            crawler_info.info(parameter)
             parameters.append(parameter)
         return parameters
 

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from pymongo import MongoClient
-
 from config.conf import get_mongo_args
 
 mongodb_args = get_mongo_args()

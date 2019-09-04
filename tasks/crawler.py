@@ -9,10 +9,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from utils import transUrls
 from config.conf import get_algorithm
 from utils import xPathTexts
-from utils.spider_utils import Parse
 import time,json
 args = get_algorithm()
-parse = Parse()
 from db.redis_db import Url_Parameter
 url_storage = Url_Parameter()
 main_url_oper = MainUrlOper()
@@ -24,6 +22,9 @@ class Crawler:
         self.brief = defaultdict(set)
         self.count = 0
         self.start_time = time.time()
+        self.end_time = None
+
+        self.target_urls = []
 
 
     def run(self,parameter):
@@ -50,14 +51,16 @@ class Crawler:
 
     def xpath_urls(self, urls,limit):
         if limit == self.limit:
-            end_time = time.time()
+            self.end_time = time.time()
             crawler_info.info("{} has been collected and program is finished".format(self.parameter["url"]))
-            crawler_info.info("{} parsesed {} websites and spending time {}".format(self.parameter["url"],self.count,(end_time-self.start_time)))
+            crawler_info.info("{} parsesed {} websites and spending time {}".format(self.parameter["url"],self.count,(self.end_time-self.start_time)))
             if self.count<20:
                 pid = self.parameter['pid']
                 parameter = {}
                 parameter["pid"] = pid
                 parameter["status"] = 0
+                parameter["spider_name"] = 0
+
                 main_url_oper.update_mainurl(parameter)
                 crawler_info.info("Exceptions may occur if the number of {} is too small".format(self.parameter["url"]))
             try:
@@ -79,7 +82,7 @@ class Crawler:
                             catalogue.append(item)
                             self.brief["catalogue"].add(item)
                 self.count = self.count+len(target_url)
-                [self.process(url) for url in target_url]
+                self.target_urls.extend(target_url)
                 self.xpath_urls(catalogue,limit+1)
             else:
                 self.clf = joblib.load(args["url_SDG"])
@@ -105,15 +108,17 @@ class Crawler:
                         elif after not in self.brief["catalogue"]:
                             catalogue.append(after[2:])
                             self.brief["catalogue"].add(after[2:])
-                [self.process(url) for url in target_url]
+                self.target_urls.extend(target_url)
                 self.count = self.count+len(target_url)
                 self.xpath_urls(catalogue,limit+1)
 
-    def process(self, url):
-        # parse.get_data(target_url)
-        parameter = {}
-        parameter["url"] = url
-        url_storage.store_parameter("新闻爬虫",parameter)
+    def process(self):
+        return self.target_urls
+
+    def monitor_info(self):
+        self.end_time = time.time()
+        return {"url":self.parameter["url"],"count":self.count,"spending_time":self.end_time - self.start_time}
+
 
 
 class Crawleruning(Crawler):
