@@ -10,7 +10,7 @@ def db_commit_decorator(func):
             return func(*args, **kwargs)
         except Exception as e:
             db_session.rollback()
-            print('DB operation error，here are details:{}'.format(e))
+            return  {"code": "500", "message": 'DB operation error，here are details:{}'.format(e)}
     return session_commit
 
 def parse_text(func):

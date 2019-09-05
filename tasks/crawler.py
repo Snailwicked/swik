@@ -113,7 +113,6 @@ class Crawler:
                 self.xpath_urls(catalogue,limit+1)
 
     def process(self):
-
         return self.target_urls
 
     def monitor_info(self):
@@ -128,8 +127,8 @@ class Crawleruning(Crawler):
         super(Crawleruning, self).__init__()
 
     def start(self):
-        crawler_info.info(self.parameters)
         self.run(self.parameters)
+
     def set_parameter(self,parameter):
         self.parameters = parameter
 

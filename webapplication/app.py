@@ -27,7 +27,6 @@ def system_info():
 @app.route('/new/datas')
 def new_datas():
     parameter = request.values.to_dict()
-    print(parameter)
     result = con.select_by_paramters(parameter)
     return jsonify(result)
 
@@ -40,8 +39,8 @@ def new_datas():
 @app.route('/task/add')
 def add_task():
     parameter = request.values.to_dict()
-    spidertask.add_one(parameter)
-    return "1"
+    result = spidertask.add_one(parameter)
+    return jsonify(result)
 
 
 @app.route('/task/delete')
