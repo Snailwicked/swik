@@ -24,9 +24,9 @@
     
         在设置了配置信息之后，你可以点击监测按钮，查看配置信息是否生效，系统会默认先读取输入的选择器信息进行精准定位获取数据，
      在未获取到数据或没有选择器的时候系统启动算法采集模式，
-![Image text](https://raw.githubusercontent.com/Snailwicked/swik/master/images/weblist.png)
+![Image text](https://raw.githubusercontent.com/Snailwicked/spider_manage/master/images/weblist.png)
 
-![Image text](https://raw.githubusercontent.com/Snailwicked/swik/master/images/config.png)
+![Image text](https://raw.githubusercontent.com/Snailwicked/spider_manage/master/images/config.png)
 
 ### 爬虫列表
         在爬虫列表中你可以新建一个数据采集引擎，新建的采集引擎为空，只需要导入网址列表中配置好的网站便可启动采集引擎，启动的采集
@@ -36,15 +36,15 @@
         引擎启动之后，引擎状态随之改变，结束之后恢复状态，你也可以手动终止任务，重启任务，或定时采集该爬虫引擎，引擎中含有采集
     任务无法删除引擎，如需销毁引擎，提前移除引擎内采集任务即可。
 
-![Image text](https://raw.githubusercontent.com/Snailwicked/swik/master/images/spider_engine.png)
-![Image text](https://raw.githubusercontent.com/Snailwicked/swik/master/images/import.png)
+![Image text](https://raw.githubusercontent.com/Snailwicked/spider_manage/master/images/spider_engine.png)
+![Image text](https://raw.githubusercontent.com/Snailwicked/spider_manage/master/images/import.png)
 
 ### 系统监控
-![Image text](https://raw.githubusercontent.com/Snailwicked/swik/master/images/monitor.png)
+![Image text](https://raw.githubusercontent.com/Snailwicked/spider_manage/master/images/monitor.png)
 
 ###数据列表
-![Image text](https://raw.githubusercontent.com/Snailwicked/swik/master/images/newslist.png)
-![Image text](https://raw.githubusercontent.com/Snailwicked/swik/master/images/detailed.png)
+![Image text](https://raw.githubusercontent.com/Snailwicked/spider_manage/master/images/newslist.png)
+![Image text](https://raw.githubusercontent.com/Snailwicked/spider_manage/master/images/detailed.png)
 ## 相关技术
 
 - flask
