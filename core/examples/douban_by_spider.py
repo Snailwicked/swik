@@ -1,24 +1,13 @@
-from core import AttrField, TextField, Item, Request,Middleware, Spider
+from core import AttrField, Item, Request, Spider
 from core.utils import get_random_user_agent
-
-middleware = Middleware()
-
-@middleware.response
-async def print_on_response(request, response):
-    print("实打实大萨达")
-    # if response.callback_result:
-    #     print(response.html)
-
 
 class DoubanItem(Item):
     cover = AttrField(css_select='a', attr='href')
-
     async def clean_title(self, title):
         if isinstance(title, str):
             return title
         else:
             return ''.join([i.text.strip().replace('\xa0', '') for i in title])
-
 
 class DoubanSpider(Spider):
     start_urls = ['https://movie.douban.com/top250']
@@ -48,6 +37,5 @@ class DoubanSpider(Spider):
             print(item.cover)
         print(res)
 
-
 if __name__ == '__main__':
-    DoubanSpider.start(middleware=middleware)
+    DoubanSpider.start()

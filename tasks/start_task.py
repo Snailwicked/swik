@@ -20,10 +20,12 @@ def start_crawler(parameter):
 
         for sub_url in target_url:
             item["url"] = sub_url
+            crawler_info.info(item)
             app.send_task('tasks.start_task.parse_url',
                           args=(item,),
                           queue='crawler_queue',
                           routing_key='for_crawler')
+
     parameters["status"] = 0
     spider_task.update_status(parameters)
 

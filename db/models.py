@@ -17,3 +17,10 @@ class SpiderTask(Base):
 
     def single_to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class User(Base):
+    __table__ = user
+
+    def single_to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

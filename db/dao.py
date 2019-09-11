@@ -7,14 +7,12 @@ import time
 
 from db.basic import db_session
 from db.models import (
-    MainUrl,SpiderTask
+    MainUrl,SpiderTask,User
 )
 from utils.exception_utils import db_commit_decorator
 
 
 class MainUrlOper:
-
-
     @classmethod
     @db_commit_decorator
     def update_mainurl(cls, parameter):
@@ -99,14 +97,8 @@ class MainUrlOper:
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
-
 class SpiderTaskOper:
 
-    def __int__(self):
-        pass
-
-
-    # parameter = {"spider_name" ;1,"status":0}
     @classmethod
     @db_commit_decorator
     def update_status(cls, parameter):
@@ -115,7 +107,6 @@ class SpiderTaskOper:
         spider_task.status = int(parameter["status"])
         db_session.commit()
         db_session.close()
-
 
     @classmethod
     @db_commit_decorator
@@ -195,8 +186,6 @@ class SpiderTaskOper:
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
-
-
 
 class TaskConfigOper:
 
@@ -300,12 +289,16 @@ if __name__ == '__main__':
     #     }
     # print(spider.select_by_id(parameter))
         #     # spider.add_one(parameter)
-    # spider_task = SpiderTaskOper()
+    spider_task = SpiderTaskOper()
     # parameter = {
     #             "page":1,
     #             "limit":10,
     #             "keyword":""
     #         }
     # print(spider_task.select_by_parameter(parameter))
-
+    parameter = {
+                "id":22,
+            }
+    result = spider_task.start_task(parameter)
+    print(result)
     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

@@ -32,4 +32,15 @@ spider_task = Table("spider_task", metadata,
                 )
 
 
-__all__ = ['main_url','spider_task']
+
+user = Table("user", metadata,
+                Column("id", INTEGER, primary_key=True, autoincrement=True),
+                Column("user_name", String(500), default='', server_default=''),
+                Column("pass_word", DATE ,nullable=False))
+
+
+
+
+
+
+__all__ = ['main_url','spider_task',"user"]
