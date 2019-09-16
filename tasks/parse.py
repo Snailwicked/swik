@@ -2,9 +2,7 @@ from utils.slave import ContentExtractor
 from utils.spider_utils.xpathtexts import xPathTexts
 from utils.exception_utils import parse_text
 from db import News_data
-import json
 from config import *
-
 xpath = xPathTexts()
 new_data =News_data()
 class Parse:
@@ -53,7 +51,6 @@ class Parse:
                 item["collection_time"] = int(content_extractor.get_thirteenTime())
                 item["summary"] = content_extractor.get_summary()
                 item["source"] = parameter["webSite"]
-
             except Exception as e:
                 crawler_info.info("parseing of Failed {}".format(parameter["url"]))
                 continue

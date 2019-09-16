@@ -14,9 +14,6 @@ class NewsSpider(Spider):
         print(res.html)
 
 
-
-
-
 if __name__ == '__main__':
     import time
     start_time = time.time()

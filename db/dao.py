@@ -7,7 +7,7 @@ import time
 
 from db.basic import db_session
 from db.models import (
-    MainUrl,SpiderTask,User
+    MainUrl,SpiderTask
 )
 from utils.exception_utils import db_commit_decorator
 
@@ -73,6 +73,7 @@ class MainUrlOper:
         }
     '''
     @classmethod
+    @db_commit_decorator
     def select_by_parameter(cls, parameter):
 
         page = int(parameter['page'])
@@ -190,6 +191,7 @@ class SpiderTaskOper:
 class TaskConfigOper:
 
     @classmethod
+    @db_commit_decorator
     def select_by_id(cls, parameter):
 
         spider_name = int(parameter['id'])
@@ -209,6 +211,7 @@ class TaskConfigOper:
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
     @classmethod
+    @db_commit_decorator
     def select_all(cls, parameter):
 
         page = int(parameter['page'])
