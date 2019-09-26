@@ -3,6 +3,7 @@ from sqlalchemy.exc import IntegrityError as SqlalchemyIntegrityError
 from pymysql.err import IntegrityError as PymysqlIntegrityError
 from sqlalchemy.exc import InvalidRequestError
 import datetime,json
+import time
 
 from db.basic import db_session
 from db.models import (
@@ -12,8 +13,6 @@ from utils.exception_utils import db_commit_decorator
 
 
 class MainUrlOper:
-
-
     @classmethod
     @db_commit_decorator
     def update_mainurl(cls, parameter):
@@ -53,7 +52,6 @@ class MainUrlOper:
     @classmethod
     @db_commit_decorator
     def add_one(cls, parameter):
-        print(parameter)
         mainurl = MainUrl()
         mainurl.address = parameter['address']
         mainurl.webSite = parameter['webSite']
@@ -75,6 +73,7 @@ class MainUrlOper:
         }
     '''
     @classmethod
+    @db_commit_decorator
     def select_by_parameter(cls, parameter):
 
         page = int(parameter['page'])
@@ -99,14 +98,8 @@ class MainUrlOper:
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
-
 class SpiderTaskOper:
 
-    def __int__(self):
-        pass
-
-
-    # parameter = {"spider_name" ;1,"status":0}
     @classmethod
     @db_commit_decorator
     def update_status(cls, parameter):
@@ -115,7 +108,6 @@ class SpiderTaskOper:
         spider_task.status = int(parameter["status"])
         db_session.commit()
         db_session.close()
-
 
     @classmethod
     @db_commit_decorator
@@ -164,16 +156,17 @@ class SpiderTaskOper:
     @classmethod
     @db_commit_decorator
     def add_one(cls, parameter):
-
         spider_task = SpiderTask()
         spider_task.task_name = parameter['task_name']
-        spider_task.create_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         spider_task.status = 0
         spider_task.creater = 'admin'
+        spider_task.create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
         db_session.add(spider_task)
+
         db_session.commit()
         db_session.close()
-        return spider_task.id
+        return {"code": "200", "message": "succeed"}
 
     @classmethod
     def select_by_parameter(cls, parameter):
@@ -195,11 +188,10 @@ class SpiderTaskOper:
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
-
-
 class TaskConfigOper:
 
     @classmethod
+    @db_commit_decorator
     def select_by_id(cls, parameter):
 
         spider_name = int(parameter['id'])
@@ -219,6 +211,7 @@ class TaskConfigOper:
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
     @classmethod
+    @db_commit_decorator
     def select_all(cls, parameter):
 
         page = int(parameter['page'])
@@ -300,7 +293,15 @@ if __name__ == '__main__':
     # print(spider.select_by_id(parameter))
         #     # spider.add_one(parameter)
     spider_task = SpiderTaskOper()
-    parameters = {}
-    parameters["id"] = 1
-    parameters["status"] = 0
-    spider_task.update_status(parameters)
+    # parameter = {
+    #             "page":1,
+    #             "limit":10,
+    #             "keyword":""
+    #         }
+    # print(spider_task.select_by_parameter(parameter))
+    parameter = {
+                "id":22,
+            }
+    result = spider_task.start_task(parameter)
+    print(result)
+    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

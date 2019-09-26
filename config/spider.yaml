@@ -42,10 +42,10 @@ share_host_count: 5
 
 
 db:
-    host: 180.97.15.181
+    host: 101.132.113.50
     port: 3306
     user: root
-    password: Vrv123!@#
+    password: BlueSnail123!
     db_name: spider_manage
     db_type: mysql
 

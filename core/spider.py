@@ -4,7 +4,6 @@ import asyncio
 
 from datetime import datetime
 from types import AsyncGeneratorType
-from types import AsyncGeneratorType
 from inspect import isawaitable
 from core.middleware import Middleware
 from core.request import Request
@@ -22,7 +21,7 @@ except ImportError:
 
 
 class Spider:
-    name = 'aspider'
+    name = 'spider'
     request_config = None
 
     failed_counts, success_counts = 0, 0

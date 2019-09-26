@@ -1,10 +1,13 @@
 # -*-coding:utf-8 -*-
-from sqlalchemy import Table, Column, INTEGER, String,DATE,TEXT,JSON
+from sqlalchemy import Table, Column, INTEGER, String,DATE,TEXT,JSON,DateTime
 from db.basic import metadata
 import uuid
 
 def index_uuid():
    return uuid.uuid4().hex
+
+
+
 
 main_url = Table("main_url", metadata,
                 Column("pid", INTEGER, primary_key=True, autoincrement=True),
@@ -14,36 +17,30 @@ main_url = Table("main_url", metadata,
                 Column("status", INTEGER, default=0, server_default='0'),
                 Column("remark", String(200), default='', server_default=''),
                 Column("spider_name", INTEGER, default=0, server_default='0'),
-                 Column("rule", JSON)
+                Column("rule", JSON)
 
 )
 
 
-webinfo = Table("webinfo", metadata,
-                Column("id", String(500), default=index_uuid, primary_key=True),
-                Column("url", String(500), default='', server_default=''),
-                Column("info", String(500), default='', server_default=''),
-                Column("add_time", DATE, default="", server_default=''),
-                Column("agent", INTEGER, default=0, server_default='0'),
-                Column("status", INTEGER, default=0, server_default='0'),
-                Column("web_name", String(500), default="", server_default=''),
-                Column("sort", INTEGER, default=0, server_default='0'),
-                Column("total", INTEGER, default=0, server_default='0'),
-                Column("checked", INTEGER, default=0, server_default='0'),
-                Column("is_starting", INTEGER, default=0, server_default='0'),
-                Column("remark", String(500), default="", server_default=''),
-                Column("spider_name", String(500), default="", server_default=''),
-                Column("pid", INTEGER, default=0, server_default='0')
-                )
-
 spider_task = Table("spider_task", metadata,
                 Column("id", INTEGER, primary_key=True, autoincrement=True),
                 Column("task_name", String(500), default='', server_default=''),
-                Column("create_time", DATE, default="", server_default=''),
+                Column("create_time", DATE ,nullable=False),
                 Column("status", INTEGER, default=0, server_default='0'),
                 Column("creater", String(500), default="", server_default=''),
-                Column("config", String(500), default=index_uuid, server_default=''),
+                Column("config", String(500), default="", server_default=''),
                 )
 
 
-__all__ = ['main_url','webinfo','spider_task']
+
+user = Table("user", metadata,
+                Column("id", INTEGER, primary_key=True, autoincrement=True),
+                Column("user_name", String(500), default='', server_default=''),
+                Column("pass_word", DATE ,nullable=False))
+
+
+
+
+
+
+__all__ = ['main_url','spider_task',"user"]

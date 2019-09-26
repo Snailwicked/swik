@@ -27,7 +27,6 @@ def system_info():
 @app.route('/new/datas')
 def new_datas():
     parameter = request.values.to_dict()
-    print(parameter)
     result = con.select_by_paramters(parameter)
     return jsonify(result)
 
@@ -40,8 +39,8 @@ def new_datas():
 @app.route('/task/add')
 def add_task():
     parameter = request.values.to_dict()
-    spidertask.add_one(parameter)
-    return "1"
+    result = spidertask.add_one(parameter)
+    return jsonify(result)
 
 
 @app.route('/task/delete')
@@ -146,8 +145,3 @@ def spider_web_site():
 if __name__ == '__main__':
     crawler_info.info("If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line")
     app.run(debug=True)
-'''
-http://news.cyol.com/app/2019-08/24/content_18127145.htm
-http://news.cyol.com/app/\d[5]-\d[2]/\d[2]/content_+d+.htm
-
-'''
