@@ -1,0 +1,646 @@
+2019-08-29 15:39:58 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-29 15:39:59 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-29 15:40:04 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-29 15:40:06 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-29 15:40:12 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-29 15:40:14 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-29 15:41:00 - crawler_info-INFO - start_task ->19 ; Task started!
+2019-08-29 15:41:01 - crawler_info-INFO - dao ->123 ; http://gold.cngold.org/ : has no filtering rules, default algorithm acquisition
+2019-08-29 15:41:01 - crawler_info-INFO - dao ->123 ; http://www.cssn.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-29 15:41:01 - crawler_info-INFO - dao ->123 ; http://www.xiangshui.gov.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-29 15:41:01 - crawler_info-INFO - dao ->123 ; http://www.gncmw.com/index.html : has no filtering rules, default algorithm acquisition
+2019-08-29 15:41:01 - crawler_info-INFO - dao ->123 ; http://js.people.com.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-29 15:41:01 - crawler_info-INFO - crawler ->52 ; http://gold.cngold.org/ has been collected and program is finished
+2019-08-29 15:41:01 - crawler_info-INFO - crawler ->53 ; http://gold.cngold.org/ parsesed 222 websites and spending time 0.5200297832489014
+2019-08-29 15:41:02 - crawler_info-INFO - crawler ->52 ; http://www.cssn.cn/ has been collected and program is finished
+2019-08-29 15:41:02 - crawler_info-INFO - crawler ->53 ; http://www.cssn.cn/ parsesed 98 websites and spending time 0.5390307903289795
+2019-08-29 15:41:02 - crawler_info-INFO - crawler ->52 ; http://www.xiangshui.gov.cn/ has been collected and program is finished
+2019-08-29 15:41:02 - crawler_info-INFO - crawler ->53 ; http://www.xiangshui.gov.cn/ parsesed 38 websites and spending time 0.25101447105407715
+2019-08-29 15:41:03 - crawler_info-INFO - crawler ->52 ; http://www.gncmw.com/index.html has been collected and program is finished
+2019-08-29 15:41:03 - crawler_info-INFO - crawler ->53 ; http://www.gncmw.com/index.html parsesed 21 websites and spending time 1.3700783252716064
+2019-08-29 15:41:03 - crawler_info-INFO - crawler ->52 ; http://js.people.com.cn/ has been collected and program is finished
+2019-08-29 15:41:03 - crawler_info-INFO - crawler ->53 ; http://js.people.com.cn/ parsesed 158 websites and spending time 0.24401402473449707
+2019-08-29 17:07:32 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-29 17:07:34 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-29 17:07:47 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-29 17:07:49 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 09:44:04 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 09:44:07 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 10:23:00 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 10:23:02 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 11:04:53 - crawler_info-INFO - dao ->123 ; http://gold.cngold.org/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:04:53 - crawler_info-INFO - dao ->123 ; http://www.cssn.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:04:53 - crawler_info-INFO - dao ->123 ; http://www.xiangshui.gov.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:04:53 - crawler_info-INFO - dao ->123 ; http://www.gncmw.com/index.html : has no filtering rules, default algorithm acquisition
+2019-08-30 11:04:53 - crawler_info-INFO - dao ->123 ; http://js.people.com.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:04:54 - crawler_info-INFO - crawler ->52 ; http://gold.cngold.org/ has been collected and program is finished
+2019-08-30 11:04:54 - crawler_info-INFO - crawler ->53 ; http://gold.cngold.org/ parsesed 223 websites and spending time 0.5490314960479736
+2019-08-30 11:04:54 - crawler_info-INFO - crawler ->52 ; http://www.cssn.cn/ has been collected and program is finished
+2019-08-30 11:04:54 - crawler_info-INFO - crawler ->53 ; http://www.cssn.cn/ parsesed 103 websites and spending time 0.4670267105102539
+2019-08-30 11:04:55 - crawler_info-INFO - crawler ->52 ; http://www.xiangshui.gov.cn/ has been collected and program is finished
+2019-08-30 11:04:55 - crawler_info-INFO - crawler ->53 ; http://www.xiangshui.gov.cn/ parsesed 38 websites and spending time 0.3520200252532959
+2019-08-30 11:04:56 - crawler_info-INFO - crawler ->52 ; http://www.gncmw.com/index.html has been collected and program is finished
+2019-08-30 11:04:56 - crawler_info-INFO - crawler ->53 ; http://www.gncmw.com/index.html parsesed 21 websites and spending time 1.1510660648345947
+2019-08-30 11:04:56 - crawler_info-INFO - crawler ->52 ; http://js.people.com.cn/ has been collected and program is finished
+2019-08-30 11:04:56 - crawler_info-INFO - crawler ->53 ; http://js.people.com.cn/ parsesed 144 websites and spending time 0.30301713943481445
+2019-08-30 11:05:28 - crawler_info-INFO - dao ->123 ; http://gold.cngold.org/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:05:28 - crawler_info-INFO - dao ->123 ; http://www.cssn.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:05:28 - crawler_info-INFO - dao ->123 ; http://www.xiangshui.gov.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:05:28 - crawler_info-INFO - dao ->123 ; http://www.gncmw.com/index.html : has no filtering rules, default algorithm acquisition
+2019-08-30 11:05:28 - crawler_info-INFO - dao ->123 ; http://js.people.com.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:05:29 - crawler_info-INFO - crawler ->52 ; http://gold.cngold.org/ has been collected and program is finished
+2019-08-30 11:05:29 - crawler_info-INFO - crawler ->53 ; http://gold.cngold.org/ parsesed 223 websites and spending time 0.3410196304321289
+2019-08-30 11:05:29 - crawler_info-INFO - crawler ->52 ; http://www.cssn.cn/ has been collected and program is finished
+2019-08-30 11:05:29 - crawler_info-INFO - crawler ->53 ; http://www.cssn.cn/ parsesed 103 websites and spending time 0.5200297832489014
+2019-08-30 11:05:29 - crawler_info-INFO - crawler ->52 ; http://www.xiangshui.gov.cn/ has been collected and program is finished
+2019-08-30 11:05:29 - crawler_info-INFO - crawler ->53 ; http://www.xiangshui.gov.cn/ parsesed 38 websites and spending time 0.2260129451751709
+2019-08-30 11:05:30 - crawler_info-INFO - crawler ->52 ; http://www.gncmw.com/index.html has been collected and program is finished
+2019-08-30 11:05:30 - crawler_info-INFO - crawler ->53 ; http://www.gncmw.com/index.html parsesed 21 websites and spending time 0.46802687644958496
+2019-08-30 11:05:30 - crawler_info-INFO - crawler ->52 ; http://js.people.com.cn/ has been collected and program is finished
+2019-08-30 11:05:30 - crawler_info-INFO - crawler ->53 ; http://js.people.com.cn/ parsesed 144 websites and spending time 0.2260129451751709
+2019-08-30 11:11:27 - crawler_info-INFO - dao ->123 ; http://gold.cngold.org/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:11:27 - crawler_info-INFO - dao ->123 ; http://www.cssn.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:11:27 - crawler_info-INFO - dao ->123 ; http://www.xiangshui.gov.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:11:27 - crawler_info-INFO - dao ->123 ; http://www.gncmw.com/index.html : has no filtering rules, default algorithm acquisition
+2019-08-30 11:11:27 - crawler_info-INFO - dao ->123 ; http://js.people.com.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:11:28 - crawler_info-INFO - crawler ->52 ; http://gold.cngold.org/ has been collected and program is finished
+2019-08-30 11:11:28 - crawler_info-INFO - crawler ->53 ; http://gold.cngold.org/ parsesed 220 websites and spending time 0.836047887802124
+2019-08-30 11:11:28 - crawler_info-INFO - crawler ->52 ; http://www.cssn.cn/ has been collected and program is finished
+2019-08-30 11:11:28 - crawler_info-INFO - crawler ->53 ; http://www.cssn.cn/ parsesed 110 websites and spending time 0.46402668952941895
+2019-08-30 11:11:29 - crawler_info-INFO - crawler ->52 ; http://www.xiangshui.gov.cn/ has been collected and program is finished
+2019-08-30 11:11:29 - crawler_info-INFO - crawler ->53 ; http://www.xiangshui.gov.cn/ parsesed 38 websites and spending time 0.22901320457458496
+2019-08-30 11:11:30 - crawler_info-INFO - crawler ->52 ; http://www.gncmw.com/index.html has been collected and program is finished
+2019-08-30 11:11:30 - crawler_info-INFO - crawler ->53 ; http://www.gncmw.com/index.html parsesed 21 websites and spending time 1.8381049633026123
+2019-08-30 11:11:31 - crawler_info-INFO - crawler ->52 ; http://js.people.com.cn/ has been collected and program is finished
+2019-08-30 11:11:31 - crawler_info-INFO - crawler ->53 ; http://js.people.com.cn/ parsesed 147 websites and spending time 0.3000171184539795
+2019-08-30 11:12:01 - crawler_info-INFO - dao ->123 ; http://gold.cngold.org/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:12:01 - crawler_info-INFO - dao ->123 ; http://www.cssn.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:12:01 - crawler_info-INFO - dao ->123 ; http://www.xiangshui.gov.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:12:01 - crawler_info-INFO - dao ->123 ; http://www.gncmw.com/index.html : has no filtering rules, default algorithm acquisition
+2019-08-30 11:12:01 - crawler_info-INFO - dao ->123 ; http://js.people.com.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:12:01 - crawler_info-INFO - crawler ->52 ; http://gold.cngold.org/ has been collected and program is finished
+2019-08-30 11:12:01 - crawler_info-INFO - crawler ->53 ; http://gold.cngold.org/ parsesed 220 websites and spending time 0.3280189037322998
+2019-08-30 11:12:01 - crawler_info-INFO - crawler ->52 ; http://www.cssn.cn/ has been collected and program is finished
+2019-08-30 11:12:01 - crawler_info-INFO - crawler ->53 ; http://www.cssn.cn/ parsesed 110 websites and spending time 0.4630265235900879
+2019-08-30 11:12:02 - crawler_info-INFO - crawler ->52 ; http://www.xiangshui.gov.cn/ has been collected and program is finished
+2019-08-30 11:12:02 - crawler_info-INFO - crawler ->53 ; http://www.xiangshui.gov.cn/ parsesed 38 websites and spending time 0.2170124053955078
+2019-08-30 11:12:02 - crawler_info-INFO - crawler ->52 ; http://www.gncmw.com/index.html has been collected and program is finished
+2019-08-30 11:12:02 - crawler_info-INFO - crawler ->53 ; http://www.gncmw.com/index.html parsesed 21 websites and spending time 0.46402645111083984
+2019-08-30 11:12:02 - crawler_info-INFO - crawler ->52 ; http://js.people.com.cn/ has been collected and program is finished
+2019-08-30 11:12:02 - crawler_info-INFO - crawler ->53 ; http://js.people.com.cn/ parsesed 147 websites and spending time 0.22201251983642578
+2019-08-30 11:18:27 - crawler_info-INFO - dao ->123 ; http://gold.cngold.org/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:18:27 - crawler_info-INFO - dao ->123 ; http://www.cssn.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:18:27 - crawler_info-INFO - dao ->123 ; http://www.xiangshui.gov.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:18:27 - crawler_info-INFO - dao ->123 ; http://www.gncmw.com/index.html : has no filtering rules, default algorithm acquisition
+2019-08-30 11:18:27 - crawler_info-INFO - dao ->123 ; http://js.people.com.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:18:27 - crawler_info-INFO - crawler ->52 ; http://gold.cngold.org/ has been collected and program is finished
+2019-08-30 11:18:27 - crawler_info-INFO - crawler ->53 ; http://gold.cngold.org/ parsesed 220 websites and spending time 0.3890223503112793
+2019-08-30 11:18:28 - crawler_info-INFO - crawler ->52 ; http://www.cssn.cn/ has been collected and program is finished
+2019-08-30 11:18:28 - crawler_info-INFO - crawler ->53 ; http://www.cssn.cn/ parsesed 110 websites and spending time 0.4560260772705078
+2019-08-30 11:18:28 - crawler_info-INFO - crawler ->52 ; http://www.xiangshui.gov.cn/ has been collected and program is finished
+2019-08-30 11:18:28 - crawler_info-INFO - crawler ->53 ; http://www.xiangshui.gov.cn/ parsesed 38 websites and spending time 0.27301573753356934
+2019-08-30 11:18:29 - crawler_info-INFO - crawler ->52 ; http://www.gncmw.com/index.html has been collected and program is finished
+2019-08-30 11:18:29 - crawler_info-INFO - crawler ->53 ; http://www.gncmw.com/index.html parsesed 21 websites and spending time 1.0410594940185547
+2019-08-30 11:18:29 - crawler_info-INFO - crawler ->52 ; http://js.people.com.cn/ has been collected and program is finished
+2019-08-30 11:18:29 - crawler_info-INFO - crawler ->53 ; http://js.people.com.cn/ parsesed 147 websites and spending time 0.22001266479492188
+2019-08-30 11:19:39 - crawler_info-INFO - dao ->123 ; http://gold.cngold.org/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:19:39 - crawler_info-INFO - dao ->123 ; http://www.cssn.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:19:39 - crawler_info-INFO - dao ->123 ; http://www.xiangshui.gov.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:19:39 - crawler_info-INFO - dao ->123 ; http://www.gncmw.com/index.html : has no filtering rules, default algorithm acquisition
+2019-08-30 11:19:39 - crawler_info-INFO - dao ->123 ; http://js.people.com.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:19:39 - crawler_info-INFO - crawler ->52 ; http://gold.cngold.org/ has been collected and program is finished
+2019-08-30 11:19:39 - crawler_info-INFO - crawler ->53 ; http://gold.cngold.org/ parsesed 220 websites and spending time 0.23201346397399902
+2019-08-30 11:19:40 - crawler_info-INFO - crawler ->52 ; http://www.cssn.cn/ has been collected and program is finished
+2019-08-30 11:19:40 - crawler_info-INFO - crawler ->53 ; http://www.cssn.cn/ parsesed 114 websites and spending time 0.45302581787109375
+2019-08-30 11:19:40 - crawler_info-INFO - crawler ->52 ; http://www.xiangshui.gov.cn/ has been collected and program is finished
+2019-08-30 11:19:40 - crawler_info-INFO - crawler ->53 ; http://www.xiangshui.gov.cn/ parsesed 38 websites and spending time 0.18801093101501465
+2019-08-30 11:19:40 - crawler_info-INFO - crawler ->52 ; http://www.gncmw.com/index.html has been collected and program is finished
+2019-08-30 11:19:40 - crawler_info-INFO - crawler ->53 ; http://www.gncmw.com/index.html parsesed 21 websites and spending time 0.4450254440307617
+2019-08-30 11:19:40 - crawler_info-INFO - crawler ->52 ; http://js.people.com.cn/ has been collected and program is finished
+2019-08-30 11:19:40 - crawler_info-INFO - crawler ->53 ; http://js.people.com.cn/ parsesed 147 websites and spending time 0.26201510429382324
+2019-08-30 11:20:06 - crawler_info-INFO - dao ->123 ; http://gold.cngold.org/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:20:06 - crawler_info-INFO - dao ->123 ; http://www.cssn.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:20:06 - crawler_info-INFO - dao ->123 ; http://www.xiangshui.gov.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:20:06 - crawler_info-INFO - dao ->123 ; http://www.gncmw.com/index.html : has no filtering rules, default algorithm acquisition
+2019-08-30 11:20:06 - crawler_info-INFO - dao ->123 ; http://js.people.com.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:20:06 - crawler_info-INFO - crawler ->52 ; http://gold.cngold.org/ has been collected and program is finished
+2019-08-30 11:20:06 - crawler_info-INFO - crawler ->53 ; http://gold.cngold.org/ parsesed 220 websites and spending time 0.24601411819458008
+2019-08-30 11:20:06 - crawler_info-INFO - crawler ->52 ; http://www.cssn.cn/ has been collected and program is finished
+2019-08-30 11:20:06 - crawler_info-INFO - crawler ->53 ; http://www.cssn.cn/ parsesed 114 websites and spending time 0.4590263366699219
+2019-08-30 11:20:07 - crawler_info-INFO - crawler ->52 ; http://www.xiangshui.gov.cn/ has been collected and program is finished
+2019-08-30 11:20:07 - crawler_info-INFO - crawler ->53 ; http://www.xiangshui.gov.cn/ parsesed 38 websites and spending time 0.23301339149475098
+2019-08-30 11:20:07 - crawler_info-INFO - crawler ->52 ; http://www.gncmw.com/index.html has been collected and program is finished
+2019-08-30 11:20:07 - crawler_info-INFO - crawler ->53 ; http://www.gncmw.com/index.html parsesed 21 websites and spending time 0.4740269184112549
+2019-08-30 11:20:07 - crawler_info-INFO - crawler ->52 ; http://js.people.com.cn/ has been collected and program is finished
+2019-08-30 11:20:07 - crawler_info-INFO - crawler ->53 ; http://js.people.com.cn/ parsesed 147 websites and spending time 0.27901601791381836
+2019-08-30 11:36:50 - crawler_info-INFO - dao ->123 ; http://gold.cngold.org/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:36:50 - crawler_info-INFO - dao ->123 ; http://www.cssn.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:36:50 - crawler_info-INFO - dao ->123 ; http://www.xiangshui.gov.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:36:50 - crawler_info-INFO - dao ->123 ; http://www.gncmw.com/index.html : has no filtering rules, default algorithm acquisition
+2019-08-30 11:36:50 - crawler_info-INFO - dao ->123 ; http://js.people.com.cn/ : has no filtering rules, default algorithm acquisition
+2019-08-30 11:36:51 - crawler_info-INFO - crawler ->52 ; http://gold.cngold.org/ has been collected and program is finished
+2019-08-30 11:36:51 - crawler_info-INFO - crawler ->53 ; http://gold.cngold.org/ parsesed 220 websites and spending time 0.3760216236114502
+2019-08-30 11:36:51 - crawler_info-INFO - crawler ->52 ; http://www.cssn.cn/ has been collected and program is finished
+2019-08-30 11:36:51 - crawler_info-INFO - crawler ->53 ; http://www.cssn.cn/ parsesed 114 websites and spending time 0.42302417755126953
+2019-08-30 11:36:51 - crawler_info-INFO - crawler ->52 ; http://www.xiangshui.gov.cn/ has been collected and program is finished
+2019-08-30 11:36:51 - crawler_info-INFO - crawler ->53 ; http://www.xiangshui.gov.cn/ parsesed 38 websites and spending time 0.29401683807373047
+2019-08-30 11:36:52 - crawler_info-INFO - crawler ->52 ; http://www.gncmw.com/index.html has been collected and program is finished
+2019-08-30 11:36:52 - crawler_info-INFO - crawler ->53 ; http://www.gncmw.com/index.html parsesed 21 websites and spending time 0.5230300426483154
+2019-08-30 11:36:52 - crawler_info-INFO - crawler ->52 ; http://js.people.com.cn/ has been collected and program is finished
+2019-08-30 11:36:52 - crawler_info-INFO - crawler ->53 ; http://js.people.com.cn/ parsesed 149 websites and spending time 0.2580149173736572
+2019-08-30 13:38:01 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 13:38:04 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 14:20:39 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 14:20:41 - crawler_info-INFO - app ->127 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 14:21:16 - crawler_info-INFO - app ->133 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 15:40:41 - crawler_info-INFO - app ->133 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 15:40:43 - crawler_info-INFO - app ->133 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 15:41:24 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:19:07 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:22:57 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:23:06 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:23:19 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:23:26 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:23:39 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:24:07 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:24:17 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:24:23 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:27:14 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:27:38 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:28:05 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:28:47 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:30:28 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-08-30 17:30:30 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 09:10:27 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 09:10:29 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 11:25:24 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 11:25:26 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 13:58:11 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 13:58:13 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 14:08:53 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 14:08:55 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 15:35:25 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 15:35:27 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 15:35:41 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 15:35:44 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 15:36:10 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 15:37:25 - crawler_info-INFO - start_task ->21 ; Task started!
+2019-09-02 15:37:25 - crawler_info-INFO - start_task ->24 ; 1b77bff2-e7aa-4d97-8bc4-fa4aae406cf0
+2019-09-02 15:37:49 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 15:37:51 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 15:38:28 - crawler_info-INFO - start_task ->21 ; Task started!
+2019-09-02 15:38:29 - crawler_info-INFO - start_task ->24 ; ae4df330-a743-4fa3-8457-c28c9e39045e
+2019-09-02 15:38:29 - crawler_info-INFO - dao ->154 ; {'rule': '{"filter_rule":"","selector":"xpath","deep_limit":"1","fields":{"title":"","author":"","content":""}}', 'url': 'http://www.people.com.cn/'}
+2019-09-02 15:38:29 - crawler_info-INFO - crawler ->118 ; {'rule': '{"filter_rule":"","selector":"xpath","deep_limit":"1","fields":{"title":"","author":"","content":""}}', 'url': 'http://www.people.com.cn/'}
+2019-09-02 15:38:36 - crawler_info-INFO - crawler ->54 ; http://www.people.com.cn/ has been collected and program is finished
+2019-09-02 15:38:36 - crawler_info-INFO - crawler ->55 ; http://www.people.com.cn/ parsesed 296 websites and spending time 6.868183135986328
+2019-09-02 15:38:36 - crawler_info-INFO - start_task ->15 ; 已经更改爬虫状态
+2019-09-02 15:39:03 - crawler_info-INFO - start_task ->21 ; Task started!
+2019-09-02 15:39:03 - crawler_info-INFO - start_task ->24 ; 0ec4593f-53e0-4057-ab26-e50296b4cb9e
+2019-09-02 15:39:04 - crawler_info-INFO - dao ->154 ; {'rule': '{"filter_rule":"","selector":"xpath","deep_limit":"1","fields":{"title":"","author":"","content":""}}', 'url': 'http://www.people.com.cn/'}
+2019-09-02 15:39:04 - crawler_info-INFO - crawler ->118 ; {'rule': '{"filter_rule":"","selector":"xpath","deep_limit":"1","fields":{"title":"","author":"","content":""}}', 'url': 'http://www.people.com.cn/'}
+2019-09-02 15:39:11 - crawler_info-INFO - crawler ->54 ; http://www.people.com.cn/ has been collected and program is finished
+2019-09-02 15:39:11 - crawler_info-INFO - crawler ->55 ; http://www.people.com.cn/ parsesed 296 websites and spending time 7.328327655792236
+2019-09-02 15:39:11 - crawler_info-INFO - start_task ->15 ; 已经更改爬虫状态
+2019-09-02 15:39:30 - crawler_info-INFO - start_task ->21 ; Task started!
+2019-09-02 15:39:30 - crawler_info-INFO - start_task ->24 ; 9b09cd3d-08b7-4819-a3d4-dd5e0f8694e0
+2019-09-02 15:39:30 - crawler_info-INFO - dao ->154 ; {'rule': '{"filter_rule":"","selector":"xpath","deep_limit":"1","fields":{"title":"","author":"","content":""}}', 'url': 'http://www.people.com.cn/'}
+2019-09-02 15:39:30 - crawler_info-INFO - crawler ->118 ; {'rule': '{"filter_rule":"","selector":"xpath","deep_limit":"1","fields":{"title":"","author":"","content":""}}', 'url': 'http://www.people.com.cn/'}
+2019-09-02 15:39:37 - crawler_info-INFO - crawler ->54 ; http://www.people.com.cn/ has been collected and program is finished
+2019-09-02 15:39:37 - crawler_info-INFO - crawler ->55 ; http://www.people.com.cn/ parsesed 296 websites and spending time 6.226356029510498
+2019-09-02 15:39:37 - crawler_info-INFO - start_task ->15 ; 已经更改爬虫状态
+2019-09-02 15:40:09 - crawler_info-INFO - start_task ->21 ; Task started!
+2019-09-02 15:40:09 - crawler_info-INFO - start_task ->24 ; 86b792fa-8f7c-4b94-8aab-fa9c77df4ae2
+2019-09-02 16:12:28 - crawler_info-INFO - dao ->154 ; {'rule': '{"filter_rule":"","selector":"xpath","deep_limit":"1","fields":{"title":"","author":"","content":""}}', 'url': 'http://www.people.com.cn/'}
+2019-09-02 16:12:28 - crawler_info-INFO - crawler ->118 ; {'rule': '{"filter_rule":"","selector":"xpath","deep_limit":"1","fields":{"title":"","author":"","content":""}}', 'url': 'http://www.people.com.cn/'}
+2019-09-02 16:12:35 - crawler_info-INFO - crawler ->54 ; http://www.people.com.cn/ has been collected and program is finished
+2019-09-02 16:12:35 - crawler_info-INFO - crawler ->55 ; http://www.people.com.cn/ parsesed 294 websites and spending time 6.393186569213867
+2019-09-02 16:12:35 - crawler_info-INFO - start_task ->15 ; 已经更改爬虫状态
+2019-09-02 16:24:20 - crawler_info-INFO - dao ->154 ; {'rule': {'selector': 'xpath', 'deep_limit': '1', 'filter_rule': 'http://www.legalweekly.cn/\\w+/\\d+.html', 'fields': {'content': '', 'title': '', 'publishTime': '', 'author': ''}}, 'url': 'http://www.legalweekly.cn/'}
+2019-09-02 16:24:20 - crawler_info-INFO - dao ->154 ; {'rule': '{"filter_rule":"","selector":"xpath","fields":{"title":"","author":"","content":""}}', 'url': 'http://www.cyol.com/'}
+2019-09-02 16:24:20 - crawler_info-INFO - crawler ->118 ; {'rule': {'selector': 'xpath', 'deep_limit': '1', 'filter_rule': 'http://www.legalweekly.cn/\\w+/\\d+.html', 'fields': {'content': '', 'title': '', 'publishTime': '', 'author': ''}}, 'url': 'http://www.legalweekly.cn/'}
+2019-09-02 16:44:57 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 16:44:59 - crawler_info-INFO - app ->144 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 17:10:19 - crawler_info-INFO - start_task ->21 ; Task started!
+2019-09-02 17:10:19 - crawler_info-INFO - start_task ->24 ; a8e5d672-8aa6-4e22-a61a-06ef7d17d33a
+2019-09-02 17:10:20 - crawler_info-INFO - start_task ->21 ; Task started!
+2019-09-02 17:10:20 - crawler_info-INFO - start_task ->24 ; b7faf0bb-0dc8-44d9-aeb1-8a41cda68996
+2019-09-02 17:10:20 - crawler_info-INFO - start_task ->21 ; Task started!
+2019-09-02 17:10:20 - crawler_info-INFO - start_task ->24 ; 293c38e0-4db7-4acb-abbe-caf2ec9caad9
+2019-09-02 17:10:21 - crawler_info-INFO - start_task ->21 ; Task started!
+2019-09-02 17:10:21 - crawler_info-INFO - start_task ->24 ; 5d1364c2-a383-4872-9912-a760b1d59e1c
+2019-09-02 17:20:06 - crawler_info-INFO - dao ->137 ; http://www.cyol.com/ : has no filtering rules, default algorithm acquisition
+2019-09-02 17:20:06 - crawler_info-INFO - dao ->154 ; {'rule': {'selector': 'xpath', 'deep_limit': '1', 'filter_rule': '', 'fields': {'content': '', 'title': '', 'publishTime': '', 'author': ''}}, 'url': 'http://www.cyol.com/'}
+2019-09-02 17:20:06 - crawler_info-INFO - crawler ->118 ; {'rule': {'selector': 'xpath', 'deep_limit': '1', 'filter_rule': '', 'fields': {'content': '', 'title': '', 'publishTime': '', 'author': ''}}, 'url': 'http://www.cyol.com/'}
+2019-09-02 17:34:34 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 17:34:56 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 17:34:58 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 17:39:59 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-02 17:50:51 - crawler_info-INFO - start_task ->20 ; Task started!
+2019-09-02 17:50:51 - crawler_info-INFO - start_task ->23 ; 003485ad-cc9a-4737-88d5-f624ffe12c2e
+2019-09-03 10:02:00 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 10:02:02 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 10:09:20 - crawler_info-INFO - start_task ->20 ; Task started!
+2019-09-03 10:09:20 - crawler_info-INFO - start_task ->23 ; 40893e3c-49d0-4d83-9b7c-fb548a4ee948
+2019-09-03 10:09:20 - crawler_info-INFO - start_task ->15 ; 已经更改爬虫状态
+2019-09-03 10:10:57 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 10:10:59 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 10:11:18 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 10:11:20 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 10:57:58 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 10:58:00 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 10:59:25 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 10:59:27 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:05:45 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:05:47 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:07:16 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:07:18 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:27:41 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:27:43 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:28:13 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:28:15 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:29:05 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:29:07 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:34:26 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:34:29 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:34:31 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 11:53:18 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 14:40:31 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 14:40:33 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 14:40:54 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 14:40:56 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 16:04:13 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 16:04:15 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 17:10:02 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 17:10:04 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 17:21:52 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-03 17:21:55 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 09:01:19 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 09:01:21 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 09:01:38 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 09:01:40 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 10:34:22 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 10:34:25 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 10:35:03 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 10:35:06 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 10:42:01 - crawler_info-INFO - start_task ->20 ; Task started!
+2019-09-04 10:42:01 - crawler_info-INFO - start_task ->23 ; 09d03c53-1850-4f2e-af9b-01564e6b7da0
+2019-09-04 10:43:04 - crawler_info-INFO - start_task ->20 ; Task started!
+2019-09-04 10:43:04 - crawler_info-INFO - start_task ->23 ; c020f0bd-53e1-4d30-8f26-ca240e724f9e
+2019-09-04 10:44:11 - crawler_info-INFO - start_task ->20 ; Task started!
+2019-09-04 10:44:11 - crawler_info-INFO - start_task ->23 ; eb911271-824d-44cb-b214-5058109fe58e
+2019-09-04 10:44:59 - crawler_info-INFO - start_task ->20 ; Task started!
+2019-09-04 10:45:00 - crawler_info-INFO - start_task ->23 ; 277e89d4-b43b-4e81-bed2-d9252d655bc6
+2019-09-04 11:11:13 - crawler_info-INFO - crawler ->125 ; {'rule': {'filter_rule': '', 'deep_limit': '1', 'fields': {'publishTime': '', 'title': '', 'author': '', 'content': ''}, 'selector': 'xpath'}, 'url': 'https://news.baidu.com/'}
+2019-09-04 11:11:16 - crawler_info-INFO - crawler ->54 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 11:11:16 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ parsesed 59 websites and spending time 2.6621525287628174
+2019-09-04 11:33:58 - crawler_info-INFO - start_task ->20 ; Task started!
+2019-09-04 11:33:58 - crawler_info-INFO - start_task ->23 ; 91e55f2a-efe5-4505-9f1e-f0c5150ce3f9
+2019-09-04 13:47:01 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 13:47:03 - crawler_info-INFO - app ->146 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 13:49:54 - crawler_info-INFO - start_task ->20 ; Task started!
+2019-09-04 13:49:55 - crawler_info-INFO - start_task ->23 ; 350fd58b-e071-4465-b56e-db0af399cdbb
+2019-09-04 13:55:59 - crawler_info-INFO - crawler ->125 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'publishTime': '', 'author': ''}, 'deep_limit': '1'}}
+2019-09-04 13:56:02 - crawler_info-INFO - crawler ->54 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 13:56:02 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ parsesed 61 websites and spending time 2.5811474323272705
+2019-09-04 15:36:53 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 15:49:46 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 15:49:47 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 15:49:47 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 62 websites and spending time 1.4720840454101562
+2019-09-04 15:50:11 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 15:50:12 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 15:50:12 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 62 websites and spending time 0.2110121250152588
+2019-09-04 15:57:00 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 15:57:00 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 15:57:00 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 62 websites and spending time 0.1610090732574463
+2019-09-04 15:57:03 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 15:57:04 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 15:57:04 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 62 websites and spending time 0.19001078605651855
+2019-09-04 15:59:31 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 15:59:32 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 15:59:32 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.18401050567626953
+2019-09-04 15:59:33 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 15:59:33 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 15:59:33 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.1910107135772705
+2019-09-04 16:00:11 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:00:11 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:00:11 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.18101048469543457
+2019-09-04 16:00:50 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:00:51 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:00:51 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.17701029777526855
+2019-09-04 16:00:59 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:00:59 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:00:59 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.1760098934173584
+2019-09-04 16:01:00 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:01:00 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:01:00 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.1670093536376953
+2019-09-04 16:01:11 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:01:11 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:01:11 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.19901132583618164
+2019-09-04 16:01:13 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:01:13 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:01:13 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.18501043319702148
+2019-09-04 16:03:03 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:03:03 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:03:03 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2280130386352539
+2019-09-04 16:03:07 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:03:08 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:03:08 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2800161838531494
+2019-09-04 16:03:19 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:03:19 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:03:19 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.21801233291625977
+2019-09-04 16:03:21 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:03:22 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:03:22 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 1.2740728855133057
+2019-09-04 16:03:24 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:03:24 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:03:24 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.17000985145568848
+2019-09-04 16:04:12 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:04:12 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:04:12 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.22501301765441895
+2019-09-04 16:06:02 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:06:02 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:06:02 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.3480198383331299
+2019-09-04 16:06:04 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:06:04 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:06:04 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.2150123119354248
+2019-09-04 16:06:21 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:06:21 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:06:21 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.23301339149475098
+2019-09-04 16:06:23 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:06:26 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:06:26 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 3.345191240310669
+2019-09-04 16:06:37 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:06:37 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:06:37 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.3330190181732178
+2019-09-04 16:06:52 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:06:52 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:06:52 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.29401683807373047
+2019-09-04 16:07:36 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:07:36 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:07:36 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.22901296615600586
+2019-09-04 16:07:38 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:07:39 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:07:39 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.20901203155517578
+2019-09-04 16:07:43 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:07:43 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:07:43 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.23801374435424805
+2019-09-04 16:08:05 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:08:05 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:08:05 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.26601529121398926
+2019-09-04 16:08:08 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:08:09 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:08:09 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.27901601791381836
+2019-09-04 16:09:00 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:00 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:09:00 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2040116786956787
+2019-09-04 16:09:01 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:02 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:09:02 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.22201251983642578
+2019-09-04 16:09:05 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:05 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:09:05 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.21201205253601074
+2019-09-04 16:09:06 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:07 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:09:07 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.3720211982727051
+2019-09-04 16:09:07 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:07 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:09:07 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.241013765335083
+2019-09-04 16:09:08 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:08 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:09:08 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.24801421165466309
+2019-09-04 16:09:21 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:21 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:09:21 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.37902164459228516
+2019-09-04 16:09:25 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:25 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:09:25 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2670152187347412
+2019-09-04 16:09:31 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:32 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:09:32 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.5470314025878906
+2019-09-04 16:09:33 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:09:33 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:09:33 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2500143051147461
+2019-09-04 16:12:35 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:12:35 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:12:35 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2280130386352539
+2019-09-04 16:12:39 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:12:39 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:12:39 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2890167236328125
+2019-09-04 16:12:58 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:12:58 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:12:58 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.27901601791381836
+2019-09-04 16:15:23 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:15:23 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:15:23 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.18001031875610352
+2019-09-04 16:17:59 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:17:59 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:17:59 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.19301104545593262
+2019-09-04 16:19:34 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:19:35 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:19:35 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2670152187347412
+2019-09-04 16:23:58 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:23:59 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:23:59 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2610146999359131
+2019-09-04 16:24:01 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:24:01 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:24:01 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.20901203155517578
+2019-09-04 16:24:03 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:24:03 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:24:03 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 0 websites and spending time 0.7410423755645752
+2019-09-04 16:24:21 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:24:21 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:24:21 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.24501395225524902
+2019-09-04 16:24:27 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:24:27 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:24:27 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.22301292419433594
+2019-09-04 16:24:51 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:24:51 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:24:51 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.18601059913635254
+2019-09-04 16:25:12 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:25:12 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:25:12 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.17300987243652344
+2019-09-04 16:25:25 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:25:26 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:25:26 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.22301292419433594
+2019-09-04 16:25:31 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:25:32 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:25:32 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.18401050567626953
+2019-09-04 16:25:46 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:25:46 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:25:46 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.23101329803466797
+2019-09-04 16:32:21 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:32:21 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:32:21 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.1760101318359375
+2019-09-04 16:34:40 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:34:40 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:34:40 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.23201322555541992
+2019-09-04 16:35:18 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:35:18 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:35:18 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.2150123119354248
+2019-09-04 16:35:52 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:35:52 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:35:52 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2240128517150879
+2019-09-04 16:36:55 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:36:55 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:36:55 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 0 websites and spending time 0.16600942611694336
+2019-09-04 16:36:56 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:36:57 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:36:57 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2000114917755127
+2019-09-04 16:36:59 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:36:59 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:36:59 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.19701123237609863
+2019-09-04 16:37:58 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:37:58 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:37:58 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.1780102252960205
+2019-09-04 16:38:13 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:38:13 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:38:13 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.16900968551635742
+2019-09-04 16:38:15 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:38:15 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:38:15 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.19201087951660156
+2019-09-04 16:38:18 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.people.com.cn/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:38:18 - crawler_info-INFO - crawler ->55 ; http://www.people.com.cn/ has been collected and program is finished
+2019-09-04 16:38:18 - crawler_info-INFO - crawler ->56 ; http://www.people.com.cn/ parsesed 292 websites and spending time 0.16600942611694336
+2019-09-04 16:38:21 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:38:21 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:38:21 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.18301057815551758
+2019-09-04 16:39:32 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:39:32 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:39:32 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.17901015281677246
+2019-09-04 16:39:35 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:39:35 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:39:35 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.16400933265686035
+2019-09-04 16:39:40 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:39:40 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:39:40 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.599034309387207
+2019-09-04 16:39:48 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:39:48 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:39:48 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.1780099868774414
+2019-09-04 16:40:06 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:40:07 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:40:07 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 1.1710669994354248
+2019-09-04 16:40:08 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:40:09 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:40:09 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.1370077133178711
+2019-09-04 16:42:24 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.people.com.cn/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:42:25 - crawler_info-INFO - crawler ->55 ; http://www.people.com.cn/ has been collected and program is finished
+2019-09-04 16:42:25 - crawler_info-INFO - crawler ->56 ; http://www.people.com.cn/ parsesed 292 websites and spending time 0.17100977897644043
+2019-09-04 16:42:27 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:42:28 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:42:28 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.1870107650756836
+2019-09-04 16:42:34 - crawler_info-INFO - crawler ->130 ; {'url': 'https://www.jinse.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:42:35 - crawler_info-INFO - crawler ->55 ; https://www.jinse.com/ has been collected and program is finished
+2019-09-04 16:42:35 - crawler_info-INFO - crawler ->56 ; https://www.jinse.com/ parsesed 38 websites and spending time 0.4470255374908447
+2019-09-04 16:45:07 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:07 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:45:07 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.24201393127441406
+2019-09-04 16:45:11 - crawler_info-INFO - crawler ->130 ; {'url': 'https://www.jinse.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:12 - crawler_info-INFO - crawler ->55 ; https://www.jinse.com/ has been collected and program is finished
+2019-09-04 16:45:12 - crawler_info-INFO - crawler ->56 ; https://www.jinse.com/ parsesed 38 websites and spending time 0.4890279769897461
+2019-09-04 16:45:15 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:15 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:45:15 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.23301339149475098
+2019-09-04 16:45:18 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:19 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:45:19 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.24901413917541504
+2019-09-04 16:45:22 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:22 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:45:22 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.2240128517150879
+2019-09-04 16:45:25 - crawler_info-INFO - crawler ->130 ; {'url': 'https://news.baidu.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:25 - crawler_info-INFO - crawler ->55 ; https://news.baidu.com/ has been collected and program is finished
+2019-09-04 16:45:25 - crawler_info-INFO - crawler ->56 ; https://news.baidu.com/ parsesed 60 websites and spending time 0.17200970649719238
+2019-09-04 16:45:31 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.cyol.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:31 - crawler_info-INFO - crawler ->55 ; http://www.cyol.com/ has been collected and program is finished
+2019-09-04 16:45:31 - crawler_info-INFO - crawler ->56 ; http://www.cyol.com/ parsesed 125 websites and spending time 0.2240126132965088
+2019-09-04 16:45:35 - crawler_info-INFO - crawler ->130 ; {'url': 'http://jining.dzwww.com', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:35 - crawler_info-INFO - crawler ->55 ; http://jining.dzwww.com has been collected and program is finished
+2019-09-04 16:45:35 - crawler_info-INFO - crawler ->56 ; http://jining.dzwww.com parsesed 107 websites and spending time 0.15500903129577637
+2019-09-04 16:45:38 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.xzzgh.gov.cn/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:39 - crawler_info-INFO - crawler ->55 ; http://www.xzzgh.gov.cn/ has been collected and program is finished
+2019-09-04 16:45:39 - crawler_info-INFO - crawler ->56 ; http://www.xzzgh.gov.cn/ parsesed 130 websites and spending time 0.5390307903289795
+2019-09-04 16:45:43 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.yzzs.cc/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:43 - crawler_info-INFO - crawler ->55 ; http://www.yzzs.cc/ has been collected and program is finished
+2019-09-04 16:45:43 - crawler_info-INFO - crawler ->56 ; http://www.yzzs.cc/ parsesed 89 websites and spending time 0.2720155715942383
+2019-09-04 16:45:47 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.xfrb.com.cn/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:48 - crawler_info-INFO - crawler ->55 ; http://www.xfrb.com.cn/ has been collected and program is finished
+2019-09-04 16:45:48 - crawler_info-INFO - crawler ->56 ; http://www.xfrb.com.cn/ parsesed 121 websites and spending time 0.7880449295043945
+2019-09-04 16:45:51 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.caijing.com.cn/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:51 - crawler_info-INFO - crawler ->55 ; http://www.caijing.com.cn/ has been collected and program is finished
+2019-09-04 16:45:51 - crawler_info-INFO - crawler ->56 ; http://www.caijing.com.cn/ parsesed 155 websites and spending time 0.24301385879516602
+2019-09-04 16:45:54 - crawler_info-INFO - crawler ->130 ; {'url': 'https://finance.sina.com.cn', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:54 - crawler_info-INFO - crawler ->55 ; https://finance.sina.com.cn has been collected and program is finished
+2019-09-04 16:45:54 - crawler_info-INFO - crawler ->56 ; https://finance.sina.com.cn parsesed 459 websites and spending time 0.31201791763305664
+2019-09-04 16:45:59 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.91ri.org/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:45:59 - crawler_info-INFO - crawler ->55 ; http://www.91ri.org/ has been collected and program is finished
+2019-09-04 16:45:59 - crawler_info-INFO - crawler ->56 ; http://www.91ri.org/ parsesed 42 websites and spending time 0.21801233291625977
+2019-09-04 16:46:02 - crawler_info-INFO - crawler ->130 ; {'url': 'https://kunjuke.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:46:04 - crawler_info-INFO - crawler ->55 ; https://kunjuke.com/ has been collected and program is finished
+2019-09-04 16:46:04 - crawler_info-INFO - crawler ->56 ; https://kunjuke.com/ parsesed 48 websites and spending time 1.565089464187622
+2019-09-04 16:46:07 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.js.chinanews.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:46:09 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.jiemian.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:46:09 - crawler_info-INFO - crawler ->55 ; http://www.jiemian.com/ has been collected and program is finished
+2019-09-04 16:46:09 - crawler_info-INFO - crawler ->56 ; http://www.jiemian.com/ parsesed 81 websites and spending time 0.44902563095092773
+2019-09-04 16:46:10 - crawler_info-INFO - crawler ->55 ; http://www.js.chinanews.com/ has been collected and program is finished
+2019-09-04 16:46:10 - crawler_info-INFO - crawler ->56 ; http://www.js.chinanews.com/ parsesed 172 websites and spending time 3.8892226219177246
+2019-09-04 16:46:10 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.js.chinanews.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:46:11 - crawler_info-INFO - crawler ->55 ; http://www.js.chinanews.com/ has been collected and program is finished
+2019-09-04 16:46:11 - crawler_info-INFO - crawler ->56 ; http://www.js.chinanews.com/ parsesed 172 websites and spending time 0.16900968551635742
+2019-09-04 16:46:15 - crawler_info-INFO - crawler ->130 ; {'url': 'https://kunjuke.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:46:17 - crawler_info-INFO - crawler ->55 ; https://kunjuke.com/ has been collected and program is finished
+2019-09-04 16:46:17 - crawler_info-INFO - crawler ->56 ; https://kunjuke.com/ parsesed 48 websites and spending time 2.03511643409729
+2019-09-04 16:46:17 - crawler_info-INFO - crawler ->130 ; {'url': 'https://kunjuke.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:46:18 - crawler_info-INFO - crawler ->55 ; https://kunjuke.com/ has been collected and program is finished
+2019-09-04 16:46:18 - crawler_info-INFO - crawler ->56 ; https://kunjuke.com/ parsesed 48 websites and spending time 1.0540602207183838
+2019-09-04 16:46:21 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.jiemian.com/', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:46:22 - crawler_info-INFO - crawler ->55 ; http://www.jiemian.com/ has been collected and program is finished
+2019-09-04 16:46:22 - crawler_info-INFO - crawler ->56 ; http://www.jiemian.com/ parsesed 81 websites and spending time 0.46402645111083984
+2019-09-04 16:46:29 - crawler_info-INFO - crawler ->130 ; {'url': 'http://www.huaian.gov.cn/index.html', 'rule': {'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath', 'fields': {'title': '', 'content': '', 'author': '', 'publishTime': ''}}}
+2019-09-04 16:46:29 - crawler_info-INFO - crawler ->55 ; http://www.huaian.gov.cn/index.html has been collected and program is finished
+2019-09-04 16:46:29 - crawler_info-INFO - crawler ->56 ; http://www.huaian.gov.cn/index.html parsesed 127 websites and spending time 0.17500996589660645
+2019-09-04 17:17:46 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 17:18:56 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 17:18:58 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 17:19:21 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-04 17:19:23 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-05 10:59:00 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-05 10:59:02 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-05 10:59:12 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-05 10:59:14 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-06 13:56:50 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-06 13:56:52 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-09 09:13:06 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-09 09:13:08 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-09 10:10:09 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-09 10:10:11 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-09 10:13:19 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-09 10:13:21 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-19 15:54:28 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-19 15:54:30 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-19 16:48:27 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-19 16:48:30 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-19 16:48:52 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-19 16:48:54 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-20 09:38:11 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-20 09:38:14 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-20 09:38:24 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-20 09:38:27 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 12:41:57 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 12:41:59 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 15:38:05 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 15:38:07 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 15:44:08 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 15:44:10 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 17:13:57 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 17:13:59 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 17:14:30 - crawler_info-INFO - start_task ->36 ; Task started!
+2019-09-26 17:14:30 - crawler_info-INFO - start_task ->39 ; 7cc26df7-fcb1-4066-a2b5-ae2b8599de2d
+2019-09-26 17:17:18 - crawler_info-INFO - app ->147 ; If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line
+2019-09-26 17:18:16 - crawler_info-INFO - start_task ->36 ; Task started!
+2019-09-26 17:18:16 - crawler_info-INFO - start_task ->39 ; 3f5f9b43-ef3d-49be-80b8-6b9e81abf72d
+2019-09-26 17:18:17 - crawler_info-INFO - dao ->133 ; https://www.dni.gov/index.php/newsroom/recent-news : has no filtering rules, default algorithm acquisition
+2019-09-26 17:18:17 - crawler_info-INFO - crawler ->131 ; {'pid': 7443, 'rule': {'fields': {'title': '', 'author': '', 'content': '', 'publishTime': ''}, 'filter_rule': '', 'deep_limit': '1', 'selector': 'xpath'}, 'url': 'https://www.dni.gov/index.php/newsroom/recent-news', 'webSite': '国家情报总监办公室'}
+2019-09-26 17:18:21 - crawler_info-INFO - crawler ->55 ; https://www.dni.gov/index.php/newsroom/recent-news has been collected and program is finished
+2019-09-26 17:18:21 - crawler_info-INFO - crawler ->56 ; https://www.dni.gov/index.php/newsroom/recent-news parsesed 27 websites and spending time 4.218063592910767
+2019-09-26 17:24:46 - crawler_info-INFO - start_task ->36 ; Task started!
+2019-09-26 17:24:46 - crawler_info-INFO - start_task ->39 ; 80a5bf68-00bc-4896-9dcd-c89b8673104d
