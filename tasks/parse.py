@@ -56,7 +56,7 @@ class Parse:
                 continue
             # crawler_info.info(item)
             print(item)
-            # new_data.insert(item)
+            new_data.insert(item)
 
 
 
