@@ -54,15 +54,15 @@ class Crawler:
             self.end_time = time.time()
             crawler_info.info("{} has been collected and program is finished".format(self.parameter["url"]))
             crawler_info.info("{} parsesed {} websites and spending time {}".format(self.parameter["url"],self.count,(self.end_time-self.start_time)))
-            if self.count<20:
-                pid = self.parameter['pid']
-                parameter = {}
-                parameter["pid"] = pid
-                parameter["status"] = 0
-                parameter["spider_name"] = 0
-
-                main_url_oper.update_mainurl(parameter)
-                crawler_info.info("Exceptions may occur if the number of {} is too small".format(self.parameter["url"]))
+            # if self.count<20:
+            #     pid = self.parameter['pid']
+            #     parameter = {}
+            #     parameter["pid"] = pid
+            #     parameter["status"] = 0
+            #     parameter["spider_name"] = 0
+            #
+            #     main_url_oper.update_mainurl(parameter)
+            #     crawler_info.info("Exceptions may occur if the number of {} is too small".format(self.parameter["url"]))
             try:
                 sys.exit()
             except:

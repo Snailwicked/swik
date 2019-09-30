@@ -30,6 +30,14 @@ def new_datas():
     result = con.select_by_paramters(parameter)
     return jsonify(result)
 
+
+@app.route('/new/delete')
+def new_delete():
+    parameter = request.values.to_dict()
+    print(parameter)
+    # result = con.select_by_paramters(parameter)
+    return jsonify(parameter)
+
 ########################################################################################################################
 '''
     站点模块代码
