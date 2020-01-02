@@ -140,6 +140,7 @@ class SpiderTaskOper:
             parameter["pid"] = item.get("pid")
             parameter["webSite"] = item.get("webSite")
             parameter["url"] = str(url).strip()
+            print(parameter)
             parameters.append(parameter)
         return parameters
 

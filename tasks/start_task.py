@@ -4,7 +4,6 @@ from tasks import Crawleruning
 from db.dao import SpiderTaskOper
 spider_task = SpiderTaskOper()
 from tasks.parse import Parse
-
 parse = Parse()
 
 @app.task(ignore_result=True)
@@ -20,7 +19,6 @@ def start_crawler(parameter):
 
         for sub_url in target_url:
             item["url"] = sub_url
-            crawler_info.info(item)
             app.send_task('tasks.start_task.parse_url',
                           args=(item,),
                           queue='crawler_queue',
@@ -32,8 +30,10 @@ def start_crawler(parameter):
 
 @app.task(ignore_result=True)
 def parse_url(parameter):
-    parse.get_data(parameter)
-
+    item = parse.get_data(parameter)
+    # with topic.get_producer() as producer:
+    #     string = bytes(str(json.dumps(item)), encoding='utf-8')
+    #     producer.produce(string)
 
 @app.task(ignore_result=True)
 def excute_start_crawler(parameter):

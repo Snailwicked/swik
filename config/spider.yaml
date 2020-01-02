@@ -33,19 +33,19 @@ share_host_count: 5
 
 
 #db:
-#    host: 127.0.0.1
+#    host: 101.132.113.50
 #    port: 3306
 #    user: root
-#    password: 123456
-#    db_name: weibo
+#    password: BlueSnail123!
+#    db_name: spider_manage
 #    db_type: mysql
 
 
 db:
-    host: 101.132.113.50
+    host: 180.97.15.181
     port: 3306
     user: root
-    password: BlueSnail123!
+    password: Vrv123!@#
     db_name: spider_manage
     db_type: mysql
 
@@ -58,9 +58,8 @@ mongo:
     db_name: spider_data
     table_name: news_data
 
-
 redis:
-    host: 101.132.113.50
+    host: 180.97.15.173
     port: 6379
 #    password: abcd
     cookies: 1                   # store and fetch cookies

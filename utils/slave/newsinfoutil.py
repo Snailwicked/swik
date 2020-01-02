@@ -2,8 +2,8 @@
 import logging.config
 # from SQL_DB.config.config import Config
 import re,requests,json
-from slave.extractors import ContentExtractor
-from master.headers import headers
+from utils.slave.extractors import ContentExtractor
+from utils.base_utils.headers import random_headers as headers
 # logger_conf = Config().get_logger_args()
 # logging.config.dictConfig(logger_conf)
 

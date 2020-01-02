@@ -80,8 +80,6 @@ class souhuNews(crawler):
         self.hash = hashlib.md5()
         self.service = mysqlClient()
 
-        # self.rediscon = RedisClient()
-
     def start_spider(self):
         try:
             json_all_str = self.session.get(url=self.starturl).text
