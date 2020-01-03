@@ -46,5 +46,5 @@ class xPathTexts(object):
 
 if __name__ == '__main__':
     xpath = xPathTexts()
-    xpath.set_parameter(url = "http://esf.focus.cn")
+    xpath.set_parameter(url = "php.weather.sina.com.cn")
     print(xpath.get_contents("//a//@href"))

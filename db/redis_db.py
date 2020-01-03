@@ -19,3 +19,8 @@ class Url_Parameter(object):
         parameters = urls_con.lrange(spider_name,1,20)
         urls_con.ltrim(spider_name,20,-1)
         return parameters
+
+    @classmethod
+    def fetch_llen(cls, spider_name):
+        parameters = urls_con.llen(spider_name)
+        return parameters

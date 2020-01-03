@@ -1,6 +1,6 @@
 from config import *
 from tasks.workers import app
-from tasks import Crawleruning
+from tasks.crawler import Crawleruning
 from db.dao import SpiderTaskOper
 spider_task = SpiderTaskOper()
 from tasks.parse import Parse
@@ -12,11 +12,23 @@ def start_crawler(parameter):
     parameters["id"] = parameter
     params = spider_task.start_task(parameters)
     for item in params:
+        '''
+         item = {'rule': {
+                     'filter_rule': '',
+                     'selector': 'xpath',
+                     'deep_limit': '1',
+                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}
+                 },
+         'pid': 6041,
+         'webSite': '新华网舆情', 
+         'url': 'http://www.news.cn/yuqing/index.htm'
+         }
+
+        '''
         crawler = Crawleruning()
         crawler.set_parameter(item)
         crawler.start()
         target_url = crawler.process()
-
         for sub_url in target_url:
             item["url"] = sub_url
             app.send_task('tasks.start_task.parse_url',

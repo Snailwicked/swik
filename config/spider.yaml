@@ -64,9 +64,9 @@ redis:
 #    password: abcd
     cookies: 1                   # store and fetch cookies
     # store fetched urls and results,so you can decide whether retry to crawl the urls or not
-    urls: 2
-    broker: 5                    # broker for celery
-    backend: 6                   # backed for celery
+    urls: 10
+    broker: 7                    # broker for celery
+    backend: 8                   # backed for celery
     id_name: 8                   # user id and names，for repost info analysis
     # expire_time (hours) for redis db2, if they are useless to you, you can set the value smaller
     expire_time: 48
@@ -97,3 +97,4 @@ algorithm:
     url_SDG: E:/Workspace/swik/algorithm/pkl/url_SDG.pkl
     url_Vocabulay: E:/Workspace/swik/algorithm/pkl/url_Vocabulary.pkl
     stop_word: E:/Workspace/swik/algorithm/pkl/stop_word
+    news_url: E:/Workspace/swik/news_url.blm
