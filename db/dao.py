@@ -140,7 +140,6 @@ class SpiderTaskOper:
             parameter["pid"] = item.get("pid")
             parameter["webSite"] = item.get("webSite")
             parameter["url"] = str(url).strip()
-            print(parameter)
             parameters.append(parameter)
         return parameters
 
@@ -301,7 +300,7 @@ if __name__ == '__main__':
     #         }
     # print(spider_task.select_by_parameter(parameter))
     parameter = {
-                "id":22,
+                "id":27,
             }
     result = spider_task.start_task(parameter)
     print(result)

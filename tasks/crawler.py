@@ -1,9 +1,6 @@
 from urllib.parse import urljoin
 from config.conf import get_algorithm
 from utils import xPathTexts
-import time
-from collections import defaultdict
-
 args = get_algorithm()
 from db.redis_db import Url_Parameter
 url_storage = Url_Parameter()
@@ -13,11 +10,8 @@ class Crawler:
         self.xpath = xPathTexts()
         self.brief =[]
 
-
     def run(self,parameter):
         self.parameter = parameter
-        self.rule = self.parameter['rule']
-        self.limit = int(self.rule["deep_limit"]) if self.rule["deep_limit"] !="" else 1
         self.xpath_urls([self.parameter["url"]])
 
     def get_hrefs(self,url):
@@ -31,7 +25,7 @@ class Crawler:
         return temp
 
     def xpath_urls(self, urls):
-        url_filter = bloomfilter.filter(args["news_url"])
+        url_filter = bloomfilter.filter(args["news_url.blm"])
 
         for url in urls:
             for item in self.get_hrefs(url):

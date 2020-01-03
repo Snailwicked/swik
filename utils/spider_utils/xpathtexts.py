@@ -17,7 +17,7 @@ class xPathTexts(object):
         if self.headers== None:
             self.headers = random_headers
         try:
-            resp = requests.get(url=self.url, headers=self.headers, cookies=self.cookies , timeout=30)
+            resp = requests.get(url=self.url, headers=self.headers, cookies=self.cookies , timeout=3)
             if resp.status_code ==200:
                 reg = '<meta .*(http-equiv="?Content-Type"?.*)?charset="?([a-zA-Z0-9_-]+)"?'
                 try:
@@ -40,8 +40,11 @@ class xPathTexts(object):
 
     def get_contents(self ,X_path= None):
         contens = []
-        for item in etree.HTML(str(self.html)).xpath(X_path):
-            contens.append(str(item).strip())
+        try:
+            for item in etree.HTML(str(self.html)).xpath(X_path):
+                contens.append(str(item).strip())
+        except:
+            return contens
         return contens
 
 if __name__ == '__main__':
