@@ -30,8 +30,8 @@ class Parse:
                 if xpath.html == None:
                     continue
                 content_extractor = ContentExtractor(html=xpath.html, url=parameter["url"])
+                import json
                 fields = parameter.get("rule").get("fields")
-
                 item["url"] = parameter["url"]
                 url_netloc = urlparse(item["url"])
                 item["domain"] = url_netloc.netloc
@@ -40,22 +40,29 @@ class Parse:
                 item["id"] = hash.hexdigest()
 
                 if fields.get("title"):
-                    item["title"] = xpath.get_contents(fields.get("title"))
+                    item["title"] = xpath.get_contents(fields.get("title").replace("+","@"))
                 else:
                     item["title"] = content_extractor.get_title()
 
                 if fields.get("author"):
-                    item["author"] = xpath.get_contents(fields.get("author"))
+                    item["author"] = xpath.get_contents(fields.get("author").replace("+","@"))
                 else:
                     item["authors"] = content_extractor.get_authors()
 
                 if fields.get("content"):
-                    item["content"] = xpath.get_contents(fields.get("content"))
+                    result = xpath.get_contents(fields.get("content").replace("+","@"))
+                    results = "".join(
+                        list(map(lambda string: (string + "<br /><br />") if len(string) > 10 else (string), result)))
+
+                    item["content"] = results
                 else:
                     item["content"] = content_extractor.get_content()
 
                 if fields.get("publish_time"):
-                    item["poTime"] = xpath.get_contents(fields.get("publish_time"))
+                    from dateutil.parser import parse as date_parser
+                    date_str = xpath.get_contents(fields.get("publish_time").replace("+","@"))
+                    item["poTime"] = int(time.mktime(date_parser(date_str).timetuple()) * 1000)
+
                 else:
                     item["poTime"] = int(content_extractor.get_publishing_date())
                 millis = int(item["poTime"]/1000)
@@ -89,7 +96,7 @@ class Parse:
                 item["importantValue"] = 0
                 item["provinceCode"] = 0
             except Exception as e:
-                crawler_info.info("parseing of Failed {}".format(parameter["url"]))
+                crawler_info.info("parseing of Failed {},{}".format(parameter["url"],e))
                 continue
             # crawler_info.info(item)
             print(item)
@@ -101,8 +108,8 @@ class Parse:
 
 if __name__ == "__main__":
 
-    url = 'http://www.chenxm.cc/post/719.html'
 
+    pass
 
     #   ParseResult(scheme='http', netloc='www.chenxm.cc', path='/post/719.html', params='', query='', fragment='')
 
@@ -111,35 +118,36 @@ if __name__ == "__main__":
     # start_time = time.time()
     # urls = [{'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
     #                  'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #         'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
-    #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
-    #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
-    #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
-    #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
-    #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
-    #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
-    #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
-    #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
-    #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
-    #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
-    #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
-    #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
-    #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
-    #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
-    #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
-    #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
-    #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
-    #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
-    #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}]
-    #
+    #         'webSite': '扬州网', 'url': 'https://www.jinse.com/blockchain/564581.html'},]
+    # # {
+    # #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+    # #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
+    # #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
+    # #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+    # #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
+    # #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
+    # #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+    # #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
+    # #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
+    # #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+    # #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
+    # #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
+    # #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+    # #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
+    # #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
+    # #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+    # #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
+    # #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
+    # #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+    # #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
+    # #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
+    # #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+    # #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
+    # #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}, {
+    # #            'rule': {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
+    # #                     'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}, 'pid': 5957,
+    # #            'webSite': '扬州网', 'url': 'http://meishi.yznews.com.cn/2019-09/09/content_7066513.htm'}]
+    # #
     # parse = Parse()
     # parse.get_data(urls)
     # end_time = time.time()

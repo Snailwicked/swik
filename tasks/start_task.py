@@ -1,6 +1,6 @@
 from config import *
 from tasks.workers import app
-from tasks.crawler import Crawleruning
+from tasks.accurate_crawler  import Crawleruning
 from db.dao import SpiderTaskOper
 spider_task = SpiderTaskOper()
 from tasks.parse import Parse
@@ -14,7 +14,8 @@ def start_crawler(parameter):
     key = 1
     while key:
         urls = url_parameter.fetch_parameters("parameter")
-        if urls:
+
+        if len(urls)!=0:
             for item in urls:
                 '''
                  item = {'rule': {
@@ -51,8 +52,9 @@ def start_crawler(parameter):
 
 @app.task(ignore_result=True)
 def parse_url(parameter):
-    print(parameter["url"])
-    # item = parse.get_data(parameter)
+    import time
+    time.sleep(1)
+    item = parse.get_data(parameter)
     # with topic.get_producer() as producer:
     #     string = bytes(str(json.dumps(item)), encoding='utf-8')
     #     producer.produce(string)

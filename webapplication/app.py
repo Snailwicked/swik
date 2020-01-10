@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from config import *
 from flask_cors import *
-from tasks.crawler import Crawleruning
+from tasks.accurate_crawler import Crawleruning
 from tasks import excute_start_crawler
 from utils.base_utils.system import System
 from db import News_data
@@ -95,7 +95,7 @@ def task_config_spider_name():
 @app.route('/start/spider_task')
 def start_spider_task():
     parameter = request.values.to_dict()
-    parameter["status"] = 1
+    parameter["status"] = 0
     spidertask.update_status(parameter)
     task_id = excute_start_crawler(parameter)
     return jsonify({"task_id":task_id})
@@ -136,22 +136,25 @@ def update_web_site():
 
 @app.route('/web_site/spider')
 def spider_web_site():
+    from tasks.test_parse import Parse
+    parse = Parse()
     parameter = request.args.to_dict()
     parameter["url"] = str(parameter["url"]).strip()
+    parameter["webSite"] ="测试"
 
     if parameter["rule"] == "null":
         parameter["rule"] = {'filter_rule': '', 'selector': 'xpath', 'deep_limit': '1',
                          'fields': {'title': '', 'author': '', 'publishTime': '', 'content': ''}}
     else:
-        parameter["rule"] = json.loads(parameter["rule"].replace("@","+"))
-
+        parameter["rule"] = json.loads(parameter["rule"])
     crawler = Crawleruning()
     crawler.set_parameter(parameter)
     crawler.start()
-    result = crawler.monitor_info()
-    return jsonify(result)
-
-
+    target_url = crawler.process()
+    for sub_url in target_url:
+        parameter["url"] = sub_url
+        parse.get_data(parameter)
+    return crawler.monitor_info()
 
 if __name__ == '__main__':
     crawler_info.info("If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line")

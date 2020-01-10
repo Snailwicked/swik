@@ -20,13 +20,13 @@ class News_data():
         keywords = parameter.get('keywords')
         if keywords == None or keywords== "":
             count = news_data.find({}).count()
-            data = [item for item in news_data.find({}, {"_id": 0}).sort([{"collection_time",-1}]).limit(limit).skip((page-1) * limit)]
+            data = [item for item in news_data.find({}, {"_id": 0}).limit(limit).skip((page-1) * limit)]
 
         else:
             count = news_data.find({'source': re.compile('{}'.format(keywords))}).count()
 
             data = [item for item in
-                    news_data.find({'source': re.compile('{}'.format(keywords))}, {"_id": 0}).sort([{"collection_time",-1}]).limit(limit).skip(
+                    news_data.find({'source': re.compile('{}'.format(keywords))}, {"_id": 0}).limit(limit).skip(
                         (page-1) * limit)]
 
         return {"code": 200, "msg": "", "count": count, "data": data}

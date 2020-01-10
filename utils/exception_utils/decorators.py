@@ -19,5 +19,5 @@ def parse_text(func):
         try:
             return func(*args, **kwargs)
         except Exception as e:
-            print('获取不到数据')
+            print(e)
     return filter_url

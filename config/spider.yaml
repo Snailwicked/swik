@@ -52,7 +52,7 @@ db:
 
 
 mongo:
-    host: 101.132.113.50
+    host: 127.0.0.1
     port: 27017
     user: root
     db_name: spider_data
