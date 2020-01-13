@@ -101,7 +101,12 @@ def start_spider_task():
     return jsonify({"task_id":task_id})
 
 
-
+@app.route('/stop/spider_task')
+def stop_spider_task():
+    parameter = request.values.to_dict()
+    parameter["status"] = 0
+    spidertask.update_status(parameter)
+    return jsonify({"task_id":""})
 
 ########################################################################################################################
 '''

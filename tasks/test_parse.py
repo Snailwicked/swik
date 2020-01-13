@@ -56,7 +56,7 @@ class Parse:
                     item["publish_time"] = int(content_extractor.get_publishing_date())
 
                 item["collection_time"] = int(content_extractor.get_thirteenTime())
-                item["summary"] = content_extractor.get_summary()
+                item["summary"] = ""
                 item["source"] = parameter["webSite"]
             except Exception as e:
                 crawler_info.info("parseing of Failed {} {}".format(parameter["url"],e))
