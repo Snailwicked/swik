@@ -26,8 +26,12 @@ class Url_Parameter(object):
         return parameters
 
 class Clear_Con():
-    def __int__(self):
-        self.broker_db = REDIS_ARGS.get('broker', 7)
 
     def clear(self):
-        self.broker_db.clear()
+        broker = REDIS_ARGS.get('broker', 7)
+        urls_con = redis.Redis(host=host, port=port,db=broker)
+        for elem in urls_con.keys():
+            urls_con.delete(elem)
+if __name__ == '__main__':
+    clear_con = Clear_Con()
+    clear_con.clear()
