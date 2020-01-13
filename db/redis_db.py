@@ -24,3 +24,10 @@ class Url_Parameter(object):
     def fetch_llen(cls, spider_name):
         parameters = urls_con.llen(spider_name)
         return parameters
+
+class Clear_Con():
+    def __int__(self):
+        self.broker_db = REDIS_ARGS.get('broker', 7)
+
+    def clear(self):
+        self.broker_db.clear()

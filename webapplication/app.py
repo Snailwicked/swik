@@ -95,7 +95,7 @@ def task_config_spider_name():
 @app.route('/start/spider_task')
 def start_spider_task():
     parameter = request.values.to_dict()
-    parameter["status"] = 0
+    parameter["status"] = 1
     spidertask.update_status(parameter)
     task_id = excute_start_crawler(parameter)
     return jsonify({"task_id":task_id})
@@ -103,9 +103,12 @@ def start_spider_task():
 
 @app.route('/stop/spider_task')
 def stop_spider_task():
+    from db.redis_db import Clear_Con
+    clear_con = Clear_Con()
     parameter = request.values.to_dict()
     parameter["status"] = 0
     spidertask.update_status(parameter)
+    clear_con.clear()
     return jsonify({"task_id":""})
 
 ########################################################################################################################
