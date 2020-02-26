@@ -58,6 +58,9 @@ class Parse:
                 else:
                     item["content"] = content_extractor.get_content()
 
+                if item["content"] =="":
+                    item["content"] = content_extractor.get_content()
+
                 if fields.get("publish_time"):
                     from dateutil.parser import parse as date_parser
                     date_str = xpath.get_contents(fields.get("publish_time").replace("+","@"))
@@ -107,11 +110,13 @@ class Parse:
 
 
 if __name__ == "__main__":
+    parse = Parse()
+    url = {'url': 'http://www.qstheory.cn/wp/2020-01/14/c_1125460341.htm','rule': {'filter_rule': '/\\\\d{4}-\\\\d{2}/\\\\d{2}/c_\\\\d{10}.htm', 'selector': 'xpath选择器', 'deep_limit': '1',
+              'fields': {'title': '', 'author': '', 'publishTime': '',
+                         'content': '//div[@class="highlight"]//p//text()'}}, 'webSite': '测试'}
 
-
-    pass
-
-    #   ParseResult(scheme='http', netloc='www.chenxm.cc', path='/post/719.html', params='', query='', fragment='')
+    parse.get_data(url)
+    #   ParseRparseesult(scheme='http', netloc='www.chenxm.cc', path='/post/719.html', params='', query='', fragment='')
 
 
     # import time
