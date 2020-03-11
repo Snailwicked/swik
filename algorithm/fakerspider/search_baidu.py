@@ -24,7 +24,7 @@ cookies = {
 configs = {'host': '180.97.15.181', 'user': 'root', 'password': 'Vrv123!@#', 'db': 'fakespider'}
 
 requests.packages.urllib3.disable_warnings()
-source = "搜索引擎"
+source = "搜索引擎-百度"
 def crawl(url,params):
     headers = {
         'Connection': 'keep-alive',
@@ -54,9 +54,9 @@ def crawl(url,params):
     white_set = set(white_list)
     try:
         r = requests.get(url=url, headers=headers, params=params, cookies=cookies, timeout=3, verify=False).text
+        html = etree.HTML(r)
     except Exception as e:
         print(e)
-    html = etree.HTML(r)
     datas = html.xpath('//div[@id="content_left"]')
     for item in datas:
         res_json = item.xpath('.//div[@class="c-tools"]/@data-tools')[0]
@@ -95,7 +95,7 @@ def crawl(url,params):
 
 if __name__ == '__main__':
     url = "https://www.baidu.com/s"
-    for item in range(0,200,10):
+    for item in range(0,1000,10):
         for kw in ["\u4F4E\u989D\u8D37\u6B3E","\u94F6\u884C\u5361"]:
             params = (
                 ('wd', '{}'.format(kw)),

@@ -9,14 +9,8 @@ import datetime
 import pymysql
 from algorithm.fakerspider.tools import check_text, remove_emoji
 
-from algorithm.fakerspider.tools import get_number
+from algorithm.fakerspider.tools import get_number,parse_content
 
-
-def parse_content(html,xpath_rule):
-    for xpath in xpath_rule:
-        account_nickname_list = html.xpath(xpath)
-        if len(account_nickname_list):
-            return account_nickname_list[0]
 
 headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
            'Accept-Encoding': 'gzip, deflate, br',
@@ -31,12 +25,19 @@ headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,imag
 
 
 def get_links():
-    origin_urls = ['http://tieba.baidu.com/f/search/res?isnew=1&kw=&qw=%CB%A2%B5%A5%20%2C%20%2BVX', 'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E5%88%B7%E5%8D%95%2C%E5%BE%AE%E4%BF%A1&red_tag=w0862132222',
+    '''
+     'http://tieba.baidu.com/f/search/res?isnew=1&kw=&qw=%CB%A2%B5%A5%20%2C%20%2BVX', # 刷单 , +VX
+     'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E5%88%B7%E5%8D%95%2C%E5%BE%AE%E4%BF%A1&red_tag=w0862132222', # 刷单,微信
+     'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E5%88%B7%E5%8D%95%2C%E5%A8%81%E4%BF%A1', # 刷单,威信
+     'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E6%B7%98%E5%AE%9D%E4%BF%A1%E8%AA%89%2C%2BVX&red_tag=e1106962408', # 淘宝信誉,+VX
+     'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E6%B7%98%E5%AE%9D%E4%BF%A1%E8%AA%89%2C%E5%BE%AE%E4%BF%A1', #淘宝信誉,微信
+    :return:
+    '''
+    origin_urls = ['http://tieba.baidu.com/f/search/res?isnew=1&kw=&qw=%CB%A2%B5%A5%20%2C%20%2BVX',
+                   'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E5%88%B7%E5%8D%95%2C%E5%BE%AE%E4%BF%A1&red_tag=w0862132222',
                    'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E5%88%B7%E5%8D%95%2C%E5%A8%81%E4%BF%A1',
                    'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E6%B7%98%E5%AE%9D%E4%BF%A1%E8%AA%89%2C%2BVX&red_tag=e1106962408',
                    'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E6%B7%98%E5%AE%9D%E4%BF%A1%E8%AA%89%2C%E5%BE%AE%E4%BF%A1',
-                   'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E6%B7%98%E5%AE%9D%E4%BF%A1%E8%AA%89%2C%E5%A8%81%E4%BF%A1',
-                   'http://tieba.baidu.com/f/search/res?ie=utf-8&qw=%E4%BB%A3%E5%8A%9E%E4%BF%A1%E7%94%A8%E5%8D%A1%2C%E5%BE%AE%E4%BF%A1&red_tag=d1825314021',
                   ]
     try:
         for origin_url in origin_urls:

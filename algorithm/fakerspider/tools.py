@@ -9,6 +9,13 @@ import requests
 from pypinyin import lazy_pinyin
 
 
+def parse_content(html,xpath_rule):
+    for xpath in xpath_rule:
+        account_nickname_list = html.xpath(xpath)
+        if len(account_nickname_list):
+            return account_nickname_list[0]
+
+
 # 去除emoji表情符号
 def remove_emoji(text):
     try:
