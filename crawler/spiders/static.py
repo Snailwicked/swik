@@ -1,6 +1,6 @@
 import scrapy
 from urllib.parse import urljoin
-from utils.base_utils.headers import random_headers
+from utils.headers import random_headers
 
 class QuotesSpider(scrapy.Spider):
     name = "quotes"

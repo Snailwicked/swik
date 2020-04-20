@@ -1,6 +1,6 @@
 import requests
 from utils.spider_utils.xpathtexts import xPathTexts
-from utils.base_utils.headers import headers
+from utils.headers import headers
 import time
 from utils.base_utils.bloomfilter import filterutil
 from urllib.parse import urljoin

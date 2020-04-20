@@ -111,13 +111,41 @@ def get_domain(website):
     :param website: str
     :return: domain :str
     """
-    domain_temp = urlparse(website)[1]
-    index = domain_temp.index('.')
-    domain = domain_temp[index+1:]
+    try:
+        domain_temp = urlparse(website)[1]
+        index = domain_temp.index('.')
+        domain = domain_temp[index+1:]
+    except:
+        return ""
     return domain
 
+def insert_data(db,data,source,sql):
+    cursors = db.cursor()
+    try:
+        sql_select = 'SELECT DISTINCT weixinhao, qq, phone FROM wa_key where source="%s"' % source
+        cursors.execute(sql_select)
+        db.commit()
+        results = cursors.fetchall()
+        if {'weixinhao': data["weixinhao"], 'qq':data["qq"] , 'phone': data["phone"]} not in results:
+            cursors.execute(sql)
+            db.commit()
+    except Exception as e:
+        print(e)
+        db.rollback()
 
 def get_number(text):
+    domain = re.search(r'(https?://)?([\da-z-]+)\.([\da-z\.-]*)[\.]*([a-z\.]{2,6})([/a-zA-Z0-9\.-]+)+/?', text)
+    if domain:
+        domain = domain[0]
+        if "www" in domain:
+            domain = get_domain(domain)
+        elif ".." in domain:
+            domain = ""
+        else:
+            domain = domain
+    else:
+        domain = ""
+
     website = re.search(r'(https?://)?([\da-z-]+)\.([\da-z\.-]*)[\.]*([a-z\.]{2,6})([/a-zA-Z0-9\.-]+)+/?',text)
     if website:
         website = website[0]
@@ -145,6 +173,7 @@ def get_number(text):
         phone_detail = ""
         phone = ""
 
+
     qq_detail = re.findall(r'[Qq扣秋]{1,2}[Qq:：扣号秋 是]{0,4}[1-9][0-9]{4,14}', text)
     if len(qq_detail) > 0:
         qq_detail = qq_detail[0]
@@ -152,11 +181,14 @@ def get_number(text):
     else:
         qq_detail = ""
         qq = ""
+
+
     e_mail = re.findall(r'([a-zA-Z0-9_.+-]+@[a-fh-pr-zA-FH-PRZ0-9-]+\.[a-zA-Z0-9-.]+)', text)
     if len(e_mail) > 0:
         e_mail = e_mail[0]
     else:
         e_mail = ""
+
     text = re.sub(r'[Qq扣秋]{1,2}[Qq:：扣号秋 是]{0,4}[1-9][0-9]{4,14}', ' ', text)
     text = text.replace("，", " ").replace("。", " ").replace("  ", " ").replace("  ", " ").replace("  ",
                                                                                                   " ").replace(
@@ -230,7 +262,7 @@ def get_number(text):
     else:
         weixin = ""
         weixinhao = ""
-    return e_mail,website ,weixin ,weixinhao, qq, qq_detail,phone,phone_detail
+    return domain ,e_mail,website ,weixin ,weixinhao, qq, qq_detail,phone,phone_detail
 
 headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
            'Accept-Encoding': 'gzip, deflate, br',

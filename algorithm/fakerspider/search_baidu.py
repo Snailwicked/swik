@@ -101,7 +101,10 @@ if __name__ == '__main__':
                 ('wd', '{}'.format(kw)),
                 ('pn', '{}'.format(item)),
             )
-            crawl(url,params)
+            try:
+                crawl(url,params)
+            except:
+                pass
     # baiduurl_list = ['https://www.baidu.com/s?wd={}&pn={}'.format(a, i)
     #                  for a in ['低额贷款', '银行卡'] for i in range(0, 200, 10)]
     # for item in baiduurl_list:

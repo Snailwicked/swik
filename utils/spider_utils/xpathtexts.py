@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests,re
 from lxml import etree
-from utils.spider_utils.headers import random_headers
+from utils.headers import random_headers
 
 class xPathTexts(object):
 

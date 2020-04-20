@@ -250,7 +250,7 @@ if __name__ == '__main__':
     #
     # for item in url_list:
     #     print(item)
-    #     crawl(item)
+    #     get_number
 
     # url = "https://www.baidu.com/s?wd=低额贷款&pn=10"
     # crawl(url)

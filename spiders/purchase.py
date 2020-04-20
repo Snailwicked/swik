@@ -1,5 +1,5 @@
 import requests,time
-from utils.base_utils.headers import random_headers
+from utils.headers import random_headers
 from lxml import etree
 cookies = {
     'acw_tc': '781bad0a15730944068836592e415cdc5b7c4f8bf3d3b354e0485da077703e',

@@ -165,5 +165,5 @@ def spider_web_site():
     return crawler.monitor_info()
 
 if __name__ == '__main__':
-    crawler_info.info("If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line")
+    crawler_info.info("If you do not see the data, enter 'celery -A workers.app worker -l info -P eventlet' on the command line")
     app.run(debug=True)

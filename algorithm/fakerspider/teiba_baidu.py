@@ -8,21 +8,8 @@ import time
 import datetime
 import pymysql
 from algorithm.fakerspider.tools import check_text, remove_emoji
-
 from algorithm.fakerspider.tools import get_number,parse_content
-
-
-headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-           'Accept-Encoding': 'gzip, deflate, br',
-           'Accept-Language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
-           'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36',
-           'Content-Type': 'application/x-www-form-urlencoded',
-           'Host': 'tieba.baidu.com',
-           'Cache-Control': 'max-age=0',
-           'Upgrade-Insecure-Requests': '1',
-          }
-
-
+from utils.headers import random_headers as headers
 
 def get_links():
     '''
@@ -141,35 +128,39 @@ def crawl():
                                 comments = str(item.xpath("//span[@class='lzl_content_main']//text()")[0]).strip()
                                 # coument_time = item.xpath("//span[@class='lzl_time']//text()")[0]
 
-                    crawl_time = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-                    isPass = 2
-                    account_url = url
-                    source = "百度贴吧-重点网站"
-                    text = account_nickname.strip() + " " + content.strip() + " " + account_nickname.strip()
+                                crawl_time = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+                                isPass = 2
+                                account_url = url
+                                source = "百度贴吧-重点网站"
+                                text = account_nickname.strip() + " " + content.strip() + " " + comments_nickname.strip()+" " + comments.strip()
 
-                    if check_text(text):
-                        e_mail,website ,weixin ,weixinhao, qq,qq_detail, phone,phone_detail = get_number(text)
+                                if check_text(text):
+                                    domain ,e_mail,website ,weixin ,weixinhao, qq,qq_detail, phone,phone_detail = get_number(text)
+                                    data ={}
+                                    data["weixinhao"] = weixinhao
+                                    data["qq"] = qq
+                                    data["phone"] = phone
 
-                        if weixinhao or qq or phone:
-                            print("联系方式", get_number(text))
-                            try:
-                                sql = 'SELECT DISTINCT weixinhao, qq, phone FROM wa_key where source="%s"' % source
-                                cursors.execute(sql)
-                                db.commit()
-                                results = cursors.fetchall()
-                                if {'weixinhao': weixinhao, 'qq': qq, 'phone': phone} not in results:
-                                    sql = 'insert into wa_key(source, account_url, account_nickname, content, comments, crawl_time, publish_time, comments_nickname, post_id, isPass, weixin, weixinhao, qq_detail, qq, phone_detail, phone, e_mail, website) values ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%d", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")' % (
-                                        source, account_url, pymysql.escape_string(account_nickname),
-                                        pymysql.escape_string(content.strip()), pymysql.escape_string(comments), crawl_time, time_list,
-                                        pymysql.escape_string(comments_nickname), temp_html["content"]["post_id"], isPass, pymysql.escape_string(weixin),
-                                        weixinhao, pymysql.escape_string(qq_detail), qq, pymysql.escape_string(phone_detail), phone,
-                                        e_mail, website)
-                                    print(sql)
-                                    cursors.execute(sql)
-                                    db.commit()
-                            except Exception as e:
-                                print(e)
-                                db.rollback()
+                                    if weixinhao or qq or phone:
+                                        print("联系方式", get_number(text))
+                                        try:
+                                            sql = 'SELECT DISTINCT weixinhao, qq, phone FROM wa_key where source="%s"' % source
+                                            cursors.execute(sql)
+                                            db.commit()
+                                            results = cursors.fetchall()
+                                            if {'weixinhao': weixinhao, 'qq': qq, 'phone': phone} not in results:
+                                                sql = 'insert into wa_key(source, account_url, account_nickname, content, comments, crawl_time, publish_time, comments_nickname, post_id, isPass, weixin, weixinhao, qq_detail, qq, phone_detail, phone, e_mail, website) values ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%d", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")' % (
+                                                    source, account_url, pymysql.escape_string(account_nickname),
+                                                    pymysql.escape_string(content.strip()), pymysql.escape_string(comments), crawl_time, time_list,
+                                                    pymysql.escape_string(comments_nickname), temp_html["content"]["post_id"], isPass, pymysql.escape_string(weixin),
+                                                    weixinhao, pymysql.escape_string(qq_detail), qq, pymysql.escape_string(phone_detail), phone,
+                                                    e_mail, website)
+                                                print(sql)
+                                                cursors.execute(sql)
+                                                db.commit()
+                                        except Exception as e:
+                                            print(e)
+                                            db.rollback()
         except:
             continue
 try:
