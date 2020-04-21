@@ -24,3 +24,10 @@ class User(Base):
 
     def single_to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class KeyWords(Base):
+    __table__ = key_words
+
+    def single_to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

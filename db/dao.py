@@ -7,9 +7,39 @@ import time
 
 from db.basic import db_session
 from db.models import (
-    MainUrl,SpiderTask
+    MainUrl,SpiderTask,KeyWords
 )
 from utils.exception_utils import db_commit_decorator
+
+class KeyWordsOper:
+
+    @classmethod
+    @db_commit_decorator
+    def select_by_parameter(cls, parameter):
+
+        page = int(parameter['page'])
+        limit = int(parameter['limit'])
+        status = int(parameter['status'])
+        keyword = str(parameter['keyword'])
+        try:
+        #     datas = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
+        #                                              MainUrl.webSite.like(
+        #                                                  "%{}%".format(keyword))).limit(
+        #         limit).offset(
+        #         (page - 1) * limit)
+        #     count = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
+        #                                              MainUrl.webSite.like("%{}%".format(keyword))).count()
+        #
+        #     db_session.close()
+
+            return {"code": "200", "message": "succeed", "data": [],
+                    "count": 1}
+
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed", "data": [], "count": 0}
+
+
 
 
 class MainUrlOper:
