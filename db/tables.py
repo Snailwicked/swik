@@ -46,5 +46,10 @@ key_words = Table("key_words", metadata,
                 Column("create_time", DATE ,nullable=False))
 
 
-
-__all__ = ['main_url','spider_task',"user","key_words"]
+word_list = Table("word_list", metadata,
+                Column("id", INTEGER, primary_key=True, autoincrement=True),
+                Column("pid", String(500), default='', server_default=''),
+                Column("word_list", String(500), default="", server_default=''),
+                Column("key", String(500), default="", server_default=''),
+                  )
+__all__ = ['main_url','spider_task',"user","key_words","word_list"]

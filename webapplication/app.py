@@ -51,7 +51,11 @@ def select_key_words():
     data = keyword.select_by_parameter(parameter)
     return jsonify(data)
 
-
+@app.route('/key_words/select_by_id')
+def select_key_words_by_id():
+    parameter = request.values.to_dict()
+    data = keyword.select_by_id(parameter)
+    return jsonify(data)
 ########################################################################################################################
 '''
     站点模块代码

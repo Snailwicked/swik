@@ -31,3 +31,10 @@ class KeyWords(Base):
 
     def single_to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class WordList(Base):
+    __table__ = word_list
+
+    def single_to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

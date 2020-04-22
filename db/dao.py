@@ -7,7 +7,7 @@ import time
 
 from db.basic import db_session
 from db.models import (
-    MainUrl,SpiderTask,KeyWords
+    MainUrl,SpiderTask,KeyWords,WordList
 )
 from utils.exception_utils import db_commit_decorator
 
@@ -29,13 +29,14 @@ class KeyWordsOper:
             #     limit).offset(
             #     (page - 1) * limit)
             count = db_session.query(KeyWords).count()
-            info_list = []
+
             db_session.close()
+            info_list = []
             for item in datas:
                 new_item = item.single_to_dict()
-                new_item["key_words_list"] = [{"key":"微博","words_list":["信用卡","刷单"]},{"key":"知乎","words_list":["贷款","信贷"]}]
+                new_item["key_words_list"] = [{"key": "微博", "words_list": ["信用卡", "刷单"]},
+                                              {"key": "知乎", "words_list": ["贷款", "信贷"]}]
                 info_list.append(new_item)
-
             return {"code": "200", "message": "succeed", "data": info_list,
                     "count": count}
 
@@ -43,6 +44,37 @@ class KeyWordsOper:
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
+
+    @classmethod
+    @db_commit_decorator
+    def select_by_id(cls, parameter):
+
+        id = int(parameter['id'])
+        # limit = int(parameter['limit'])
+        # status = int(parameter['status'])
+        # keyword = str(parameter['keyword'])
+        try:
+            datas = db_session.query(KeyWords,WordList).filter(KeyWords.id == id,KeyWords.pid == WordList.pid)
+            # datas = db_session.query(KeyWords).limit(
+            #     limit).offset(
+            #     (page - 1) * limit)
+            # count = db_session.query(KeyWords).filter(KeyWords.pid == WordList.pid).count()
+            db_session.close()
+            info_list={}
+            word_list = []
+            for item,item2 in datas:
+                info_list = item.single_to_dict()
+                new_item2 = item2.single_to_dict()
+                new_item2["word_list"]=eval(new_item2["word_list"])
+                word_list.append(new_item2)
+            info_list["word_list"] = word_list
+            # print(info_list)
+            return {"code": "200", "message": "succeed", "data": info_list,
+                    "count": 1}
+
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
 
 
@@ -330,9 +362,9 @@ if __name__ == '__main__':
     parameter = {
                 "page":1,
                 "limit":10,
-                # "keyword":""
+                "id":1
             }
-    print(spider_task.select_by_parameter(parameter))
+    print(spider_task.select_by_id(parameter))
     # parameter = {
     #             "id":27,
     #         }
