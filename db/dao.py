@@ -19,8 +19,8 @@ class KeyWordsOper:
 
         page = int(parameter['page'])
         limit = int(parameter['limit'])
-        status = int(parameter['status'])
-        keyword = str(parameter['keyword'])
+        # status = int(parameter['status'])
+        # keyword = str(parameter['keyword'])
         try:
         #     datas = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
         #                                              MainUrl.webSite.like(
@@ -31,9 +31,10 @@ class KeyWordsOper:
         #                                              MainUrl.webSite.like("%{}%".format(keyword))).count()
         #
         #     db_session.close()
+            data = [{"id":1,"key_name":"小猪佩奇","key_words_list":[{"key":"微博","words_list":["信用卡","刷单"]},{"key":"知乎","words_list":["贷款","信贷"]}],"create_time":"2020-04-23 09:28:57"},{"id":2,"key_name":"小猪佩奇","key_words_list":[{"key":"微博","words_list":["信用卡","刷单"]},{"key":"知乎","words_list":["贷款","信贷"]}],"create_time":"2020-04-23 09:28:57"}]
 
-            return {"code": "200", "message": "succeed", "data": [],
-                    "count": 1}
+            return {"code": "200", "message": "succeed", "data": data,
+                    "count": 2}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()

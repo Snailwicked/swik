@@ -8,12 +8,14 @@ from db import News_data
 from db.dao import MainUrlOper
 from db.dao import TaskConfigOper
 from db.dao import SpiderTaskOper
+from db.dao import KeyWordsOper
 
 con = News_data()
 import json
 mainurl = MainUrlOper()
 taskconfig = TaskConfigOper()
 spidertask = SpiderTaskOper()
+keyword = KeyWordsOper()
 system = System()
 SECRET_KEY = 'This is the key'
 app = Flask(__name__)
@@ -40,6 +42,15 @@ def new_delete():
     print(parameter)
     # result = con.select_by_paramters(parameter)
     return jsonify(parameter)
+
+
+
+@app.route('/key_words/select')
+def select_key_words():
+    parameter = request.values.to_dict()
+    data = keyword.select_by_parameter(parameter)
+    return jsonify(data)
+
 
 ########################################################################################################################
 '''
