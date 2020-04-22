@@ -14,7 +14,7 @@ from utils.exception_utils import db_commit_decorator
 class KeyWordsOper:
 
     @classmethod
-    @db_commit_decorator
+    # @db_commit_decorator
     def select_by_parameter(cls, parameter):
 
         page = int(parameter['page'])
@@ -22,19 +22,22 @@ class KeyWordsOper:
         # status = int(parameter['status'])
         # keyword = str(parameter['keyword'])
         try:
-        #     datas = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
-        #                                              MainUrl.webSite.like(
-        #                                                  "%{}%".format(keyword))).limit(
-        #         limit).offset(
-        #         (page - 1) * limit)
-        #     count = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
-        #                                              MainUrl.webSite.like("%{}%".format(keyword))).count()
-        #
-        #     db_session.close()
-            data = [{"id":1,"key_name":"小猪佩奇","key_words_list":[{"key":"微博","words_list":["信用卡","刷单"]},{"key":"知乎","words_list":["贷款","信贷"]}],"create_time":"2020-04-23 09:28:57"},{"id":2,"key_name":"小猪佩奇","key_words_list":[{"key":"微博","words_list":["信用卡","刷单"]},{"key":"知乎","words_list":["贷款","信贷"]}],"create_time":"2020-04-23 09:28:57"}]
+            datas = db_session.query(KeyWords).filter(KeyWords.pid == 23).limit(
+                limit).offset(
+                (page - 1) * limit)
+            # datas = db_session.query(KeyWords).limit(
+            #     limit).offset(
+            #     (page - 1) * limit)
+            count = db_session.query(KeyWords).count()
+            info_list = []
+            db_session.close()
+            for item in datas:
+                new_item = item.single_to_dict()
+                new_item["key_words_list"] = [{"key":"微博","words_list":["信用卡","刷单"]},{"key":"知乎","words_list":["贷款","信贷"]}]
+                info_list.append(new_item)
 
-            return {"code": "200", "message": "succeed", "data": data,
-                    "count": 2}
+            return {"code": "200", "message": "succeed", "data": info_list,
+                    "count": count}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
@@ -323,16 +326,16 @@ if __name__ == '__main__':
     #     }
     # print(spider.select_by_id(parameter))
         #     # spider.add_one(parameter)
-    spider_task = SpiderTaskOper()
-    # parameter = {
-    #             "page":1,
-    #             "limit":10,
-    #             "keyword":""
-    #         }
-    # print(spider_task.select_by_parameter(parameter))
+    spider_task = KeyWordsOper()
     parameter = {
-                "id":27,
+                "page":1,
+                "limit":10,
+                # "keyword":""
             }
-    result = spider_task.start_task(parameter)
-    print(result)
-    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+    print(spider_task.select_by_parameter(parameter))
+    # parameter = {
+    #             "id":27,
+    #         }
+    # result = spider_task.start_task(parameter)
+    # print(result)
+    # print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
