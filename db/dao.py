@@ -14,7 +14,7 @@ from utils.exception_utils import db_commit_decorator
 class KeyWordsOper:
 
     @classmethod
-    # @db_commit_decorator
+    @db_commit_decorator
     def select_by_parameter(cls, parameter):
 
         page = int(parameter['page'])
@@ -75,6 +75,28 @@ class KeyWordsOper:
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
+
+    @classmethod
+    # @db_commit_decorator
+    def update_word_list(cls, parameter):
+
+        id = int(parameter['id'])
+        remark = parameter['word_list']
+        word_list = db_session.query(WordList).filter(WordList.id == id).first()
+        try:
+            word_list.word_list = str(remark)
+            db_session.commit()
+            db_session.close()
+            return {"code": "200", "message": "succeed",}
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed"}
+            # datas = db_session.query(KeyWords).limit(
+            #     limit).offset(
+            #     (page - 1) * limit)
+            # count = db_session.query(KeyWords).filter(KeyWords.pid == WordList.pid).count()
+
+
 
 
 
@@ -359,12 +381,8 @@ if __name__ == '__main__':
     # print(spider.select_by_id(parameter))
         #     # spider.add_one(parameter)
     spider_task = KeyWordsOper()
-    parameter = {
-                "page":1,
-                "limit":10,
-                "id":1
-            }
-    print(spider_task.select_by_id(parameter))
+    parameter = {'id': '1', 'word_lsit': '["萨瓦迪卡","思密达"]'}
+    print(spider_task.update_word_list(parameter))
     # parameter = {
     #             "id":27,
     #         }

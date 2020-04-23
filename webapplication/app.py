@@ -56,6 +56,14 @@ def select_key_words_by_id():
     parameter = request.values.to_dict()
     data = keyword.select_by_id(parameter)
     return jsonify(data)
+
+@app.route('/word_list/update_by_id')
+def update_words_list_by_id():
+    parameter = request.values.to_dict()
+    print(parameter)
+    data = keyword.update_word_list(parameter)
+    return jsonify(data)
+
 ########################################################################################################################
 '''
     站点模块代码
