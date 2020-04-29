@@ -43,12 +43,21 @@ def new_delete():
     # result = con.select_by_paramters(parameter)
     return jsonify(parameter)
 
-
-
+########################################################################################################################
+'''
+    关键词模块
+    get_tasks_on：  更新站点站点子类信息
+'''
 @app.route('/key_words/select')
 def select_key_words():
     parameter = request.values.to_dict()
     data = keyword.select_by_parameter(parameter)
+    return jsonify(data)
+
+@app.route('/key_words/delete_by_id')
+def delete_key_words_by_id():
+    parameter = request.values.to_dict()
+    data = keyword.delete_by_id(parameter)
     return jsonify(data)
 
 @app.route('/key_words/select_by_id')
@@ -60,10 +69,27 @@ def select_key_words_by_id():
 @app.route('/word_list/update_by_id')
 def update_words_list_by_id():
     parameter = request.values.to_dict()
-    print(parameter)
     data = keyword.update_word_list(parameter)
     return jsonify(data)
 
+@app.route('/word_list/delete_word_list_by_id')
+def delete_word_list_by_id():
+    parameter = request.values.to_dict()
+    print(parameter)
+    data = keyword.delete_word_list_by_id(parameter)
+    print("dadada",data)
+    return jsonify(data)
+@app.route('/word_list/add_word_list_by_key_id')
+def add_word_list_by_key_id():
+    parameter = request.values.to_dict()
+    data = keyword.add_word_list_by_key_id(parameter)
+    return jsonify(data)
+
+@app.route('/key_words/add_key_word')
+def add_key_word():
+    parameter = request.values.to_dict()
+    data = keyword.add_key_word(parameter)
+    return jsonify(data)
 ########################################################################################################################
 '''
     站点模块代码
@@ -189,4 +215,8 @@ def spider_web_site():
 
 if __name__ == '__main__':
     crawler_info.info("If you do not see the data, enter 'celery -A workers.app worker -l info -P eventlet' on the command line")
-    app.run(debug=True)
+    crawler_info.info("If you do not see the data, enter 'celery -A tasks.workers.app worker -l info -P eventlet' on the command line")
+
+    # app.run(host='192.168.4.2',port=5001)
+
+    app.run(debug=True,port=5000)

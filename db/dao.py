@@ -19,15 +19,10 @@ class KeyWordsOper:
 
         page = int(parameter['page'])
         limit = int(parameter['limit'])
-        # status = int(parameter['status'])
-        # keyword = str(parameter['keyword'])
         try:
-            datas = db_session.query(KeyWords).filter(KeyWords.pid == 23).limit(
+            datas = db_session.query(KeyWords).limit(
                 limit).offset(
                 (page - 1) * limit)
-            # datas = db_session.query(KeyWords).limit(
-            #     limit).offset(
-            #     (page - 1) * limit)
             count = db_session.query(KeyWords).count()
 
             db_session.close()
@@ -50,26 +45,19 @@ class KeyWordsOper:
     def select_by_id(cls, parameter):
 
         id = int(parameter['id'])
-        # limit = int(parameter['limit'])
-        # status = int(parameter['status'])
-        # keyword = str(parameter['keyword'])
         try:
-            datas = db_session.query(KeyWords,WordList).filter(KeyWords.id == id,KeyWords.pid == WordList.pid)
-            # datas = db_session.query(KeyWords).limit(
-            #     limit).offset(
-            #     (page - 1) * limit)
-            # count = db_session.query(KeyWords).filter(KeyWords.pid == WordList.pid).count()
+            KeyWords_info = db_session.query(KeyWords).filter(KeyWords.id == id).first()
+            word_info= KeyWords_info.single_to_dict()
+            datas = db_session.query(WordList).filter(WordList.pid==int(word_info["pid"]))
             db_session.close()
-            info_list={}
             word_list = []
-            for item,item2 in datas:
+            for item in datas:
                 info_list = item.single_to_dict()
-                new_item2 = item2.single_to_dict()
-                new_item2["word_list"]=eval(new_item2["word_list"])
-                word_list.append(new_item2)
-            info_list["word_list"] = word_list
-            # print(info_list)
-            return {"code": "200", "message": "succeed", "data": info_list,
+                info_list["word_list"]=str(info_list["word_list"]).split(",")
+                word_list.append(info_list)
+            word_info["word_list"] = word_list
+
+            return {"code": "200", "message": "succeed", "data": word_info,
                     "count": 1}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
@@ -77,7 +65,58 @@ class KeyWordsOper:
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
     @classmethod
-    # @db_commit_decorator
+    @db_commit_decorator
+    def delete_by_id(cls, parameter):
+
+        id = int(parameter['id'])
+
+        result = cls.select_by_id(parameter)
+        if result["data"]:
+            return {"code": "400", "message":"请先清空关键词中所有词组"}
+        else:
+            try:
+                keyword = db_session.query(KeyWords).filter(
+                    KeyWords.id == id).first()
+                db_session.delete(keyword)
+                db_session.commit()
+                db_session.close()
+                return {"code": "200", "message": "删除成功"}
+            except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+                db_session.close()
+
+    @classmethod
+    @db_commit_decorator
+    def add_key_word(cls, parameter):
+        key_name = parameter["key_name"]
+
+        def select_by_key_name(key_name):
+            try:
+                KeyWords_info = db_session.query(KeyWords).filter(KeyWords.key_name == key_name).first()
+                return KeyWords_info.single_to_dict()
+            except:
+                return []
+        result = select_by_key_name(key_name)
+        if len(result)!=0:
+            return {"code": "400", "message": "关键词名重复"}
+        else:
+            key_word = KeyWords()
+            key_word.key_name = key_name
+            datetime_str = time.strftime('%Y-%m-%d %H', time.localtime(time.time()))
+            key_word.pid = int(time.time())
+            key_word.create_time = datetime_str
+            try:
+                db_session.add(key_word)
+                db_session.commit()
+                db_session.close()
+                return {"code": "200", "message": "添加成功"}
+            except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+                db_session.close()
+                return {"code": "400", "message": "添加失败"}
+
+
+
+    @classmethod
+    @db_commit_decorator
     def update_word_list(cls, parameter):
 
         id = int(parameter['id'])
@@ -91,12 +130,40 @@ class KeyWordsOper:
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed"}
-            # datas = db_session.query(KeyWords).limit(
-            #     limit).offset(
-            #     (page - 1) * limit)
-            # count = db_session.query(KeyWords).filter(KeyWords.pid == WordList.pid).count()
+
+    @classmethod
+    # @db_commit_decorator
+    def delete_word_list_by_id(cls, parameter):
 
 
+        try:
+            word_list = db_session.query(WordList).filter(WordList.id == int(parameter['id'])).first()
+            # print(word_list.single_to_dict())
+
+            db_session.delete(word_list)
+            db_session.commit()
+            db_session.close()
+            return {"code": "200", "message": "succeed",}
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed"}
+
+    @classmethod
+    @db_commit_decorator
+    def add_word_list_by_key_id(cls, parameter):
+
+        pid = int(parameter['pid'])
+        word_list = WordList()
+        word_list.key = parameter["key"]
+        word_list.pid = pid
+        try:
+            db_session.add(word_list)
+            db_session.commit()
+            db_session.close()
+            return {"code": "200", "message": "succeed", }
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed"}
 
 
 
@@ -111,22 +178,25 @@ class MainUrlOper:
             mainurl.remark = remark
             db_session.commit()
             db_session.close()
-        except:
-            pass
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed"}
         try:
             status = parameter['status']
             mainurl.status = status
             db_session.commit()
             db_session.close()
-        except:
-            pass
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed"}
         try:
             rule= parameter['rule']
             mainurl.rule =  rule
             db_session.commit()
             db_session.close()
-        except:
-            pass
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            db_session.close()
+            return {"code": "404", "message": "fialed"}
 
     @classmethod
     @db_commit_decorator
@@ -381,8 +451,8 @@ if __name__ == '__main__':
     # print(spider.select_by_id(parameter))
         #     # spider.add_one(parameter)
     spider_task = KeyWordsOper()
-    parameter = {'id': '1', 'word_lsit': '["萨瓦迪卡","思密达"]'}
-    print(spider_task.update_word_list(parameter))
+    parameter = {'id': '50', 'word_lsit': '["萨瓦迪卡","思密达"]',"page":1,"limit":5}
+    print(spider_task.delete_word_list_by_id(parameter))
     # parameter = {
     #             "id":27,
     #         }

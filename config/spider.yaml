@@ -52,9 +52,8 @@ db:
 
 
 mongo:
-    host: 127.0.0.1
+    host: 47.105.140.207
     port: 27017
-    user: root
     db_name: spider_data
     table_name: news_data
 

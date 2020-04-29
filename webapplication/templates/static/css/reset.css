@@ -1,6 +1,6 @@
 html,
 body {
-  background-color: #fff;
+  background-color: #f0f2f5;
   color: #000;
   font-size: 16px;
   min-width: 1024px;
@@ -223,10 +223,12 @@ a:hover {
   outline: 0;
   text-decoration: none;
 }
+
 /* 鼠标悬停小手 */
 .hovering {
   cursor: pointer
 }
+
 /* 清理浮动 */
 .f-clear:after {
   display: block;
@@ -235,32 +237,35 @@ a:hover {
   clear: both;
   height: 0;
 }
+
 /* ant design 样式修改 */
-.ant-table-thead > tr > th, .ant-table-tbody > tr > td{
+.ant-table-thead>tr>th,
+.ant-table-tbody>tr>td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.ant-modal{
+.ant-modal {
   /* top: 50%;
   transform: translateY(-50%);
   padding-bottom: 0;
   overflow: auto; */
 }
 
-.ant-modal-body{
+.ant-modal-body {
   padding-top: 24px;
 }
-.ant-table-tbody > tr >td:nth-child(5){
+
+.ant-table-tbody>tr>td:nth-child(5) {
   padding: 0
 }
 
-.ant-table-tbody > tr >td:nth-child(6){
+.ant-table-tbody>tr>td:nth-child(6) {
   padding: 0
 }
 
-.ant-table-tbody > tr >td:nth-child(2){
+.ant-table-tbody>tr>td:nth-child(2) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -270,4 +275,3 @@ th.column-money,
 td.column-money {
   text-align: right !important;
 }
-

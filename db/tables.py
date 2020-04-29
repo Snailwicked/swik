@@ -41,8 +41,8 @@ user = Table("user", metadata,
 
 key_words = Table("key_words", metadata,
                 Column("id", INTEGER, primary_key=True, autoincrement=True),
-                Column("key_name", INTEGER, default=1, server_default=''),
-                Column("pid", String(500), default='', server_default=''),
+                Column("key_name", INTEGER, default="", server_default=''),
+                Column("pid", INTEGER, default=1, server_default=''),
                 Column("create_time", DATE ,nullable=False))
 
 

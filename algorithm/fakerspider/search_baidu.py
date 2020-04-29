@@ -22,6 +22,8 @@ cookies = {
 }
 
 configs = {'host': '180.97.15.181', 'user': 'root', 'password': 'Vrv123!@#', 'db': 'fakespider'}
+# configs = {'host': '192.168.30.217', 'user': 'root', 'password': 'wzh234287', 'db': 'fakespider'}
+
 
 requests.packages.urllib3.disable_warnings()
 source = "搜索引擎-百度"

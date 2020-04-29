@@ -2,11 +2,15 @@ from config import *
 from tasks.workers import app
 from tasks.accurate_crawler  import Crawleruning
 from db.dao import SpiderTaskOper
+from db.mongo_db import News_data
 spider_task = SpiderTaskOper()
 from tasks.parse import Parse
 parse = Parse()
 from db.redis_db import Url_Parameter
 url_parameter = Url_Parameter
+news_data = News_data()
+
+
 @app.task(ignore_result=True)
 def start_crawler(parameter):
     parameters = {}
@@ -14,7 +18,6 @@ def start_crawler(parameter):
     key = 1
     while key:
         urls = url_parameter.fetch_parameters("parameter")
-
         if len(urls)!=0:
             for item in urls:
                 '''
@@ -36,6 +39,7 @@ def start_crawler(parameter):
                 crawler.set_parameter(item)
                 crawler.start()
                 target_url = crawler.process()
+                print(crawler.count)
                 for sub_url in target_url:
                     item["url"] = sub_url
                     app.send_task('tasks.start_task.parse_url',
@@ -55,6 +59,7 @@ def parse_url(parameter):
     import time
     time.sleep(1)
     item = parse.get_data(parameter)
+    news_data.insert(item)
     # with topic.get_producer() as producer:
     #     string = bytes(str(json.dumps(item)), encoding='utf-8')
     #     producer.produce(string)
