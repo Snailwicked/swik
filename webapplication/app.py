@@ -9,6 +9,8 @@ from db.dao import MainUrlOper
 from db.dao import TaskConfigOper
 from db.dao import SpiderTaskOper
 from db.dao import KeyWordsOper
+from db.dao import TemplateOper
+from db.dao import KeyAndTemplateOper
 
 con = News_data()
 import json
@@ -16,6 +18,9 @@ mainurl = MainUrlOper()
 taskconfig = TaskConfigOper()
 spidertask = SpiderTaskOper()
 keyword = KeyWordsOper()
+template = TemplateOper()
+keyandtemplate = KeyAndTemplateOper()
+
 system = System()
 SECRET_KEY = 'This is the key'
 app = Flask(__name__)
@@ -42,6 +47,30 @@ def new_delete():
     print(parameter)
     # result = con.select_by_paramters(parameter)
     return jsonify(parameter)
+
+########################################################################################################################
+'''
+    模板配置
+    get_tasks_on：  更新站点站点子类信息
+'''
+@app.route('/key_select_template/add')
+def key_select_template():
+    parameter = request.values.to_dict()
+    data = keyandtemplate.add_list(parameter)
+    return jsonify(data)
+
+########################################################################################################################
+'''
+    关键词模块
+    get_tasks_on：  更新站点站点子类信息
+'''
+@app.route('/template/select')
+def select_template():
+    parameter = request.values.to_dict()
+    data = template.select_by_parameter(parameter)
+    return jsonify(data)
+
+
 
 ########################################################################################################################
 '''

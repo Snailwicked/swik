@@ -56,8 +56,8 @@ def get_comments(params,content_info):
 
 
 
-# db = pymysql.connect(host='180.97.15.181', port=3306, user='root', passwd='Vrv123!@#', db='fakespider', use_unicode=True, charset='utf8mb4')
-db = pymysql.connect(host='192.168.30.217', port=3306, user='root', passwd='wzh234287', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+db = pymysql.connect(host='180.97.15.181', port=3306, user='root', passwd='Vrv123!@#', db='fakespider', use_unicode=True, charset='utf8mb4')
+# db = pymysql.connect(host='192.168.30.217', port=3306, user='root', passwd='wzh234287', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
 cursors = db.cursor()
 
@@ -151,7 +151,7 @@ import json
 if __name__ == '__main__':
     import requests
     keword =["手游充值","博彩","返利","返现","银行卡","代办信用卡","刷单","淘宝信誉"]
-    for page in range(2,40):
+    for page in range(2,11):
         for ke in keword:
             params = (
                 ('containerid', '100103type=1&q={}'.format(ke)),

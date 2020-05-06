@@ -52,4 +52,18 @@ word_list = Table("word_list", metadata,
                 Column("word_list", String(500), default="", server_default=''),
                 Column("key", String(500), default="", server_default=''),
                   )
-__all__ = ['main_url','spider_task',"user","key_words","word_list"]
+
+template = Table("template", metadata,
+                Column("id", INTEGER, primary_key=True, autoincrement=True),
+                Column("template_name", String(500), default='', server_default=''),
+                Column("status", INTEGER, default=1, server_default=''),
+                Column("path", String(500), default="", server_default=''),
+                  )
+
+key_and_template = Table("key_and_template", metadata,
+                Column("id", INTEGER, primary_key=True, autoincrement=True),
+                Column("key_id", INTEGER, default=1, server_default=''),
+                Column("template_id", INTEGER, default=1, server_default=''),
+                  )
+
+__all__ = ['main_url','spider_task',"user","key_words","word_list","template","key_and_template"]
