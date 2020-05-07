@@ -64,6 +64,8 @@ key_and_template = Table("key_and_template", metadata,
                 Column("id", INTEGER, primary_key=True, autoincrement=True),
                 Column("key_id", INTEGER, default=1, server_default=''),
                 Column("template_id", INTEGER, default=1, server_default=''),
-                  )
+                Column("word_list_id", INTEGER, default=1, server_default=''),
+
+                         )
 
 __all__ = ['main_url','spider_task',"user","key_words","word_list","template","key_and_template"]

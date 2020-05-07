@@ -47,19 +47,27 @@ class KeyWordsOper:
         id = int(parameter['id'])
         try:
             KeyWords_info = db_session.query(KeyWords).filter(KeyWords.id == id).first()
-            word_info= KeyWords_info.single_to_dict()
-            datas = db_session.query(WordList).filter(WordList.pid==int(word_info["pid"]))
-            db_session.close()
+            new_key_info  = KeyWords_info.single_to_dict()
+            KeyAndTemplate_info = db_session.query(KeyAndTemplate).filter(KeyAndTemplate.key_id == id)
             word_list = []
-            for item in datas:
-                info_list = item.single_to_dict()
-                info_list["word_list"]=str(info_list["word_list"]).split(",")
-                word_list.append(info_list)
-            word_info["word_list"] = word_list
+            for item in KeyAndTemplate_info:
+                item_info = {}
+                Template_info = db_session.query(Template).filter(Template.id == int(item.single_to_dict()["template_id"])).first()
+                WordList_info = db_session.query(WordList).filter(WordList.id == int(item.single_to_dict()["word_list_id"])).first()
+                item_info["id"] = WordList_info.single_to_dict()["id"]
+                item_info["key"] = Template_info.single_to_dict()["template_name"]
+                item_info["key_id"] = Template_info.single_to_dict()["id"]
 
-            return {"code": "200", "message": "succeed", "data": word_info,
+                item_info["word_list"] = str(WordList_info.single_to_dict()["word_list"]).split(",")
+                item_info["pid"] = Template_info.single_to_dict()["id"]
+                word_list.append(item_info)
+            new_key_info["word_list"] = word_list
+
+            db_session.close()
+
+            return {"code": "200", "message": "succeed", "data": new_key_info,
                     "count": 1}
-
+        #
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
@@ -419,6 +427,7 @@ class TaskConfigOper:
                 return {"code": "404", "message": "更新失败"}
         else:
             return {"code": "202", "message": "并没有移除数据"}
+keyword = KeyWordsOper()
 
 class TemplateOper:
 
@@ -444,11 +453,34 @@ class TemplateOper:
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
+    @classmethod
+    @db_commit_decorator
+    def select_remove_template(cls,parameter):
+        try:
+            result_all = cls.select_by_parameter(parameter)
+            result = keyword.select_by_id(parameter)
+            data_pid = result["data"]["word_list"]
+            data_page = result_all["data"]
+            for jtem in data_pid:
+                for item in data_page:
+                    if item["id"] == jtem["key_id"]:
+                        item["exist"] = 1
+            for item in data_page:
+                if "exist" not in str(item):
+                    item["exist"] = 0
+            return {"code": "200", "message": "succeed", "data": data_page,
+                    "count": result_all["count"]}
+        except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
+            return {"code": "404", "message": "fialed", "data": [], "count": 0}
+        # print(data_pid)
+        # print(data_page)
+        # print(len(data_page))
+
 
 class KeyAndTemplateOper:
 
     @classmethod
-    # @db_commit_decorator
+    @db_commit_decorator
     def add_list(cls,parameter):
         template_id_list = parameter["template_id_list"].split(",")
         key_id = parameter["key_id"]
@@ -506,9 +538,37 @@ if __name__ == '__main__':
     #     }
     # print(spider.select_by_id(parameter))
         #     # spider.add_one(parameter)
-    spider_task = KeyAndTemplateOper()
-    parameter = {"key_id":2,'template_id_list': "1,7,8,4"}
-    print(spider_task.add_list(parameter))
+    info = '''
+    {  
+        'code': '200', 
+        'message': 'succeed', 
+        'data': {
+                    'id': 1,
+                    'key_name':'test', 
+                    'pid': 23,
+                    'create_time': datetime.datetime(2020, 4, 23, 9, 28, 57), 
+                    'word_list': [
+                                    {
+                                        id': 53,
+                                        'pid': 23, 
+                                        'word_list': ['', '啊沙发', '富士达', '嘎嘎嘎', '111', '222', '333', '4444444444', '55555555555', '77777777', '8888888888888'], 
+                                        'key': '是的冯绍峰'
+                                    }, 
+                                    
+                                    {
+                                        'id': 91, 
+                                        'pid': 23,
+                                        'word_list': [''],
+                                        'key': '十多个富士达'}
+                                ] 
+                },
+        'count': 1}
+
+    '''
+    print(info)
+    spider_task = TemplateOper()
+    parameter = {"key_id":2,'template_id_list': "1,7,8,4","id":2,'page':2,'limit':5,'status':1}
+    print(spider_task.select_remove_template(parameter))
     # parameter = {
     #             "id":27,
     #         }

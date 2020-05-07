@@ -70,7 +70,11 @@ def select_template():
     data = template.select_by_parameter(parameter)
     return jsonify(data)
 
-
+@app.route('/template/select_remove')
+def select_remove_template():
+    parameter = request.values.to_dict()
+    data = template.select_remove_template(parameter)
+    return jsonify(data)
 
 ########################################################################################################################
 '''
