@@ -147,9 +147,10 @@ class KeyWordsOper:
     def delete_word_list_by_id(cls, parameter):
 
         try:
+            keyAndTemplate = db_session.query(KeyAndTemplate).filter(KeyAndTemplate.word_list_id == int(parameter['id'])).first()
+            db_session.delete(keyAndTemplate)
+            db_session.commit()
             word_list = db_session.query(WordList).filter(WordList.id == int(parameter['id'])).first()
-            # print(word_list.single_to_dict())
-
             db_session.delete(word_list)
             db_session.commit()
             db_session.close()

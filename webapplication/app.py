@@ -108,9 +108,7 @@ def update_words_list_by_id():
 @app.route('/word_list/delete_word_list_by_id')
 def delete_word_list_by_id():
     parameter = request.values.to_dict()
-    print(parameter)
     data = keyword.delete_word_list_by_id(parameter)
-    print("dadada",data)
     return jsonify(data)
 @app.route('/word_list/add_word_list_by_key_id')
 def add_word_list_by_key_id():
