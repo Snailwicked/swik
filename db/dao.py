@@ -77,11 +77,12 @@ class KeyWordsOper:
     def delete_by_id(cls, parameter):
 
         id = int(parameter['id'])
-
-        result = cls.select_by_id(parameter)
-        print(result)
+        try:
+            result = cls.select_by_id(parameter)
+        except:
+            return {"code": "404", "message": "数据库异常"}
         if result["data"]["word_list"]:
-            return {"code": "400", "message":"请先清空关键词中所有词组"}
+            return {"code": "400", "message": "请先清空关键词中所有词组"}
         else:
             try:
                 keyword = db_session.query(KeyWords).filter(
@@ -573,10 +574,10 @@ if __name__ == '__main__':
         'count': 1}
 
     '''
-    print(info)
-    spider_task = TemplateOper()
-    parameter = {"key_id":2,'template_id_list': "1,7,8,4","id":2,'page':2,'limit':5,'status':1}
-    print(spider_task.select_remove_template(parameter))
+    # print(info)
+    spider_task = KeyWordsOper()
+    parameter = {"key_id":2,'template_id_list': "1,7,8,4","id":19,'page':2,'limit':5,'status':1}
+    print(spider_task.delete_by_id(parameter))
     # parameter = {
     #             "id":27,
     #         }
