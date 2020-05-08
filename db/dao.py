@@ -2,14 +2,15 @@ from config import *
 from sqlalchemy.exc import IntegrityError as SqlalchemyIntegrityError
 from pymysql.err import IntegrityError as PymysqlIntegrityError
 from sqlalchemy.exc import InvalidRequestError
-import datetime,json
+import datetime, json
 import time
 
 from db.basic import db_session
 from db.models import (
-    MainUrl,SpiderTask,KeyWords,WordList, Template,KeyAndTemplate
+    MainUrl, SpiderTask, KeyWords, WordList, Template, KeyAndTemplate
 )
 from utils.exception_utils import db_commit_decorator
+
 
 class KeyWordsOper:
 
@@ -39,7 +40,6 @@ class KeyWordsOper:
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
 
-
     @classmethod
     @db_commit_decorator
     def select_by_id(cls, parameter):
@@ -47,13 +47,15 @@ class KeyWordsOper:
         id = int(parameter['id'])
         try:
             KeyWords_info = db_session.query(KeyWords).filter(KeyWords.id == id).first()
-            new_key_info  = KeyWords_info.single_to_dict()
+            new_key_info = KeyWords_info.single_to_dict()
             KeyAndTemplate_info = db_session.query(KeyAndTemplate).filter(KeyAndTemplate.key_id == id)
             word_list = []
             for item in KeyAndTemplate_info:
                 item_info = {}
-                Template_info = db_session.query(Template).filter(Template.id == int(item.single_to_dict()["template_id"])).first()
-                WordList_info = db_session.query(WordList).filter(WordList.id == int(item.single_to_dict()["word_list_id"])).first()
+                Template_info = db_session.query(Template).filter(
+                    Template.id == int(item.single_to_dict()["template_id"])).first()
+                WordList_info = db_session.query(WordList).filter(
+                    WordList.id == int(item.single_to_dict()["word_list_id"])).first()
                 item_info["id"] = WordList_info.single_to_dict()["id"]
                 item_info["key"] = Template_info.single_to_dict()["template_name"]
                 item_info["key_id"] = Template_info.single_to_dict()["id"]
@@ -105,8 +107,9 @@ class KeyWordsOper:
                 return KeyWords_info.single_to_dict()
             except:
                 return []
+
         result = select_by_key_name(key_name)
-        if len(result)!=0:
+        if len(result) != 0:
             return {"code": "400", "message": "关键词名重复"}
         else:
             key_word = KeyWords()
@@ -123,8 +126,6 @@ class KeyWordsOper:
                 db_session.close()
                 return {"code": "400", "message": "添加失败"}
 
-
-
     @classmethod
     @db_commit_decorator
     def update_word_list(cls, parameter):
@@ -136,7 +137,7 @@ class KeyWordsOper:
             word_list.word_list = str(remark)
             db_session.commit()
             db_session.close()
-            return {"code": "200", "message": "succeed",}
+            return {"code": "200", "message": "succeed", }
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed"}
@@ -145,7 +146,6 @@ class KeyWordsOper:
     @db_commit_decorator
     def delete_word_list_by_id(cls, parameter):
 
-
         try:
             word_list = db_session.query(WordList).filter(WordList.id == int(parameter['id'])).first()
             # print(word_list.single_to_dict())
@@ -153,7 +153,7 @@ class KeyWordsOper:
             db_session.delete(word_list)
             db_session.commit()
             db_session.close()
-            return {"code": "200", "message": "succeed",}
+            return {"code": "200", "message": "succeed", }
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed"}
@@ -174,7 +174,6 @@ class KeyWordsOper:
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed"}
-
 
 
 class MainUrlOper:
@@ -200,8 +199,8 @@ class MainUrlOper:
             db_session.close()
             return {"code": "404", "message": "fialed"}
         try:
-            rule= parameter['rule']
-            mainurl.rule =  rule
+            rule = parameter['rule']
+            mainurl.rule = rule
             db_session.commit()
             db_session.close()
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
@@ -230,7 +229,6 @@ class MainUrlOper:
         db_session.commit()
         db_session.close()
 
-
     '''
     parameter = {
             "page":1,
@@ -240,6 +238,7 @@ class MainUrlOper:
             "keyword":""
         }
     '''
+
     @classmethod
     @db_commit_decorator
     def select_by_parameter(cls, parameter):
@@ -253,18 +252,20 @@ class MainUrlOper:
             datas = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
                                                      MainUrl.webSite.like(
                                                          "%{}%".format(keyword))).limit(
-                        limit).offset(
-                        (page - 1) * limit)
+                limit).offset(
+                (page - 1) * limit)
             count = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.status == status,
                                                      MainUrl.webSite.like("%{}%".format(keyword))).count()
 
             db_session.close()
 
-            return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
+            return {"code": "200", "message": "succeed", "data": [item.single_to_dict() for item in datas],
+                    "count": count}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
+
 
 class SpiderTaskOper:
 
@@ -311,7 +312,6 @@ class SpiderTaskOper:
             parameters.append(parameter)
         return parameters
 
-
     @classmethod
     @db_commit_decorator
     def delete_one(cls, parameter):
@@ -344,17 +344,19 @@ class SpiderTaskOper:
         keyword = str(parameter['keyword'])
         try:
             datas = db_session.query(SpiderTask).filter(SpiderTask.task_name.like(
-                                                         "%{}%".format(keyword))).limit(
-                        limit).offset(
-                        (page - 1) * limit)
+                "%{}%".format(keyword))).limit(
+                limit).offset(
+                (page - 1) * limit)
             count = db_session.query(SpiderTask).filter(SpiderTask.task_name.like("%{}%".format(keyword))).count()
             db_session.close()
 
-            return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
+            return {"code": "200", "message": "succeed", "data": [item.single_to_dict() for item in datas],
+                    "count": count}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
+
 
 class TaskConfigOper:
 
@@ -366,13 +368,14 @@ class TaskConfigOper:
         page = int(parameter['page'])
         limit = int(parameter['limit'])
         try:
-            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).limit(
-                        limit).offset(
-                        (page - 1) * limit)
-            count = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name,MainUrl.status==1).count()
+            datas = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name, MainUrl.status == 1).limit(
+                limit).offset(
+                (page - 1) * limit)
+            count = db_session.query(MainUrl).filter(MainUrl.spider_name == spider_name, MainUrl.status == 1).count()
             db_session.close()
 
-            return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
+            return {"code": "200", "message": "succeed", "data": [item.single_to_dict() for item in datas],
+                    "count": count}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
@@ -386,19 +389,22 @@ class TaskConfigOper:
         limit = int(parameter['limit'])
         sort = int(parameter['sort'])
 
-
         try:
-            datas = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.spider_name == 0,MainUrl.status==1).limit(
-                        limit).offset(
-                        (page - 1) * limit)
-            count = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.spider_name == 0,MainUrl.status==1).count()
+            datas = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.spider_name == 0,
+                                                     MainUrl.status == 1).limit(
+                limit).offset(
+                (page - 1) * limit)
+            count = db_session.query(MainUrl).filter(MainUrl.sort == sort, MainUrl.spider_name == 0,
+                                                     MainUrl.status == 1).count()
             db_session.close()
 
-            return {"code": "200", "message": "succeed", "data":[item.single_to_dict() for item in datas], "count": count}
+            return {"code": "200", "message": "succeed", "data": [item.single_to_dict() for item in datas],
+                    "count": count}
 
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
+
     # parameter ={"task_id":1 ,"operation":"import","main_url_pids":[6571,4541,45781,1512]}
     @classmethod
     @db_commit_decorator
@@ -428,7 +434,10 @@ class TaskConfigOper:
                 return {"code": "404", "message": "更新失败"}
         else:
             return {"code": "202", "message": "并没有移除数据"}
+
+
 keyword = KeyWordsOper()
+
 
 class TemplateOper:
 
@@ -456,7 +465,7 @@ class TemplateOper:
 
     @classmethod
     @db_commit_decorator
-    def select_remove_template(cls,parameter):
+    def select_remove_template(cls, parameter):
         try:
             result_all = cls.select_by_parameter(parameter)
             result = keyword.select_by_id(parameter)
@@ -479,12 +488,12 @@ class KeyAndTemplateOper:
 
     @classmethod
     @db_commit_decorator
-    def add_list(cls,parameter):
+    def add_list(cls, parameter):
         template_id_list = parameter["template_id_list"].split(",")
         key_id = parameter["key_id"]
         try:
             for template_id in template_id_list:
-                cls.add_one(key_id,template_id)
+                cls.add_one(key_id, template_id)
             db_session.commit()
             db_session.close()
             return {"code": "200", "message": "succeed"}
@@ -495,7 +504,7 @@ class KeyAndTemplateOper:
 
     @classmethod
     @db_commit_decorator
-    def add_one(cls, key_id,template_id):
+    def add_one(cls, key_id, template_id):
         try:
             Template_info = db_session.query(Template).filter(
                 Template.id == template_id).first()
@@ -505,8 +514,9 @@ class KeyAndTemplateOper:
             pid = int(time.time() * 1000)
             wordlist.pid = pid
             db_session.add(wordlist)
+            db_session.commit()
             word_info = db_session.query(WordList).filter(
-                Template.pid == pid).first()
+                WordList.pid == pid).first()
             key_and_template = KeyAndTemplate()
             key_and_template.key_id = key_id
             key_and_template.template_id = template_id
@@ -518,8 +528,11 @@ class KeyAndTemplateOper:
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             db_session.close()
             return {"code": "404", "message": "fialed"}
+
+
 if __name__ == '__main__':
     import json
+
     # rule = json.dumps({
     #     'page': 10,
     #     'good_list': "//ul[@id= 'newsListContent']//li//p[@class='title']//a//@href",
@@ -546,7 +559,7 @@ if __name__ == '__main__':
     #         "id":1
     #     }
     # print(spider.select_by_id(parameter))
-        #     # spider.add_one(parameter)
+    #     # spider.add_one(parameter)
     info = '''
     {  
         'code': '200', 
@@ -563,7 +576,7 @@ if __name__ == '__main__':
                                         'word_list': ['', '啊沙发', '富士达', '嘎嘎嘎', '111', '222', '333', '4444444444', '55555555555', '77777777', '8888888888888'], 
                                         'key': '是的冯绍峰'
                                     }, 
-                                    
+
                                     {
                                         'id': 91, 
                                         'pid': 23,
@@ -576,7 +589,7 @@ if __name__ == '__main__':
     '''
     # print(info)
     spider_task = KeyWordsOper()
-    parameter = {"key_id":2,'template_id_list': "1,7,8,4","id":19,'page':2,'limit':5,'status':1}
+    parameter = {"key_id": 2, 'template_id_list': "1,7,8,4", "id": 19, 'page': 2, 'limit': 5, 'status': 1}
     print(spider_task.delete_by_id(parameter))
     # parameter = {
     #             "id":27,
