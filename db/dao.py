@@ -472,9 +472,6 @@ class TemplateOper:
                     "count": result_all["count"]}
         except (SqlalchemyIntegrityError, PymysqlIntegrityError, InvalidRequestError):
             return {"code": "404", "message": "fialed", "data": [], "count": 0}
-        # print(data_pid)
-        # print(data_page)
-        # print(len(data_page))
 
 
 class KeyAndTemplateOper:
@@ -498,10 +495,21 @@ class KeyAndTemplateOper:
     @classmethod
     @db_commit_decorator
     def add_one(cls, key_id,template_id):
-        key_and_template = KeyAndTemplate()
-        key_and_template.key_id = key_id
-        key_and_template.template_id = template_id
         try:
+            Template_info = db_session.query(Template).filter(
+                Template.id == template_id).first()
+            template_name = Template_info.single_to_dict()["template_name"]
+            wordlist = WordList()
+            wordlist.key = template_name
+            pid = int(time.time() * 1000)
+            wordlist.pid = pid
+            db_session.add(wordlist)
+            word_info = db_session.query(WordList).filter(
+                Template.pid == pid).first()
+            key_and_template = KeyAndTemplate()
+            key_and_template.key_id = key_id
+            key_and_template.template_id = template_id
+            key_and_template.word_list_id = word_info.id
             db_session.add(key_and_template)
             db_session.commit()
             db_session.close()
