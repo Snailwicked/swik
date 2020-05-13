@@ -180,6 +180,13 @@ def start_spider_task():
     task_id = excute_start_crawler(parameter)
     return jsonify({"task_id":task_id})
 
+@app.route('/start/spider_accurate')
+def start_spider_accurate():
+    parameter = request.values.to_dict()
+    parameter["status"] = 1
+    spidertask.update_status(parameter)
+    task_id = excute_start_crawler(parameter)
+    return jsonify({"task_id":task_id})
 
 @app.route('/stop/spider_task')
 def stop_spider_task():
