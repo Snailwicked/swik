@@ -11,7 +11,7 @@ from http import cookiejar
 from PIL import Image
 import threading
 import json
-from algorithm.fakerspider.tools import check_text, get_host
+from algorithm.fakerspider import check_text, get_host
 import pymysql
 from pypinyin import lazy_pinyin
 

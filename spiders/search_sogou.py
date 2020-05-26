@@ -1,7 +1,7 @@
 import requests, re,time
 from lxml import etree
 import datetime
-from algorithm.fakerspider import DbToMysql
+from algorithm.fakerspider.store import DbToMysql
 from utils.slave.extractors import ContentExtractor
 
 
@@ -10,8 +10,8 @@ from requests import RequestException
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
                          'AppleWebKit/537.36 (KHTML, like Gecko) Chrome'
                          '/71.0.3578.10 Safari/537.36'}
-configs = {'host': '180.97.15.181', 'user': 'root', 'password': 'Vrv123!@#', 'db': 'fakespider'}
-# configs = {'host': '192.168.30.217', 'user': 'root', 'password': 'wzh234287', 'db': 'fakespider'}
+# configs = {'host': '180.97.15.181', 'user': 'root', 'password': 'Vrv123!@#', 'db': 'fakespider'}
+configs = {'host': '192.168.30.217', 'user': 'root', 'password': 'wzh234287', 'db': 'fakespider'}
 
 requests.packages.urllib3.disable_warnings()
 source = "搜索引擎-搜狗"

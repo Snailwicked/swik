@@ -6,10 +6,9 @@ from urllib.parse import urljoin
 from requests import RequestException
 import re
 import datetime
-from algorithm.fakerspider.store import DbToMysql
-from algorithm.fakerspider.tools import get_domain, is_borders
+from algorithm.fakerspider import DbToMysql
+from algorithm.fakerspider import get_domain, is_borders
 import json
-import time
 import urllib3
 
 

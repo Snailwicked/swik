@@ -1,8 +1,8 @@
 import requests,json
 from lxml import etree
-from algorithm.fakerspider import get_domain
+from algorithm.fakerspider.tools import get_domain
 import datetime
-from algorithm.fakerspider import DbToMysql
+from algorithm.fakerspider.store import DbToMysql
 
 cookies = {
     'BIDUPSID': '2EBEF0AFA587D154535C8F1BB1875F2F',

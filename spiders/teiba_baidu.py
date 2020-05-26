@@ -49,9 +49,9 @@ def get_links():
     except requests.exceptions.RequestException as e:
         print(e)
 #192.168.30.217 root wzh234287
-db = pymysql.connect(host='192.168.30.217', port=3306, user='root', passwd='wzh234287', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+# db = pymysql.connect(host='192.168.30.217', port=3306, user='root', passwd='wzh234287', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
-# db = pymysql.connect(host='180.97.15.181', port=3306, user='root', passwd='Vrv123!@#', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+db = pymysql.connect(host='180.97.15.181', port=3306, user='root', passwd='Vrv123!@#', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 cursors = db.cursor()
 #
 #

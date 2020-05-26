@@ -7,8 +7,8 @@ import json
 import time
 import datetime
 import pymysql
-from algorithm.fakerspider.tools import check_text, remove_emoji
-from algorithm.fakerspider.tools import get_number,parse_content
+from algorithm.fakerspider import check_text, remove_emoji
+from algorithm.fakerspider import get_number,parse_content
 from utils.headers import random_headers as headers
 
 def get_links():
@@ -49,9 +49,9 @@ def get_links():
     except requests.exceptions.RequestException as e:
         print(e)
 #192.168.30.217 root wzh234287
-# db = pymysql.connect(host='192.168.30.217', port=3306, user='root', passwd='wzh234287', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+db = pymysql.connect(host='192.168.30.217', port=3306, user='root', passwd='wzh234287', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
-db = pymysql.connect(host='180.97.15.181', port=3306, user='root', passwd='Vrv123!@#', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+# db = pymysql.connect(host='180.97.15.181', port=3306, user='root', passwd='Vrv123!@#', db='fakespider', use_unicode=True, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 cursors = db.cursor()
 #
 #

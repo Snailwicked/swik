@@ -11,7 +11,7 @@ from db.dao import SpiderTaskOper
 from db.dao import KeyWordsOper
 from db.dao import TemplateOper
 from db.dao import KeyAndTemplateOper
-
+from spiders import *
 con = News_data()
 import json
 mainurl = MainUrlOper()
@@ -182,8 +182,16 @@ def start_spider_task():
 
 @app.route('/start/spider_accurate')
 def start_spider_accurate():
-    parameter = request.values.to_dict()
-    parameter["status"] = 1
+    # parameter = request.values.to_dict()
+    # data = keyword.select_by_id(parameter)
+    # for item in data["data"]["word_list"]:
+    #     if item["path"] =="weibo":
+    #         config = {"page":3,"key_words":["央视新闻"]}
+    #         weibo = WeiBo_Spider(config)
+    #         weibo.start()
+        # print(item["path"])
+        # print(item["word_list"])
+
     # spidertask.update_status(parameter)
     # task_id = excute_start_crawler(parameter)
     return jsonify({"task_id":""})

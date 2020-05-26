@@ -58,6 +58,8 @@ class KeyWordsOper:
                     WordList.id == int(item.single_to_dict()["word_list_id"])).first()
                 item_info["id"] = WordList_info.single_to_dict()["id"]
                 item_info["key"] = Template_info.single_to_dict()["template_name"]
+                item_info["path"] = Template_info.single_to_dict()["path"]
+
                 item_info["key_id"] = Template_info.single_to_dict()["id"]
 
                 item_info["word_list"] = str(WordList_info.single_to_dict()["word_list"]).split(",")

@@ -1,9 +1,8 @@
-import requests,json,re
+import requests, re
 from lxml import etree
-from algorithm.fakerspider.tools import get_domain, is_borders
 import datetime
-from algorithm.fakerspider.store import DbToMysql
-from algorithm.fakerspider.tools import get_number,parse_content
+from algorithm.fakerspider import DbToMysql
+
 cookies = {
     '$Cookie: __huid': '11HGgxWodKG97zfn33N%2Bz7vpWw4ewskSjoUiznVzYM%2FjM%3D',
     '__DC_gid': '9114931.187358221.1546519824080.1553582054483.9',

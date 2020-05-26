@@ -56,11 +56,32 @@ def get_comments(params,content_info):
 
 
 
-# db = pymysql.connect(host='180.97.15.181', port=3306, user='root', passwd='Vrv123!@#', db='fakespider', use_unicode=True, charset='utf8mb4')
-db = pymysql.connect(host='192.168.30.217', port=3306, user='root', passwd='wzh234287', db='fakespider', use_unicode=True, charset='utf8mb4')
+db = pymysql.connect(host='180.97.15.181', port=3306, user='root', passwd='Vrv123!@#', db='fakespider', use_unicode=True, charset='utf8mb4')
+# db = pymysql.connect(host='192.168.30.217', port=3306, user='root', passwd='wzh234287', db='fakespider', use_unicode=True, charset='utf8mb4')
 
 cursors = db.cursor()
 
+
+# def insert_data(text):
+#     if check_text(text):
+#         domain, e_mail, website, weixin, weixinhao, qq, qq_detail, phone, phone_detail = get_number(
+#             text)
+#         if weixinhao or qq or phone or domain:
+#             sql = 'SELECT DISTINCT weixinhao, qq, phone, domain FROM wa_key where source="%s"' % source
+#             cursors.execute(sql)
+#             db.commit()
+#             results = set(cursors.fetchall())
+#             if (weixinhao, qq, phone, domain) not in results:
+#                 sql = 'insert into wa_key(source, account_url, account_nickname, description, content, comments, crawl_time, publish_time, comments_nickname, isPass, weixin, weixinhao, qq_detail, qq, phone_detail, phone, e_mail, domain, source_number) values ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%d", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%d")' % (
+#                     source, account_url,
+#                     account_nickname, description,
+#                     content_info["content"], item["comments"], item["crawl_time"],
+#                     content_info["publish_time"], item["comments_nickname"], isPass, weixin, weixinhao,
+#                     pymysql.escape_string(qq_detail), qq, pymysql.escape_string(phone_detail), phone,
+#                     e_mail, domain, 2)
+#                 print(content_info)
+#                 cursors.execute(sql)
+#                 db.commit()
 
 def start(params):
     response = requests.get('https://m.weibo.cn/api/container/getIndex', headers=headers, params=params,timeout=2)
@@ -101,8 +122,33 @@ def start(params):
                 ('mid', '{}'.format(news_id)),
                 ('max_id_type', '0'),
             )
+            result = []
             try:
                 result = get_comments(params, content_info)
+            except Exception as e:
+                pass
+            if len(result) == 0:
+                text = item["description"].strip() + " " + item["content"].strip()
+                if check_text(text):
+                    domain, e_mail, website, weixin, weixinhao, qq, qq_detail, phone, phone_detail = get_number(
+                        text)
+                    if weixinhao or qq or phone or domain:
+                        sql = 'SELECT DISTINCT weixinhao, qq, phone, domain FROM wa_key where source="%s"' % source
+                        cursors.execute(sql)
+                        db.commit()
+                        results = set(cursors.fetchall())
+                        if (weixinhao, qq, phone, domain) not in results:
+                            sql = 'insert into wa_key(source, account_url, account_nickname, description, content, comments, crawl_time, publish_time, comments_nickname, isPass, weixin, weixinhao, qq_detail, qq, phone_detail, phone, e_mail, domain, source_number) values ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%d", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%d")' % (
+                                source, account_url,
+                                account_nickname, description,
+                                content_info["content"], item["comments"], item["crawl_time"],
+                                content_info["publish_time"], item["comments_nickname"], isPass, weixin, weixinhao,
+                                pymysql.escape_string(qq_detail), qq, pymysql.escape_string(phone_detail), phone,
+                                e_mail, domain, 2)
+                            print(content_info)
+                            cursors.execute(sql)
+                            db.commit()
+            else:
                 for item in result:
                     print(item)
                     text = item["description"].strip() + " " + item["content"].strip() + " " + item[
@@ -126,29 +172,9 @@ def start(params):
                                 print(content_info)
                                 cursors.execute(sql)
                                 db.commit()
-            except Exception as e:
-                print(e)
-            finally:
-                text = item["description"].strip() + " " + item["content"].strip()
-                if check_text(text):
-                    domain, e_mail, website, weixin, weixinhao, qq, qq_detail, phone, phone_detail = get_number(
-                        text)
-                    if weixinhao or qq or phone or domain:
-                        sql = 'SELECT DISTINCT weixinhao, qq, phone, domain FROM wa_key where source="%s"' % source
-                        cursors.execute(sql)
-                        db.commit()
-                        results = set(cursors.fetchall())
-                        if (weixinhao, qq, phone, domain) not in results:
-                            sql = 'insert into wa_key(source, account_url, account_nickname, description, content, comments, crawl_time, publish_time, comments_nickname, isPass, weixin, weixinhao, qq_detail, qq, phone_detail, phone, e_mail, domain, source_number) values ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%d", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%d")' % (
-                                source, account_url,
-                                account_nickname, description,
-                                content_info["content"], item["comments"], item["crawl_time"],
-                                content_info["publish_time"], item["comments_nickname"], isPass, weixin, weixinhao,
-                                pymysql.escape_string(qq_detail), qq, pymysql.escape_string(phone_detail), phone,
-                                e_mail, domain, 2)
-                            print(content_info)
-                            cursors.execute(sql)
-                            db.commit()
+
+
+
 import json
 if __name__ == '__main__':
     import requests

@@ -20,14 +20,16 @@ class News_data():
         keywords = parameter.get('keywords')
         if keywords == None or keywords== "":
             count = news_data.find({}).count()
-            data = [item for item in news_data.find({}, {"_id": 0}).limit(limit).skip((page-1) * limit)]
+            data = [item for item in news_data.find({}, {"_id": 0}).limit(limit).skip((page-1) * limit).sort(
+                    [{"poTime", -1}])]
 
         else:
-            count = news_data.find({'source': re.compile('{}'.format(keywords))}).count()
+            count = news_data.find({'title': re.compile('{}'.format(keywords))}).count()
 
             data = [item for item in
-                    news_data.find({'source': re.compile('{}'.format(keywords))}, {"_id": 0}).limit(limit).skip(
-                        (page-1) * limit)]
+                    news_data.find({'title': re.compile('{}'.format(keywords))}, {"_id": 0}).limit(limit).skip(
+                        (page-1) * limit).sort(
+                    [{"poTime", -1}])]
 
         return {"code": 200, "msg": "", "count": count, "data": data}
 
@@ -37,10 +39,10 @@ class News_data():
         limit = int(parameter.get('limit'))
         start_date = str(parameter.get('start_date'))
         end_date = str(parameter.get('end_date'))
-        count = news_data.find({"collection_time": {"$gte": start_date, "$lte": end_date}},{"_id": 0}).count()
+        count = news_data.find({"poTime": {"$gte": start_date, "$lte": end_date}},{"_id": 0}).count()
         data = [item for item in
-                news_data.find({"collection_time": {"$gte": start_date, "$lte": end_date}},{"_id": 0}).sort(
-                    [{"collection_time", -1}]).limit(limit).skip(
+                news_data.find({"poTime": {"$gte": start_date, "$lte": end_date}},{"_id": 0}).sort(
+                    [{"poTime", -1}]).limit(limit).skip(
                     (page - 1) * limit)]
         return {"code": 200, "msg": "", "count": count, "data": data}
 if __name__ == '__main__':
